@@ -1,0 +1,87 @@
+/*page相当于html*/
+page {
+font-family: Circular, PingFang-SC, "Hiragino Sans GB", 微软雅黑, "Microsoft YaHei", "Heiti SC" !important;
+color: #3d4451;
+background: #f3f3f3;
+}
+/*尽量使用rpx*/
+swiper{
+  width: 100%;
+  height:340rpx;
+}
+swiper image {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.container {
+  padding:30rpx;
+}
+.list {
+  overflow: hidden;
+  position: relative;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+.logo {
+  float: left;
+  width: 190rpx;
+  height: 190rpx;
+}
+.body {
+  margin-left: 220rpx;
+}
+.title {
+  font-size: 35rpx;
+  line-height: 1.2;
+  font-weight: bold;
+}
+.body .desc {
+  font-size: 30rpx;
+  color: #d3d3d3;
+  line-height: 1.2;
+}
+.body .num{
+  font-size: 30rpx;
+}
+.footer{
+  padding-top:5px;
+}
+.footer .price {
+  color:orangered;
+}
+.footer .promotion{
+  font-size: 20rpx;
+  background-color:rgb(236, 198, 198);
+}
+.btn {
+  position:absolute;
+  right:10px;
+  bottom:20%;
+  width: 150rpx;
+  font-size: 20rpx;
+  background: orangered;
+  color:white;
+  text-align: center;
+  padding:5px 0 ;
+  border-radius: 10px;
+}
+.call {
+  position: relative;
+  margin-top: 5rpx;
+  background-color: white;
+  text-align: left;
+  line-height: 2;
+  border-style: none;
+  border-radius: 0;
+  padding: 3rpx 20rpx;
+  font-size: 30rpx;
+}
+.call image {
+  position: absolute;
+  right: 20rpx;
+  top:16rpx;
+  width: 30rpx;
+  height: 30rpx;
+}

@@ -1,0 +1,2 @@
+<!--pages/details/detail.wxml-->
+<text>{{index}}-{{title}}</text>

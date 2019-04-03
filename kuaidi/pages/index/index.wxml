@@ -1,0 +1,17 @@
+<!--index.wxml-->
+<view class="container">
+  <!--bindinput:input输入事件，可获取输入内容-->
+  <input placeholder='请输入运单号' bindinput='input'></input>
+  <button bindtap='query' type='primary'>查询</button>
+  <!--滚动条，可设置高度-->
+<scroll-view scroll-y style="height:250px">
+<!--循环显示数据-->
+  <view wx:for="{{kdInfo.result.list}}" style='margin-top:20px;'>
+    {{item.time}}
+    -------
+    {{item.status}}
+  </view>
+</scroll-view>
+</view>
+
+

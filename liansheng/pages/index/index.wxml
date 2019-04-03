@@ -1,0 +1,33 @@
+<!--轮播图-->
+<swiper
+  indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}"
+  interval="{{interval}}"
+  duration="{{duration}}"
+>
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class='info'>
+  <!--打电话-->
+  <button bindtap='call' class='call'><text class='iphone'>商家电话：13980561803</text><image src='/images/iphone.png'></image></button>
+</view>
+<!--列表-->
+<view class='container'>
+  <view class='list' wx:for='{{list}}' bindtap='toDetail' data-index='{{index}}'>
+    <image class='logo' src='{{item.logo}}'></image>
+    <view class='body'>
+      <view class='title'>{{item.title}} ></view>
+      <text class='desc'>{{item.desc}}</text>
+      <view class='num'>月售 {{item.num}}</view>
+      <view class='footer'>
+        <text class='price'>￥{{item.price}} </text> 
+        <text class='promotion'>{{item.promotion}}</text>
+      </view>
+    </view>
+    <view class='btn'>马上抢 ></view>
+  </view>
+</view>

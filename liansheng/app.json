@@ -1,18 +1,15 @@
-//定义页面，第一个就是首页
 {
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
     "pages/details/detail"
   ],
-  //定义窗口显示
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#2e5e86",
     "navigationBarTitleText": "老胡的包子铺",
     "navigationBarTextStyle": "white"
   },
-//定义底部菜单
   "tabBar": {
     "selectedColor": "#2e5e86",
     "list": [

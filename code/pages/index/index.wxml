@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<!--"data-"可以设置控件的dataset，相当于自定义属性值-->
+<view class="viewcontainer" bindtap='viewcontainerclick' id='viewcontainer' data-id="100" data-title="news">
+viewcontainer
+  <view class='view1' bindtap='view1click' id='view1'>
+  view1
+    <view class='view2' bindtap='view2click' id='view2'>  <!--catch可以阻止冒泡-->
+    view2
+    </view>
+  </view>
+</view>

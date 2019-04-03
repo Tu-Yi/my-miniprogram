@@ -1,0 +1,45 @@
+<!--模板使用,这里参数默认使用子页面的参数-->
+<include src="../templates/header" data="{{text:'hahhaha'}}" />
+
+<button
+  type="default"
+  size="{{defaultSize}}"
+  loading="{{loading}}"
+  plain="{{plain}}"
+  disabled="{{disabled}}"
+  bindtap="default"
+  hover-class="other-button-hover"
+>
+  default
+</button>
+<button
+  type="primary"
+  size="{{primarySize}}"
+  loading="{{loading}}"
+  plain="{{plain}}"
+  disabled="{{disabled}}"
+  bindtap="primary"
+>
+  primary
+</button>
+<button
+  type="warn"
+  size="{{warnSize}}"
+  loading="{{loading}}"
+  plain="{{plain}}"
+  disabled="{{disabled}}"
+  bindtap="warn"
+>
+  {{btnText}}
+</button>
+<!--判断-->
+<view wx:if="{{isShow}}">{{text}} 1</view>
+<view wx:else="{{isShow}}">{{text}} 2</view>
+<!--循环-->
+<view wx:for="{{news}}" wx:for-item="itemx" wx:for-index="ix">
+{{ix}}{{itemx}}
+</view>
+<!--模板使用，这里参数必须自定义-->
+<import src="../templates/footer" />
+<template is="footer1" data="{{text:'my father'}}" />
+<template is="footer2" data="{{text:'my son'}}" />

@@ -1,0 +1,15 @@
+.viewcontainer {
+  height:500px;
+  width: 100%;
+  background: red;
+}
+.view1 {
+  height:400px;
+  width: 100%;
+  background: blue;
+}
+.view2 {
+  height:300px;
+  width: 100%;
+  background: yellow;
+}

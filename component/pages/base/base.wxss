@@ -1,0 +1,5 @@
+/* pages/base/base.wxss */
+progress{
+  width: 100%;
+  margin-top: 20rpx;
+}

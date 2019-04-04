@@ -1,7 +1,11 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/map/map",
+    "pages/media/media",
+    "pages/feedback/feecback",
+    "pages/form/form",
+    "pages/base/base",
+    "pages/index/index"
   ],
   "window":{
     "backgroundTextStyle":"light",

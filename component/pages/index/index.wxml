@@ -6,6 +6,7 @@
   interval="3000"
   duration="1000"
   style='width:100%;'
+  bindchange='schange'
 >
   <block wx:for="{{imgUrls}}">
     <swiper-item>
@@ -14,10 +15,13 @@
   </block>
 </swiper>
 
-<scroll-view scroll-y style="height:250px">
+<scroll-view scroll-y style="height:250px" 
+bindscrolltoupper="toUpper" bindscrolltolower="tolower" 
+bindscroll="scroll" 
+upper-threshold="100px" scroll-top="{{scrolltop}}" scroll-into-view="red">
     <view id="green" class="scroll-view-item_H bc_green"></view>
     <view id="red" class="scroll-view-item_H bc_red"></view>
     <view id="yellow" class="scroll-view-item_H bc_yellow"></view>
 </scroll-view>
-
 </view>
+<button bindtap='toTop' style='margin-top:30rpx;'>滚动</button>

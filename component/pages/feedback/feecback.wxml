@@ -1,0 +1,7 @@
+<view>
+
+<button type="primary" size="mini" bindtap='showfoot'>actionsheet</button>
+<button type="primary" size="mini" bindtap='showtoast'>toast</button>
+<button type="primary" size="mini" bindtap='showmodal'>modal</button>
+<button type="primary" size="mini" bindtap='showloading'>loading</button>
+</view>

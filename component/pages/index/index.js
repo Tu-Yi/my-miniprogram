@@ -12,7 +12,8 @@ Page({
       'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
       'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
       'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ]
+    ],
+    scrolltop:0
   },
   //事件处理函数
   bindViewTap: function() {
@@ -55,5 +56,20 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  toUpper:function(e){
+    console.log(e)
+  },
+  tolower:(e)=>{
+    console.log(e)
+  },
+  scroll:(e)=>{
+    //console.log(e)
+  },
+  toTop:function(){
+    this.setData({scrolltop:50})
+  },
+  schange:function(e){
+    console.log(e)
   }
 })

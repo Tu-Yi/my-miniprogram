@@ -62,18 +62,18 @@ Page({
   onShareAppMessage: function () {
     
   },
-  clickone: function(){
+  clickone: function () {
     //具有tabbar的页面，必须用switchtab，hide，show
     //switchTab不能传参，只能使用全局变量或者缓存
     wx.setStorageSync("id", 1);
     wx.switchTab({
       url: '/pages/detail/detail',
     })
-    //index hide和show  detail unload
+    //navigateTo-index的状态是hide和show  detail的状态是unload
     // wx.navigateTo({
     //   url: '/pages/detail/detail',
     // })
-    //index unload
+    //redirectTo-index会unload
     // wx.redirectTo({
     //   url: '/pages/detail/detail',
     // })

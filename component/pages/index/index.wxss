@@ -1,6 +1,7 @@
 swiper{
   width: 100%;
   height:340rpx;
+  margin-bottom: 30rpx;
 }
 swiper image {
   display: block;

@@ -1,0 +1,66 @@
+.container{
+  /*容器属性*/
+  display: flex;
+  /* flex-flow: row; */
+  /*flex-direction: column;*/
+  /* flex-wrap:wrap nowrap wrap-reverse; */
+  /* flex-flow: row wrap; */
+  justify-content: /*flex-start flex-end*/ space-between /*space-around center*/;
+  align-items:flex-start /*flex-end center stretch(如果没有高度占满高度) baseline(按文字对齐)*/;
+  
+  width: 100%;
+  height: 300rpx;
+  background: #eeeeee;
+}
+.item{
+  width: 100rpx;
+  height: 100rpx;
+  background: #d3d3d3;
+  border: 1px solid #fff;
+  /* 元素属性 */
+  /* flex-grow: 1; 有多余空间占据的比例 */
+  /* flex-shrink: 1; 空间不足默认等比缩小 */
+  flex: 1 0 auto; /*grow shrink basis*/ 
+}
+.i3{
+  /* flex-grow: 2;  有多余空间占据的比例 */
+  /* flex-shrink: 0;空间不足默认不要等比缩小 */
+  /* flex-basis: 200rpx; 元素在主轴上占据的空间 */
+  order:-1; /*顺序*/
+  align-self: flex-end; /*自身在交叉轴*/
+  
+}
+.containerp{
+  position: relative;
+  /* padding-top: 5rpx; */
+  width: 100%;
+  height: 300rpx;
+  background: #eeeeee;
+}
+.view1{
+  position: absolute;
+  right:0;
+  top:50rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #d3d3d3;
+  border: 1px solid #fff;
+}
+.view2{
+  /* position: relative;
+  left:40rpx;
+  top:50rpx; */
+  margin-top: 50rpx;
+  margin-bottom: 30rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #d3d3d3;
+  border: 1px solid #fff;
+}
+.view3{
+  margin-top: 20rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #d3d3d3;
+  border: 1px solid #fff;
+}

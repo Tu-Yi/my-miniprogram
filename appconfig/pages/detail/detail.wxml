@@ -1,0 +1,2 @@
+<!--pages/detail/detail.wxml-->
+<text>这里是文章详情 当前id是{{id}}</text>

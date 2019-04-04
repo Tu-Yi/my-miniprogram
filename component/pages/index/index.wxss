@@ -1,0 +1,25 @@
+swiper{
+  width: 100%;
+  height:340rpx;
+}
+swiper image {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.scroll-view_H{
+  height: 250px;
+  border: 1px solid;
+}
+.scroll-view-item_H{
+  height:100px;
+}
+.bc_green{
+  background: green;
+}
+.bc_red{
+  background: red;
+}
+.bc_yellow{
+  background: yellow;
+}

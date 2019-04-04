@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container">
+  <view bindtap='clickone'>
+    <text class="user-motto">文章一</text>
+  </view>
+  <!--还是不能跳转tabbar页面-->
+  <navigator url='/pages/logs/logs'>
+    <view>
+      <text class="user-motto">文章二</text>
+    </view>
+  </navigator>
+  <view>
+    <text class="user-motto">文章三</text>
+  </view>
+  <view>
+    <text class="user-motto">文章四</text>
+  </view>
+</view>

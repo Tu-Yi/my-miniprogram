@@ -1,0 +1,15 @@
+<view class="container">
+  <view class='item'>1</view>
+  <view class='item'>2</view>
+  <view class='item i3'>3</view>
+  <view class='item'>4</view>
+  <view class='item'>5</view>
+  <view class='item'>6</view>
+  <view class='item'>7</view>
+  <view class='item'>8</view>
+</view>
+<view class="containerp">
+  <view class='view1'>1</view>
+  <view class='view2'>2</view>
+  <view class='view3'>3</view>
+</view>

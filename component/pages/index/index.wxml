@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view class="container">
+  <swiper
+  indicator-dots="true"
+  autoplay="true"
+  interval="3000"
+  duration="1000"
+  style='width:100%;'
+>
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="100%" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+
+<scroll-view scroll-y style="height:250px">
+    <view id="green" class="scroll-view-item_H bc_green"></view>
+    <view id="red" class="scroll-view-item_H bc_red"></view>
+    <view id="yellow" class="scroll-view-item_H bc_yellow"></view>
+</scroll-view>
+
+</view>

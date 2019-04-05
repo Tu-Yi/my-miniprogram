@@ -1,0 +1,6 @@
+/* pages/media/media.wxss */
+image{
+  width: 100rpx;
+  height:100rpx;
+  border-radius: 50%;
+}

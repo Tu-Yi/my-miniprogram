@@ -1,0 +1,13 @@
+<view style='display:flex;flex-direction:column;'>
+<view style='margin: 20rpx 0;padding:10rpx;border-bottom:5px solid #efefef;'>
+  <view>
+    <image src='https://www.v2ex.com/static/img/v2ex@2x.png' style='width:40rpx;height:40rpx;margin-right:10rpx;'/><text style='font-size:13px;color:#888888;'>text</text>
+  </view>
+  <view style='margin: 20rpx 0;'>
+    <text style='font-size:16px;color:#353535'>这里是标题</text>
+  </view>
+  <view style='display:flex;justify-content:space-between;'>
+    <text style='font-size:13px;color:#888888;'>10条回复</text><text style='font-size:18px;color:#888888;'>节点</text>
+  </view>
+</view>
+</view>

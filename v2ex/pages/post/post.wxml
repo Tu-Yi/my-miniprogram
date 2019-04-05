@@ -1,0 +1,24 @@
+<view style='display:flex;flex-direction:column;padding:15rpx;'>
+  <view style='background:#c2c2c2;padding:10rpx;'>
+    <view>
+      <text style='font-size:20px;'>标题</text>
+    </view>
+    <view>
+      <text style='font-size:14px;'>作者</text>
+    </view>
+    <view>
+      <text style='font-size:17px;'>内容</text>
+    </view>
+    <view style='display:flex;justify-content:space-between;'>
+      <text style='font-size:14px;'>10条回复</text><text style='font-size:14px;'>节点</text>
+    </view>
+  </view>
+  <view>
+  <view style='margin-top:15rpx;'>
+      <text>用户名</text>
+    </view>
+    <view>
+      <text>内容</text>
+    </view>
+  </view>
+</view>

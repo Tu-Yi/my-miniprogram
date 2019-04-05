@@ -1,0 +1,9 @@
+<view>
+  <button type='default' bindtap='open'>开启连接</button>
+
+  <button type='default' bindtap='send'>发送消息</button>
+
+  <button type='default' bindtap='close'>关闭连接</button>
+
+  <view wx:for="{{msgs}}">{{item}}</view>
+</view>

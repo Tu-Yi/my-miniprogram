@@ -1,0 +1,52 @@
+<!--index.wxml-->
+<view class="container">
+<view class='header'>
+  <swiper
+    indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}"
+    interval="{{interval}}"
+    duration="{{duration}}"
+  >
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class='section'>
+  <view class='title'>
+    <text>精品推荐</text>
+    <text>全部精品</text>
+  </view>
+  <view class='content'>
+    <view class='content-item' wx:for="{{images}}">
+      <image src='{{item}}'></image>
+      <view class='content-item-text'>
+        <text>这里是文字</text>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='list'>
+  <view class='title'>
+    <text>热门评测</text>
+    <text>全部评测</text>
+  </view>
+  <view class='list-item' wx:for="{{lists}}">
+    <view class='list-item-images'>
+     <image class='bigimg' src='{{item}}'></image>
+     <image class='logo' src='/images/avatar.png'></image>
+    </view>
+    <view class='list-item-text'>
+      <view class='list-item-text-title'>
+        <text>这里是标题</text>
+      </view>
+      <view class='list-item-text-content'>
+        <text>这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</text>
+      </view>
+    </view>
+  </view>
+</view>
+</view>

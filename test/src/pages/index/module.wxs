@@ -1,0 +1,15 @@
+var num = require("module2.wxs");
+
+var name ='niliv'
+var age = 12
+
+var method = function(obj){
+  console.log(num.name)
+  return obj
+}
+
+module.exports = {
+  name: name,
+  age: age,
+  method: method
+}

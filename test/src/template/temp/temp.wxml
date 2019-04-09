@@ -1,0 +1,11 @@
+<template name="mytemp">
+  <view>姓名{{name}}</view>
+  <view>年龄{{age}}</view>
+  <view>地址{{address}}</view>
+  <view>备注{{remark}}</view>
+  <view>消息{{msg}}</view>
+</template>
+
+<view>
+  <template is="mytemp" data="{{...person,msg,name: 'imooc', age: '18'}}" />
+</view>

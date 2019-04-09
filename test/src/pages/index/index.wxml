@@ -1,1 +1,15 @@
-this is my app
+<include src="header.wxml" />
+
+<text class="left">{{txt}}</text> 
+<button bindtap='clickMe' data-id="1" data-title="001">点我</button>
+
+<wxs src='module.wxs' module='item'></wxs>
+<view>{{item.name}}</view>
+<view>{{item.age}}</view>
+<view>{{item.method('hello')}}</view>
+
+<import src="../../template/temp/temp.wxml" />
+<view>
+  <template is="mytemp" data="{{...person,msg,name: 'imooc', age: '18'}}" />
+</view>
+<include src="footer.wxml" />

@@ -26,6 +26,7 @@ App({
    */
   onError: function (msg) {
     console.log('app error')
-  }
+  },
+  globalData: 'i am a pig'
 })
 

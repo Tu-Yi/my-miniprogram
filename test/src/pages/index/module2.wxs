@@ -1,0 +1,12 @@
+var name = 'hahha'
+var age = 12
+
+var method = function (obj) {
+  return obj
+}
+
+module.exports = {
+  name: name,
+  age: age,
+  method: method
+}

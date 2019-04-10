@@ -222,7 +222,130 @@ doLogin: function (e) {
 
 [image图片自适应宽度比例显示](<http://www.wxapp-union.com/portal.php?mod=view&aid=1197>)
 
+### swiper自适应
+
+```html
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" 
+style='height:{{swiperHeight}}px'>
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+        <swiper-item>
+            <image class='swiper-img' bindload='setSwiperHeight' src='{{item}}' mode="widthFix"></image>
+        </swiper-item>
+    </block>
+</swiper>
+```
+
+```css
+/**轮播图图片宽高自适应**/
+.swiper-img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+```
+
+```javascript
+/**
+ * 获取图片宽高比率
+ */
+function getImageScale(e){
+  //图片的原始宽度
+  var imgWidth = e.detail.width;
+  //图片的原始高度
+  var imgHeight = e.detail.height;
+  //同步获取设备宽度
+  var sysInfo = wx.getSystemInfoSync();
+  //获取屏幕的宽度
+  var screenWidth = sysInfo.screenWidth;
+  //获取屏幕和原图的比例
+  var scale = screenWidth / imgWidth;
+  //设置容器的高度
+  var height = imgHeight * scale;
+  return height;
+}
+setSwiperHeight: function (e) {
+    let sheight = utils.getImageScale(e);
+    this.setData({
+      swiperHeight: sheight
+    })
+    console.log(this.data.swiperHeight)
+}
+```
+
+
+
+
+
 ## 地理位置
 
 [获取地理位置](<https://blog.csdn.net/UFO00001/article/details/72879360>)
+
+## base64
+
+tabbar里的图标只支持本地图片，不支持网络和base64
+
+## 封装请求
+
+```javascript
+function request(url, data = {}, method='GET'){
+  wx.showLoading({
+    title: constants.LoadingTitle,
+  });
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: url,
+      data: data,
+      method: method,
+      header: {
+        'Content-Type': method == 'GET' ? 'application/json' : 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.statusCode == 200) {
+          resolve(res.data);
+        } else {
+          reject(res.errMsg);
+        }
+      },
+      fail: function (err) {
+        reject(err)
+      }
+    })
+  });
+}
+```
+
+## 封装API
+
+```javascript
+const url = 'http://rest.apizza.net/';
+const root = 'mock/86eb76c00ac2c0c85b99661b338be435';
+module.exports = {
+  Store_Detail: url + root + '/detail'
+}
+```
+
+## 封装常量
+
+```javascript
+module.exports = {
+
+  AppTitle: '喵姐米粉',
+
+  AppDesc: '最正宗的南充米粉，小时候的味道!',
+
+  AppHome: '/pages/index/index',
+
+  IndicatorDots: true,
+
+  Autoplay: true,
+
+  Interval: 3000,
+
+  Duration: 1000,
+
+  LoadingTitle: '加载中...'
+
+};
+```
 

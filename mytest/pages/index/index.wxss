@@ -6,31 +6,52 @@ swiper {
     width: 100%;
     height: auto;
     display: block;
-    border-bottom-left-radius: 120px 20px;
-    border-bottom-right-radius: 120px 20px;
 }
-.weui-cell-front {
-  -webkit-box-flex:1;
-  -webkit-flex:1;
-  flex:1;
-  margin-right: 10rpx;
-
+.header {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.weui-cell-end {
-  -webkit-box-flex:3;
-  -webkit-flex:3;
-  flex:3;
-  text-align:left;
+.cell-image {
+  margin-right:5px;
+  vertical-align:middle;
+  width:20px;
+  height:20px;
 }
-.detail {
-  margin: 0 auto;
-  position: relative;
-  margin-top:-40px;
-  width: 92%;
-  height: 300rpx;
-  border: 1px solid #e9e9e9;
-  border-radius: 13px;
-  background: #ffffff;
-  z-index: 9999;
+.cell-image-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cell-bg{
+  background-color: #fff;
+}
+.weui-cell_font {
+  font-size:14px;
+  padding-top:4px;
+}
+.cells-show {
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+}
+.content {
+  margin-top:20rpx;
+  background-color: #fff;
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+}
+.content .activity {
+  padding-left: 20rpx;
+  padding-bottom: 20rpx;
+  display: flex;
+  font-size: 14px;
+}
+.cus_address {
+  margin-left: 20rpx;
+  padding-top: 10rpx;
+  color: #ff8557;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
 }

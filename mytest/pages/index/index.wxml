@@ -1,13 +1,61 @@
-<view class="header">
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" 
+<view class="header" style='height:{{height}}px;background-image:url({{storeImg}})'>
+<!-- <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" 
 style='height:{{swiperHeight}}px'>
     <block wx:for="{{imgUrls}}" wx:key="{{index}}">
         <swiper-item>
             <image class='swiper-img' bindload='setSwiperHeight' src='{{item}}' mode="widthFix"></image>
         </swiper-item>
     </block>
-</swiper>
+</swiper> -->
+<view class='cus_address'>
+  <text>领馆区1号</text>
+  <image src='{{img_drop}}' style='width:20px;height:20px;' />
 </view>
-<view class='detail'>
- 
 </view>
+<view class="weui-cells weui-cells_after-title cells-show">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_picture}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font">查看店铺所有图片</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_zb}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font" >{{address}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_phone}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font">{{phone}}</view>
+        <view class="weui-cell__ft"> <image src='{{img_call}}' style="vertical-align: middle;width:23px; height: 23px;" /> </view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_time}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font" >配送时间：{{delivery_time}}</view>
+        <view class="weui-cell__ft"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd weui-cell_font" ><image src="{{ico_notice}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>公告：亲们小店可以开发票了哟，随时欢迎亲们下单哟亲们小店可以开发票了哟，随时欢迎亲们下</view>
+        <view class="weui-cell__ft"></view>
+    </navigator>
+  </view>
+  <view class="content">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd" style='font-weight:bold;'>优惠<text style='color:#ff8557;'>活动</text></view>
+    </navigator>
+    <view class='activity'>
+      <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:22px; height: 22px;'/>
+      <text>新用户首单立减{{new_user_reduction}}元</text>
+    </view>
+    <view class='activity'>
+      <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:22px; height: 22px;'/>
+      <text>小程序下单享{{minaDiscount}}折</text>
+    </view>
+  </view>

@@ -349,3 +349,65 @@ module.exports = {
 };
 ```
 
+## 列表布局
+
+```html
+<view class="weui-cells weui-cells_after-title cells-show">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_picture}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font">查看店铺所有图片</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_zb}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font" >{{address}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_phone}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font">{{phone}}</view>
+        <view class="weui-cell__ft"> <image src='{{img_call}}' style="vertical-align: middle;width:23px; height: 23px;" /> </view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{ico_time}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
+        </view>
+        <view class="weui-cell__bd weui-cell_font" >配送时间：{{delivery_time}}</view>
+        <view class="weui-cell__ft"></view>
+    </navigator>
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd weui-cell_font" ><image src="{{ico_notice}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>公告：亲们小店可以开发票了哟，随时欢迎亲们下单哟亲们小店可以开发票了哟，随时欢迎亲们下</view>
+        <view class="weui-cell__ft"></view>
+    </navigator>
+  </view>
+```
+
+## 单张图片自适应，设置成背景
+
+```html
+<view class="header" style='height:{{height}}px;background-image:url({{storeImg}})'>
+.header {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+```
+
+```javascript
+function getImageScale(e){
+  //同步获取设备宽度
+  var sysInfo = wx.getSystemInfoSync();
+  //获取屏幕的宽度
+  var screenWidth = sysInfo.screenWidth;
+  //设置容器的高度
+  var height = screenWidth*9/16;  //自适应16:9
+  return height;
+}
+```
+

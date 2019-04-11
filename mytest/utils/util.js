@@ -15,23 +15,25 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 /**
- * 获取图片宽高比率
- */
+ * 获取图片宽高比率 
+*/
 function getImageScale(e){
-  //图片的原始宽度
-  var imgWidth = e.detail.width;
-  //图片的原始高度
-  var imgHeight = e.detail.height;
+  // //图片的原始宽度
+  // var imgWidth = e.detail.width;
+  // //图片的原始高度
+  // var imgHeight = e.detail.height;
   //同步获取设备宽度
   var sysInfo = wx.getSystemInfoSync();
   //获取屏幕的宽度
   var screenWidth = sysInfo.screenWidth;
   //获取屏幕和原图的比例
-  var scale = screenWidth / imgWidth;
+  //var scale = screenWidth / imgWidth;
+
   //设置容器的高度
-  var height = imgHeight * scale;
+  var height = screenWidth*9/16;
   return height;
 }
+ 
 
 function request(url, data = {}, method='GET'){
   wx.showLoading({

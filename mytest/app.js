@@ -1,4 +1,5 @@
 //app.js
+var constants = require('config/constants.js');
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -35,6 +36,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    storeId: 'mjmf'
+    storeId: 'mjmf',
+    constants: constants
   }
 })

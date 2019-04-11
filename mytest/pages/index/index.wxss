@@ -11,6 +11,7 @@ swiper {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: #cdcdcf;
 }
 .cell-image {
   margin-right:5px;

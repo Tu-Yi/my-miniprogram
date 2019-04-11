@@ -1,0 +1,5 @@
+<!--pages/index/pictures/pictures.wxml-->
+<view class='box' >
+  <view class='imageView' style='background-image:url({{imgurl}});height:{{height}}px;' wx:for="{{imgUrls}}" wx:for-item="imgurl" wx:key="index">
+  </view>
+</view>

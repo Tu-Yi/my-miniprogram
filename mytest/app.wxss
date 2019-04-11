@@ -17,3 +17,9 @@ page{
     text-align: left;
     font-size: 14px;
 }
+.failView {
+  position:absolute; 
+  top:50%; 
+  left:50%; 
+  margin:-64px 0 0 -64px; 
+}

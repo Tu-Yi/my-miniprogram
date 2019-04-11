@@ -18,5 +18,16 @@ module.exports = {
   img_call: 'static/images/call.png',
   img_mina: 'static/images/mina.png',
   img_first: 'static/images/first.png',
-  img_drop: 'static/images/drop.png'
+  img_drop: 'static/images/drop.png',
+  /**页面标题 */
+  PageTitle_Pictures: "店铺图片",
+  /**缺省设置 */
+  img_fail: 'static/images/fail.png',
+  img_default: 'static/images/default.png',
+  title_default: '店铺名称',
+  address_default: '店铺未标注地址',
+  phone_default: '商家未预留电话',
+  time_default: '请联系店家',
+  /**提示信息 */
+  Msg_DataError:'获取数据失败'
 };

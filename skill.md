@@ -411,3 +411,68 @@ function getImageScale(e){
 }
 ```
 
+## 请求错误显示默认图片
+
+```html
+<view wx:if='{{!isShow}}' style='position:absolute;height:100%;width:100%;display:flex;align-items: center;justify-content: center;'>
+  <image src='{{img_fail}}' style='width:128px;height:128px;' />
+</view>
+```
+
+## 请求数据
+
+```javascript
+getStoreDetail: function(){
+    var that = this;
+    utils.request(api.Store_Detail, { shopId: app.globalData.storeId}).then(
+      res=>{
+        console.log(res)
+        wx.setNavigationBarTitle({
+          title: res.store_name || constants.title_default
+        }),
+        that.setData({ 
+          storeImg: res.store_img || '../../' + constants.img_default,
+          address: res.address || constants.address_default,
+          phone: res.phone || constants.phone_default,
+          delivery_time: res.delivery_time || constants.time_default,
+          new_user_reduction: res.new_user_reduction || "0",
+          minaDiscount: 10 - (+(res.weixin_order_reduction || "0"))*10 + ''
+        })
+        wx.setStorage({
+          key: 'storeInfo',
+          data: res,
+        })
+      },
+      err=>{
+        wx.hideLoading();
+        that.setData({
+          isShow: false
+        })
+        utils.showErrorToast(constants.Msg_DataError);
+        console.log(err)
+      }
+    )
+  },
+```
+
+## 背景图设置背景色防止图片错误
+
+```css
+.header {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #cdcdcf;
+}
+```
+
+## 常见错误处理方法
+
+请求数据失败：显示错误图片 刷新页面 退出小程序
+
+字段不存在或字段值为空：给予默认值
+
+图片字段不存在或字段值为空：给予默认图片
+
+图片url错误：设置背景色
+

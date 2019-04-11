@@ -33,8 +33,17 @@ function getImageScale(e){
   var height = screenWidth*9/16;
   return height;
 }
- 
-
+/**
+ * 设置页面标题
+ */
+function setPageTitle(title){
+  wx.setNavigationBarTitle({
+    title: title
+  })
+}
+/**
+ * 封装wx请求
+ */
 function request(url, data = {}, method='GET'){
   wx.showLoading({
     title: constants.LoadingTitle,
@@ -61,9 +70,23 @@ function request(url, data = {}, method='GET'){
     })
   });
 }
+function showErrorToast(msg) {
+  wx.showToast({
+    title: msg,
+    image: '../../static/images/error.png'
+  })
+}
+function showSuccessToast(msg) {
+  wx.showToast({
+    title: msg,
+  })
+}
 
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
-  request: request
+  request: request,
+  setPageTitle: setPageTitle,
+  showErrorToast: showErrorToast,
+  showSuccessToast: showSuccessToast
 }

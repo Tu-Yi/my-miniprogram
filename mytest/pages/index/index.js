@@ -32,7 +32,8 @@ Page({
     new_user_reduction: '',
     minaDiscount: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    notice: ''
   },
   failOnclick: function(){
     var pages = getCurrentPages();
@@ -68,11 +69,12 @@ Page({
         }),
         that.setData({ 
           storeImg: res.store_img || '../../' + constants.img_default,
-          address: res.address || constants.address_default,
+          address: utils.cutstr((res.address || constants.address_default),34),
           phone: res.phone || constants.phone_default,
           delivery_time: res.delivery_time || constants.time_default,
           new_user_reduction: res.new_user_reduction || "0",
-          minaDiscount: 10 - (+(res.weixin_order_reduction || "0"))*10 + ''
+          minaDiscount: 10 - (+(res.weixin_order_reduction || "0"))*10 + '',
+          notice: utils.cutstr((res.notice || constants.notice_default),80)
         })
         wx.setStorage({
           key: 'storeInfo',

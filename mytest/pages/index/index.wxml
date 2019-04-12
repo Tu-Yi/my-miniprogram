@@ -43,7 +43,7 @@
           <view class="weui-cell__ft"></view>
       </navigator>
       <navigator url="index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-          <view class="weui-cell__bd weui-cell_font" ><image src="{{ico_notice}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>公告：亲们小店可以开发票了哟，随时欢迎亲们下单哟亲们小店可以开发票了哟，随时欢迎亲们下</view>
+          <view class="weui-cell__bd weui-cell_font" ><image src="{{ico_notice}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>{{notice}}</view>
           <view class="weui-cell__ft"></view>
       </navigator>
     </view>

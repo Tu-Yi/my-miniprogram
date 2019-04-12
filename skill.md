@@ -476,3 +476,113 @@ getStoreDetail: function(){
 
 图片url错误：设置背景色
 
+## 模板
+
+```html
+<template name="failPage">
+  <view wx:if='{{!isShow}}' style='position:absolute;height:100%;width:100%;display:flex;align-items: center;justify-content: center;'>
+    <image src='{{img_fail}}' style='width:96px;height:96px;' />
+  </view>
+</template>
+<import src="../template/fail/fail.wxml" />
+<template is="failPage" data="{{...item}}" />
+```
+
+## 错误模板
+
+```html
+<template name="failPage">
+  <view wx:if='{{!isShow}}' style='position:absolute;height:100%;width:100%;display:flex;align-items: center;justify-content: center;display:flex;flex-direction:column;'>
+    <image src='../../static/images/fail.png' style='width:96px;height:96px;' />
+  <view>
+    <button bindtap='onReflash'>刷新页面</button>
+  </view>
+  </view>
+</template>
+<import src="../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+<template is="failPage" data="{{isShow}}" />
+</view>
+```
+
+```javascript
+fail.js
+var fail = {
+  onReflash : function (pages) {
+    if (pages.length != 0) {
+      pages[pages.length - 1].onLoad()
+    }
+  }
+}
+export default fail
+
+index.js
+failOnclick: function(){
+    var pages = getCurrentPages();
+    console.log(pages)
+    console.log(fail)
+    fail.default.onReflash(pages);
+    this.setData({
+      isShow: true
+    })
+  }
+```
+
+## 封装获取缓存
+
+```javascript
+function getLocalStorage(key,cal,fail){
+  wx.getStorage({
+    key: 'storeInfo',
+    success: function (res) {
+      cal(res)
+    },
+    fail: function (err) {
+      fail(err)
+    }
+  })
+}
+```
+
+## 打开坐标位置
+
+```javascript
+openLocation:function(){
+    var that=this;
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res=>{
+        that.setData({
+          latitude: res.data.latitude || '30.657420',
+          longitude: res.data.longitude || '104.065840',
+        })
+        wx.openLocation({
+          longitude: Number(that.data.longitude),
+          latitude: Number(that.data.latitude),
+          scale: 18
+        })
+      }, 
+      err=>{
+        utils.showErrorToast(constants.Msg_DataError);
+        console.log(err)
+    })
+  },
+```
+
+## navigator报错
+
+<navigator/> should have url attribute when using navigateTo, redirectTo or switchTab
+
+```html
+url="本页面名称"
+```
+
+## 地理位置
+
+```javascript
+"permission": {
+    "scope.userLocation": {
+      "desc": "小程序将获取您的用餐位置"
+    }
+  }
+```
+

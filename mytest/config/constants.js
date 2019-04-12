@@ -1,4 +1,6 @@
 module.exports = {
+  /**腾讯地图key */
+  Map_Key: 'GKSBZ-OK33D-TQF4Y-HJDZX-KQEE6-GGFRZ',
   /** 全局常量*/
   AppTitle: '喵姐米粉',
   AppDesc: '最正宗的南充米粉，小时候的味道!',
@@ -29,6 +31,7 @@ module.exports = {
   address_default: '店铺未标注地址',
   phone_default: '商家未预留电话',
   time_default: '请联系店家',
+  notice_default: '暂无公告',
   /**提示信息 */
   Msg_DataError:'获取数据失败',
   Msg_AddrError: '获取地址失败',

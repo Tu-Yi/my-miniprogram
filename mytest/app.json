@@ -49,5 +49,10 @@
     "connectSocket": 10000,
     "uploadFile": 10000,
     "downloadFile": 10000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "小程序将获取您的用餐位置"
+    }
   }
 }

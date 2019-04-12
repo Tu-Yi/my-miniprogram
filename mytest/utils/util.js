@@ -70,23 +70,55 @@ function request(url, data = {}, method='GET'){
     })
   });
 }
+/**
+ * 显示错误提示
+ */
 function showErrorToast(msg) {
   wx.showToast({
     title: msg,
-    image: '../../static/images/error.png'
+    image: '/static/images/error.png'
   })
 }
+/**
+ * 显示成功提示
+ */
 function showSuccessToast(msg) {
   wx.showToast({
     title: msg,
   })
 }
-
+/**
+ * 获取缓存
+ */
+function getLocalStorage(key,cal,fail){
+  wx.getStorage({
+    key: 'storeInfo',
+    success: function (res) {
+      cal(res)
+    },
+    fail: function (err) {
+      fail(err)
+    }
+  })
+}
+/**
+ * 打电话
+ */
+function phone(num,fail){
+  wx.makePhoneCall({
+    phoneNumber: num,
+    fail:function(err){
+      fail(err)
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
   request: request,
   setPageTitle: setPageTitle,
   showErrorToast: showErrorToast,
-  showSuccessToast: showSuccessToast
+  showSuccessToast: showSuccessToast,
+  getLocalStorage: getLocalStorage,
+  phone: phone
 }

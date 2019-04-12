@@ -1,6 +1,7 @@
 var utils = require('../../utils/util.js');
 var api = require('../../config/api.js');
 var constants = require('../../config/constants.js');
+var fail = require('../template/fail/fail.js');
 var app = getApp();
 Page({
 
@@ -13,7 +14,6 @@ Page({
     // autoplay: constants.Autoplay,
     // interval: constants.Interval,
     // duration: constants.Duration,
-    img_fail: '../../' + constants.img_fail,
     ico_zb: '../../' + constants.ico_zb,
     ico_phone: '../../' + constants.ico_phone,
     ico_time: '../../' + constants.ico_time,
@@ -30,7 +30,18 @@ Page({
     phone: '',
     delivery_time: '',
     new_user_reduction: '',
-    minaDiscount: ''
+    minaDiscount: '',
+    latitude: '',
+    longitude: ''
+  },
+  failOnclick: function(){
+    var pages = getCurrentPages();
+    console.log(pages)
+    console.log(fail)
+    fail.default.onReflash(pages);
+    this.setData({
+      isShow: true
+    })
   },
   onShareAppMessage: function () {
     debugger;
@@ -83,10 +94,51 @@ Page({
    */
   onLoad: function (options) {
     this.setHeight();
-    
     this.getStoreDetail();
+    wx.getLocation({
+      type: 'wgs84',
+      success(res) {
+        console.log(res)
+        const latitude1 = res.latitude
+        const longitude1 = res.longitude
+        const speed = res.speed
+        const accuracy = res.accuracy
+      }
+    })
   },
-
+  openLocation:function(){
+    if (this.data.address === constants.address_default) {
+      utils.showErrorToast(constants.Msg_AddrError);
+      return;
+    }
+    var that=this;
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res=>{
+        that.setData({
+          latitude: res.data.latitude || '30.657420',
+          longitude: res.data.longitude || '104.065840',
+        })
+        wx.openLocation({
+          longitude: Number(that.data.longitude),
+          latitude: Number(that.data.latitude),
+          scale: 18
+        })
+      }, 
+      err=>{
+        utils.showErrorToast(constants.Msg_AddrError);
+        console.log(err)
+    })
+  },
+  callPhone: function(){
+    if (this.data.phone === constants.phone_default){
+      utils.showErrorToast(constants.Msg_PhoneError);
+      return;
+    }
+    utils.phone(this.data.phone, err => {
+      utils.showErrorToast(constants.Msg_PhoneError);
+      console.log(err)
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

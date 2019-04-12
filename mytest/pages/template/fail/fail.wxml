@@ -1,0 +1,9 @@
+<template name="failPage">
+  <view wx:if='{{!isShow}}' style='position:absolute;height:100%;width:100%;display:flex;align-items: center;justify-content: center;display:flex;flex-direction:column;'>
+    <image src='/static/images/fail.png' style='width:96px;height:96px;' />
+  <view>
+    <button bindtap='onReflash'>刷新页面</button>
+  </view>
+  </view>
+</template>
+

@@ -1,5 +1,9 @@
 <!--pages/index/pictures/pictures.wxml-->
-<view class='box' >
+<view class='box' wx:if='{{isShow}}' >
   <view class='imageView' style='background-image:url({{imgurl}});height:{{height}}px;' wx:for="{{imgUrls}}" wx:for-item="imgurl" wx:key="index">
   </view>
+</view>
+<import src="../../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+<template is="failPage" data="{{isShow}}" />
 </view>

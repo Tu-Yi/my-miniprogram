@@ -21,6 +21,7 @@ module.exports = {
   img_drop: 'static/images/drop.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
+  PageTitle_Location: "地图位置",
   /**缺省设置 */
   img_fail: 'static/images/fail.png',
   img_default: 'static/images/default.png',
@@ -29,5 +30,9 @@ module.exports = {
   phone_default: '商家未预留电话',
   time_default: '请联系店家',
   /**提示信息 */
-  Msg_DataError:'获取数据失败'
+  Msg_DataError:'获取数据失败',
+  Msg_AddrError: '获取地址失败',
+  Msg_PhoneError: '拨打电话失败',
+  /**缓存名称 */
+  Storage_StoreInfo: 'storeInfo'
 };

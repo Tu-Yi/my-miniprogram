@@ -1,5 +1,6 @@
 var constants = require('../../../config/constants.js');
 var utils = require('../../../utils/util.js');
+var fail = require('../../template/fail/fail.js');
 Page({
 
   /**
@@ -7,7 +8,18 @@ Page({
    */
   data: {
     imgUrls: [],
-    height: ''
+    height: '',
+    img_default: '../../../' + constants.img_default,
+    isShow: true
+  },
+  failOnclick: function () {
+    var pages = getCurrentPages();
+    console.log(pages)
+    console.log(fail)
+    fail.default.onReflash(pages);
+    this.setData({
+      isShow: true
+    })
   },
 
   /**
@@ -15,14 +27,27 @@ Page({
    */
   onLoad: function (options) {
     utils.setPageTitle(constants.PageTitle_Pictures);
+    wx.showLoading({
+      title: constants.LoadingTitle,
+    });
     var that = this;
     wx.getStorage({
       key: 'storeInfo',
       success: function(res) {
+        wx.hideLoading();
         that.setData({
-          imgUrls: res.data.store_imgs || '../../../'+constants.img_default
+          imgUrls: res.data.store_imgs || ''
         })
       },
+      fail: function(err){
+        wx.hideLoading();
+        that.setData({
+          isShow: false
+        })
+        utils.showErrorToast(constants.Msg_DataError);
+        console.log(err)
+
+      }
     }),
     this.setHeight();
   },

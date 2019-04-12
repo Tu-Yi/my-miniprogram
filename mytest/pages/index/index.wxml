@@ -21,34 +21,34 @@
           <view class="weui-cell__bd weui-cell_font">查看店铺所有图片</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </navigator>
-      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="index" bindtap='openLocation' class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
               <image src="{{ico_zb}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
           </view>
           <view class="weui-cell__bd weui-cell_font" >{{address}}</view>
           <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </navigator>
-      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="index" class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap='callPhone'>
           <view class="weui-cell__hd">
               <image src="{{ico_phone}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
           </view>
           <view class="weui-cell__bd weui-cell_font">{{phone}}</view>
           <view class="weui-cell__ft"> <image src='{{img_call}}' style="vertical-align: middle;width:23px; height: 23px;" /> </view>
       </navigator>
-      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
               <image src="{{ico_time}}" style="margin-right: 5px;vertical-align: middle;width:18px; height: 18px;"></image>
           </view>
           <view class="weui-cell__bd weui-cell_font" >配送时间：{{delivery_time}}</view>
           <view class="weui-cell__ft"></view>
       </navigator>
-      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__bd weui-cell_font" ><image src="{{ico_notice}}" style="margin-right: 5px;vertical-align: middle;width:22px; height: 22px;"></image>公告：亲们小店可以开发票了哟，随时欢迎亲们下单哟亲们小店可以开发票了哟，随时欢迎亲们下</view>
           <view class="weui-cell__ft"></view>
       </navigator>
     </view>
     <view class="content">
-      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__bd" style='font-weight:bold;'>优惠<text style='color:#ff8557;'>活动</text></view>
       </navigator>
       <view class='activity'>
@@ -61,6 +61,7 @@
       </view>
     </view>
 </view>
-<view wx:if='{{!isShow}}' style='position:absolute;height:100%;width:100%;display:flex;align-items: center;justify-content: center;'>
-  <image src='{{img_fail}}' style='width:128px;height:128px;' />
+<import src="../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+<template is="failPage" data="{{isShow}}" />
 </view>

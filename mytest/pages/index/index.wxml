@@ -8,8 +8,8 @@
           </swiper-item>
       </block>
   </swiper> -->
-  <view class='cus_address'>
-    <text>领馆区1号</text>
+  <view class='cus_address' wx:if='{{cAddIsShow}}'>
+    <text>{{cAddress}}</text>
     <image src='{{img_drop}}' style='width:20px;height:20px;' />
   </view>
   </view>

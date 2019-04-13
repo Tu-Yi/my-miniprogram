@@ -1,1 +1,137 @@
 /* pages/sell/sell.wxss */
+.header {
+  height: 100rpx;
+  background-color: #ff8557;
+}
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top:-80rpx;
+  padding: 20rpx;
+  width: 90%;
+  background-color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.1);
+}
+.info .title {
+  font-weight:bold
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  margin-top:10rpx;
+}
+.content .activity {
+  display: flex;
+  font-size: 14px;
+}
+.content .activity:first-child {
+  flex: 1.2;
+  margin-left: -3rpx;
+}
+.content .activity:first-child text {
+  margin-left : -2rpx;
+}
+.content .activity:last-child {
+  flex: 1;
+}
+.content .activity:last-child image{
+  margin-top: 6rpx;
+}
+.info .logo {
+  position: absolute;
+  right: -2px;
+  top: -10rpx;
+}
+.info .logo image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.5);
+}
+
+.caregory{
+  margin-top:10rpx;
+}
+.nav_left{
+  background: #f8f8f8;
+  width: 150rpx;
+  white-space: nowrap;
+}
+.nav_right{
+  background: #fff;
+  padding:20rpx;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.nav_left_items{
+  font-size: 28rpx;
+  color: #333;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+.nav_left_item-active{
+  background-color: #fff;
+  color: #ff8557;
+}
+.type_title {
+  margin-bottom: 20rpx;
+  margin-top:40rpx;
+  font-size: 14px;
+  color: #888888;
+}
+.type_title:first-child {
+  margin-top:0;
+}
+.good {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+}
+.good .good_img {
+  margin-right: 15rpx;
+}
+.good .good_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.good_content_title {
+  vertical-align: top;
+  line-height: 1;
+  margin-bottom: 5rpx;
+  font-weight: bold;
+  font-size: 17px;
+  overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.good_content_detail {
+  color: #888888;
+    text-align: left;
+    font-size: 14px;
+   overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    margin-bottom: 10rpx;
+}
+.good_content_count {
+  color: #888888;
+    text-align: left;
+    font-size: 14px;
+}
+.good_content_price {
+  color: #ff8557;
+  font-weight: bold;
+  text-align: left;
+}
+.good_content_price text {
+  font-size: 13px;
+}

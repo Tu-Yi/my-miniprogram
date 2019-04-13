@@ -1,2 +1,61 @@
-<!--pages/sell/sell.wxml-->
-<text>外卖</text>
+<view wx:if='{{isShow}}'>
+  <view class='header'>
+  </view>
+  <view class='info'>
+    <view class='logo'>
+      <image src='{{ico_logo}}' />
+    </view>
+    <view class='page__title title'>
+      <text>{{store_name}}</text>
+    </view>
+    <view class='page__desc'>
+      公告：{{notice}}
+    </view>
+    <view class='content'>
+      <view class='activity'>
+        <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:20px; height: 20px;' />
+        <text>新用户首单立减{{new_user_reduction}}元</text>
+      </view>
+      <view class='activity'>
+        <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:16px; height: 16px;' />
+        <text>小程序下单享{{minaDiscount}}折</text>
+      </view>
+    </view>
+  </view>
+  <view style='display:flex;margin-top:10rpx;'>
+    <view>
+      <scroll-view class="nav_left" scroll-y='true' style='height:{{height}}rpx'>
+        <block wx:for="{{list}}" wx:key='{{index}}'>
+          <view wx-if='{{item.goods.length}}' class="nav_left_items {{curIndex == index ? 'nav_left_item-active' : ''}}" data-id='b{{index}}' data-index="{{index}}" bindtap="switchRightTab" data-itemid='{{item.goods_type_id}}'>
+            {{item.goods_type}}
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view>
+      <scroll-view style='height:{{height}}rpx' class='nav_right' scroll-y='true' scroll-into-view='{{toView}}' bindscroll="scroll" scroll-with-animation='true'>
+        <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
+          <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
+            {{item.goods_type}}
+          </view>
+          <view class="good" wx:for='{{item.goods}}' wx:for-item="goods" wx:key='{{index}}'>
+            <view class='good_img'>
+              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;' />
+            </view>
+            <view class='good_content'>
+              <text class='good_content_title'>{{goods.goods_name}}</text>
+              <view class='good_content_detail'>{{goods.goods_detail}}</view>
+              <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
+              <view class='good_content_price'>
+                <text>￥</text>{{goods.goods_price}}</view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+  <import src="../template/fail/fail.wxml" />
+  <view bindtap='failOnclick'>
+    <template is="failPage" data="{{isShow}}" />
+  </view>

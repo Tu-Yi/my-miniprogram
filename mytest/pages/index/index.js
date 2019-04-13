@@ -33,7 +33,9 @@ Page({
     minaDiscount: '',
     latitude: '',
     longitude: '',
-    notice: ''
+    notice: '',
+    cAdddress: '',
+    cAddIsShow: true
   },
   failOnclick: function(){
     var pages = getCurrentPages();
@@ -77,7 +79,7 @@ Page({
           notice: utils.cutstr((res.notice || constants.notice_default),80)
         })
         wx.setStorage({
-          key: 'storeInfo',
+          key: constants.Storage_StoreInfo,
           data: res,
         })
       },
@@ -97,16 +99,8 @@ Page({
   onLoad: function (options) {
     this.setHeight();
     this.getStoreDetail();
-    wx.getLocation({
-      type: 'wgs84',
-      success(res) {
-        console.log(res)
-        const latitude1 = res.latitude
-        const longitude1 = res.longitude
-        const speed = res.speed
-        const accuracy = res.accuracy
-      }
-    })
+    this.getCustomLocation();
+    
   },
   openLocation:function(){
     if (this.data.address === constants.address_default) {
@@ -139,6 +133,38 @@ Page({
     utils.phone(this.data.phone, err => {
       utils.showErrorToast(constants.Msg_PhoneError);
       console.log(err)
+    })
+  },
+  getCustomLocation: function(){
+    var that = this
+    wx.getSetting({
+      success: function(res){
+        if (res.authSetting[constants.Scope_UserLocation]) {
+          utils.getUserLocationInfo(function(addr){
+            that.setData({
+              cAddress: addr.formatted_addresses.recommend,
+              cAddIsShow: true
+            })
+          })
+        }else{
+          wx.openSetting({
+            success: function(res){
+              if (res.authSetting[constants.Scope_UserLocation]) {
+                utils.getUserLocationInfo(function (addr) {
+                  that.setData({
+                    cAddress: addr.formatted_addresses.recommend,
+                    cAddIsShow: true
+                  })
+                })
+              }else{
+                that.setData({
+                  cAddIsShow: false
+                })
+              }
+            }
+          })
+        }
+      }
     })
   },
   /**

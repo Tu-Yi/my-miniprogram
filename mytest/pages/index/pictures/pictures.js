@@ -32,7 +32,7 @@ Page({
     });
     var that = this;
     wx.getStorage({
-      key: 'storeInfo',
+      key: constants.Storage_StoreInfo,
       success: function(res) {
         wx.hideLoading();
         that.setData({

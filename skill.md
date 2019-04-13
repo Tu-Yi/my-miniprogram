@@ -576,7 +576,7 @@ openLocation:function(){
 url="本页面名称"
 ```
 
-## 地理位置
+## 获取地理位置
 
 ```javascript
 "permission": {
@@ -584,5 +584,246 @@ url="本页面名称"
       "desc": "小程序将获取您的用餐位置"
     }
   }
+function getUserLocationInfo(cal){
+  this.getLocation(function (addr) {
+    cal(addr);
+    wx.setStorage({
+      key: constants.Storage_UserLocation,
+      data: addr,
+    })
+  });
+}
+function getLocation(cal){
+  var that=this
+  wx.getLocation({
+    success(res) {
+      console.log(res)
+      // 1.3 将获取到的 经纬度传值给 getAddress 解析出 具体的地址
+      that.getAddress(res.latitude, res.longitude,function(addr){
+        console.log("getLocation"+addr)
+        cal(addr);
+      })
+    }
+  })
+}
+function getAddress(latitude, longitude,cal){
+  let qqmapsdk = new QQMapWX({
+    key: constants.Map_Key
+  })
+  qqmapsdk.reverseGeocoder({
+    location: { latitude, longitude },
+    success(res) {
+      console.log('success', res)
+      cal(res.result);
+    }
+  })
+}
+
+getCustomLocation: function(){
+    var that = this
+    wx.getSetting({
+      success: function(res){
+        if (res.authSetting[constants.Scope_UserLocation]) {
+          utils.getUserLocationInfo(function(addr){
+            that.setData({
+              cAddress: addr.formatted_addresses.recommend,
+              cAddIsShow: true
+            })
+          })
+        }else{
+          wx.openSetting({
+            success: function(res){
+              if (res.authSetting[constants.Scope_UserLocation]) {
+                utils.getUserLocationInfo(function (addr) {
+                  that.setData({
+                    cAddress: addr.formatted_addresses.recommend,
+                    cAddIsShow: true
+                  })
+                })
+              }else{
+                that.setData({
+                  cAddIsShow: false
+                })
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+```
+
+## 商品分类列表
+
+```html
+<view style='display:flex;margin-top:10rpx;'>
+    <view>
+      <scroll-view class="nav_left" scroll-y='true' style='height:{{height}}rpx'>
+        <block wx:for="{{list}}" wx:key='{{index}}'>
+          <view wx-if='{{item.goods.length}}' class="nav_left_items {{curIndex == index ? 'nav_left_item-active' : ''}}" data-id='b{{index}}' data-index="{{index}}" bindtap="switchRightTab" data-itemid='{{item.goods_type_id}}'>
+            {{item.goods_type}}
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view>
+      <scroll-view style='height:{{height}}rpx' class='nav_right' scroll-y='true' scroll-into-view='{{toView}}' bindscroll="scroll" scroll-with-animation='true'>
+        <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
+          <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
+            {{item.goods_type}}
+          </view>
+          <view class="good" wx:for='{{item.goods}}' wx:for-item="goods" wx:key='{{index}}'>
+            <view class='good_img'>
+              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;' />
+            </view>
+            <view class='good_content'>
+              <text class='good_content_title'>{{goods.goods_name}}</text>
+              <view class='good_content_detail'>{{goods.goods_detail}}</view>
+              <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
+              <view class='good_content_price'>
+                <text>￥</text>{{goods.goods_price}}</view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+```
+
+```css
+.caregory{
+  margin-top:10rpx;
+}
+.nav_left{
+  background: #f8f8f8;
+  width: 150rpx;
+  white-space: nowrap;
+}
+.nav_right{
+  background: #fff;
+  padding:20rpx;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.nav_left_items{
+  font-size: 28rpx;
+  color: #333;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+.nav_left_item-active{
+  background-color: #fff;
+  color: #ff8557;
+}
+.type_title {
+  margin-bottom: 20rpx;
+  margin-top:40rpx;
+  font-size: 14px;
+  color: #888888;
+}
+.type_title:first-child {
+  margin-top:0;
+}
+.good {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+}
+.good .good_img {
+  margin-right: 15rpx;
+}
+.good .good_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.good_content_title {
+  vertical-align: top;
+  line-height: 1;
+  margin-bottom: 5rpx;
+  font-weight: bold;
+  font-size: 17px;
+  overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.good_content_detail {
+  color: #888888;
+    text-align: left;
+    font-size: 14px;
+   overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    margin-bottom: 10rpx;
+}
+.good_content_count {
+  color: #888888;
+    text-align: left;
+    font-size: 14px;
+}
+.good_content_price {
+  color: #ff8557;
+  font-weight: bold;
+  align-self: flex-end;
+  text-align: left;
+}
+.good_content_price text {
+  font-size: 13px;
+}
+```
+
+```javascript
+wx.getSystemInfo({
+      success: function(res) {
+        console.log(res.windowHeight)
+        var h;
+        if (res.windowHeight>700){
+          h = res.windowHeight * 0.65
+        } else if (res.windowHeight > 600){
+          h = res.windowHeight * 1.25
+        } else if (res.windowHeight > 500){
+          h = res.windowHeight * 1.25
+        } else if (res.windowHeight<500){
+          h = res.windowHeight * 1.4
+        }
+        that.setData({
+          height: h
+        })
+      },
+    })
+    this.getGoodsList();
+getGoodsList: function () {
+    var that = this;
+    utils.request(api.Goods_list, { shopId: app.globalData.storeId }).then(
+      res => {
+        console.log(res)
+          that.setData({
+            list: res
+          })
+      },
+      err => {
+        wx.hideLoading();
+        that.setData({
+          isShow: false
+        })
+        utils.showErrorToast(constants.Msg_DataError);
+        console.log(err)
+      }
+    )
+  },
+  switchRightTab(e) {
+    console.log(e)
+    let id = e.currentTarget.dataset.id
+    let index = parseInt(e.currentTarget.dataset.index);
+    let itemid = e.currentTarget.dataset.itemid
+    this.setData({
+      toView: id,
+      curIndex: index
+    })
+  },
 ```
 

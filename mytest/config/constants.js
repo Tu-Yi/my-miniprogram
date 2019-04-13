@@ -21,6 +21,7 @@ module.exports = {
   img_mina: 'static/images/mina.png',
   img_first: 'static/images/first.png',
   img_drop: 'static/images/drop.png',
+  ico_logo: 'static/images/logo.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",
@@ -37,5 +38,8 @@ module.exports = {
   Msg_AddrError: '获取地址失败',
   Msg_PhoneError: '拨打电话失败',
   /**缓存名称 */
-  Storage_StoreInfo: 'storeInfo'
+  Storage_StoreInfo: 'storeInfo',
+  Storage_UserLocation: 'userLocationInfo',
+  /**授权范围 */
+  Scope_UserLocation: 'scope.userLocation'
 };

@@ -1,4 +1,5 @@
 var constants = require('../config/constants.js');
+const QQMapWX = require('qqmap-wx-jssdk.min.js')
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -136,6 +137,38 @@ function cutstr(str, len) {
     return str;
   }
 }
+/**获取用户地理位置 */
+function getUserLocationInfo(cal){
+  this.getLocation(function (addr) {
+    cal(addr);
+    wx.setStorage({
+      key: constants.Storage_UserLocation,
+      data: addr,
+    })
+  });
+}
+function getLocation(cal){
+  var that=this
+  wx.getLocation({
+    success(res) {
+      that.getAddress(res.latitude, res.longitude,function(addr){
+        console.log("getLocation"+addr)
+        cal(addr);
+      })
+    }
+  })
+}
+function getAddress(latitude, longitude,cal){
+  let qqmapsdk = new QQMapWX({
+    key: constants.Map_Key
+  })
+  qqmapsdk.reverseGeocoder({
+    location: { latitude, longitude },
+    success(res) {
+      cal(res.result);
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
@@ -145,5 +178,8 @@ module.exports = {
   showSuccessToast: showSuccessToast,
   getLocalStorage: getLocalStorage,
   phone: phone,
-  cutstr: cutstr
+  cutstr: cutstr,
+  getLocation: getLocation,
+  getAddress: getAddress,
+  getUserLocationInfo: getUserLocationInfo
 }

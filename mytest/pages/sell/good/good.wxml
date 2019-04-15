@@ -1,0 +1,28 @@
+<view class='body' wx:if='{{isShow}}'>
+  <view class="header" style='height:{{height}}px;background-image:url({{goodsImg}})'>
+  </view>
+  <view class='info'>
+    <view class='share' bindtap='share' open-type='share'>
+      <button open-type='share'>
+        <image src='{{ico_share}}' style='width:24px;height:24px;' />
+        <text>分享</text>
+    </button>
+    </view>    
+    <view class='name'>{{goodsName}}</view>
+    <view class='number'>
+      <view class='price'>
+        <text>￥</text><text>{{goodsPrice}}</text>
+      </view>
+      <view class='month page__desc'>
+        月售<text>{{goodsMonthSellcount}}</text>
+      </view>
+    </view>
+  </view>
+  <view class='detail'>
+    {{goodsDetail}}
+  </view> 
+</view>
+<import src="../../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+<template is="failPage" data="{{isShow}}" />
+</view>

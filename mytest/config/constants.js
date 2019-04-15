@@ -4,7 +4,6 @@ module.exports = {
   /** 全局常量*/
   AppTitle: '喵姐米粉',
   AppDesc: '最正宗的南充米粉，小时候的味道!',
-  AppHome: '/pages/index/index',
   LoadingTitle: '加载中...',
   /**swiper相关 */
   IndicatorDots: true,
@@ -22,9 +21,13 @@ module.exports = {
   img_first: 'static/images/first.png',
   img_drop: 'static/images/drop.png',
   ico_logo: 'static/images/logo.png',
+  ico_share: 'static/images/share.png',
+  img_wechat: 'static/images/wechat.png',
+  img_cart: 'static/images/cart.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",
+  PageTitle_GoodsDetail: "详情",
   /**缺省设置 */
   img_fail: 'static/images/fail.png',
   img_default: 'static/images/default.png',
@@ -41,5 +44,8 @@ module.exports = {
   Storage_StoreInfo: 'storeInfo',
   Storage_UserLocation: 'userLocationInfo',
   /**授权范围 */
-  Scope_UserLocation: 'scope.userLocation'
+  Scope_UserLocation: 'scope.userLocation',
+  /**页面地址 */
+  AppHome: '/pages/index/index',
+  PagePath_GoodsDetail: '/pages/sell/good/good'
 };

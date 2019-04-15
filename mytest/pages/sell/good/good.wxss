@@ -1,0 +1,76 @@
+/* pages/sell/good/good.wxss */
+button::after {
+   border: none;
+}
+button {
+    background-color: #fff;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ff8557;
+  font-size: 13px;
+  font-weight: bold;
+  vertical-align: top;
+}
+button text {
+  margin-top: -10rpx;
+}
+
+
+.body {
+  padding: 10rpx;
+}
+
+.header {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #cdcdcf;
+  border-radius: 5rpx;
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+}
+.info .share {
+  position: absolute;
+  right: 20rpx;
+  bottom:10rpx;
+  color: #ff8557;
+}
+.info {
+  padding: 10rpx;
+  background: #fff;
+    position: relative;
+}
+.name {
+  font-size: 17px;
+  color: #353535;
+  font-weight: 700;
+}
+.number {
+  padding-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  vertical-align: top;
+}
+.price {
+  flex: 1;
+  color: #ff8557;
+}
+.price text:last-child{
+  font-weight: bold;
+  text-align: left;
+  font-size: 18px;
+}
+.price text:first-child {
+  font-size: 13px;
+}
+.month {
+  flex: 1;
+}
+.detail {
+  margin-top: 10rpx;
+  padding:10rpx;
+  background: #fff;
+  font-size:13px;
+}

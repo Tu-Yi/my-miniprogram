@@ -653,7 +653,7 @@ getCustomLocation: function(){
   },
 ```
 
-## 商品分类列表
+## 商品分类列表，左右联动
 
 ```html
 <view style='display:flex;margin-top:10rpx;'>
@@ -825,5 +825,117 @@ getGoodsList: function () {
       curIndex: index
     })
   },
+```
+
+### 自己控制
+
+```html
+<view style='display:flex;margin-top:10rpx;' id="categrays">
+    <view>
+      <scroll-view class="nav_left" scroll-y style='height:{{height}}px'>
+        <block wx:for="{{list}}" wx:key='{{index}}'>
+          <view wx-if='{{item.goods.length}}' class="nav_left_items item {{index==cateListActiveIndex && 'nav_left_item-active'}}" data-id='b{{index}}' data-index="{{index}}" bindtap="scrollToCategory" data-itemid='{{item.goods_type_id}}'>
+            {{item.goods_type}}
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view>
+      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}"  bindscroll="foodListScrolling" scroll-with-animation='true'>
+        <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
+          <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
+            {{item.goods_type}}
+          </view>
+          <view class="good" wx:for='{{item.goods}}' wx:for-item="goods" wx:key='{{index}}'>
+            <view class='good_img'>
+              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;' />
+            </view>
+            <view class='good_content'>
+              <text class='good_content_title'>{{goods.goods_name}}</text>
+              <view class='good_content_detail'>{{goods.goods_detail}}</view>
+              <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
+              <view class='good_content_price'>
+                <text>￥</text>{{goods.goods_price}}</view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+```
+
+```javascript
+ setFoodListAreaHeight() {
+    let query = wx.createSelectorQuery();
+    let that = this;
+    //分类栏的高度
+    query.select('.type_title').boundingClientRect(function (rect) {
+      that.setData({
+        eleCateTitleHeight: rect.height
+      })
+    }).exec();
+    //商品item的高度
+    query.select('.good').boundingClientRect(function (rect) {
+      that.setData({
+        eleFoodHeight: rect.height
+      })
+    }).exec();
+
+    //把商品列表每个分类的区间高度计算，并放进数组
+    //上面获取元素的高度可能不是同步的，所以把下面的放在setTimeout里面
+    let fh = [0]
+    let heightCount = 0
+    setTimeout(() => {
+      this.data.list.forEach((item, index) => {
+        //console.log(item.items.length * this.data.eleFoodHeight);
+        if (item.length>0){
+          heightCount += item.length * this.data.eleFoodHeight + this.data.eleCateTitleHeight
+          fh.push(heightCount)
+        }
+      })
+      this.setData({
+        foodAreaHeight: fh
+      })
+    }, 100)
+
+  },
+  /**
+     * 滚动到右边的高度
+     * @param {*} e 
+     */
+  scrollToCategory(e) {
+    //let id = e.currentTarget.dataset.id
+    let index = parseInt(e.currentTarget.dataset.index);
+    //let itemid = e.currentTarget.dataset.itemid
+    this.setData({
+      //toView: id,
+      curIndex: index
+    })
+    console.log(e.currentTarget.dataset);
+    let idx = e.currentTarget.dataset.index
+    this.setData({
+      listViewScrollTop: (this.data.foodAreaHeight[idx] + idx * this.data.eleCateTitleHeight)
+    })
+  },
+  foodListScrolling(event) {
+    let scrollTop = event.detail.scrollTop
+    let foodAreaHeight = this.data.foodAreaHeight
+    foodAreaHeight.forEach((item, index) => {
+      if (scrollTop >= foodAreaHeight[index] && scrollTop < foodAreaHeight[index + 1]) {
+        this.setData({ cateListActiveIndex: index })
+      }
+    })
+  },
+```
+
+## 分享
+
+```html
+<view class='share' bindtap='share' open-type='share'>
+      <button open-type='share'>
+        <image src='{{ico_share}}' style='width:24px;height:24px;' />
+        <text>分享</text>
+    </button>
+    </view>  
 ```
 

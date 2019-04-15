@@ -16,11 +16,17 @@ Page({
     img_first: '../../' + constants.img_first,
     img_mina: '../../' + constants.img_mina,
     ico_logo: '../../' + constants.ico_logo,
+    img_wechat: '../../' + constants.img_wechat,
+    img_cart: '../../' + constants.img_cart,
     list: [],
     curIndex: 0,
     isShow: true,
     toView: '',
-    height: ''
+    height: '',
+    foodAreaHeight: [],
+    eleCateTitleHeight: '',
+    eleFoodHeight: '',
+    cateListActiveIndex: 0
   },
 
   /**
@@ -51,26 +57,10 @@ Page({
 
       }
     })
-    wx.getSystemInfo({
-      success: function(res) {
-        console.log(res.windowHeight)
-        var h;
-        if (res.windowHeight>700){
-          h = res.windowHeight * 0.65
-        } else if (res.windowHeight > 600){
-          h = res.windowHeight * 1.25
-        } else if (res.windowHeight > 500){
-          h = res.windowHeight * 1.25
-        } else if (res.windowHeight<500){
-          h = res.windowHeight * 1.4
-        }
-        that.setData({
-          height: h
-        })
-      },
-    })
     this.getGoodsList();
+    
   },
+  /**错误页面按钮 */
   failOnclick: function () {
     var pages = getCurrentPages();
     console.log(pages)
@@ -80,14 +70,31 @@ Page({
       isShow: true
     })
   },
+  /**获取商品列表 */
   getGoodsList: function () {
     var that = this;
-    utils.request(api.Goods_list, { shopId: app.globalData.storeId }).then(
+    utils.request(api.Goods_List, { shopId: app.globalData.storeId }).then(
       res => {
         console.log(res)
-          that.setData({
-            list: res
-          })
+        that.setData({
+          list: res
+        })
+        /**设置商品列表高度 */
+        wx.getSystemInfo({
+          success: function (res) {
+            console.log("123 " + res.windowHeight)
+            var h;
+            var query = wx.createSelectorQuery();
+            query.select('#categrays').boundingClientRect(function (rect) {
+              h = res.windowHeight - rect.top
+              that.setData({
+                height: h - res.windowHeight*0.08
+              })
+            }).exec();
+          },
+        })
+        /**获取每类商品界面高度数组 */
+        this.setFoodListAreaHeight()
       },
       err => {
         wx.hideLoading();
@@ -99,41 +106,85 @@ Page({
       }
     )
   },
-  switchRightTab(e) {
-    console.log(e)
-    let id = e.currentTarget.dataset.id
-    let index = parseInt(e.currentTarget.dataset.index);
-    let itemid = e.currentTarget.dataset.itemid
-    this.setData({
-      toView: id,
-      curIndex: index
-    })
-  },
-  // scroll:function(e){
-  //   var scrolltop = e.detail.scrollTop 							//获取滚动的长度，单位为px，
-  //   var h = 0   													//h为每个模块的长度 ，px
-  //   var selectedid;												// 用来控制curId 
-  //   var coefficient = this.data.widthcoefficient				//根据机型的不同 商品展示长度不同，我在这里用了rpx转换px系数
-  //   this.data.list.forEach(function (item, i) {
-  //     var list_height = (item.goods.length * 260) / coefficient	//这里list_height为每个分类的高度， 208 是rpx 单位商品展示长度
-  //     // console.log('移动了'+scrolltop)
-  //     // console.log('循环判断模块高度h为'+h)
-  //     h += list_height;										//给每个分类计算距离顶部的高度，那这个对比滚动的长度
-  //     if (scrolltop >= h) {	                                 // 判断滚动长度有没有超过分类的长度，
-  //       selectedid = item.goods_type_id					//如果超过了就给左侧的控制高亮的flag 赋值
-  //     }
-  //   });
-  //   this.setData({
-  //     curIndex: selectedid
-  //   })
-  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
   },
+  /** 获取每类商品界面高度数组*/
+  setFoodListAreaHeight() {
+    let query = wx.createSelectorQuery();
+    let that = this;
+    //分类栏的高度
+    query.select('.type_title').boundingClientRect(function (rect) {
+      that.setData({
+        eleCateTitleHeight: rect.height
+      })
+    }).exec();
+    //商品item的高度
+    query.select('.good').boundingClientRect(function (rect) {
+      that.setData({
+        eleFoodHeight: rect.height
+      })
+    }).exec();
 
+    //把商品列表每个分类的区间高度计算，并放进数组
+    //上面获取元素的高度可能不是同步的，所以把下面的放在setTimeout里面
+    let fh = [0]
+    let heightCount = 0
+    setTimeout(() => {
+      this.data.list.forEach((item, index) => {
+        //console.log(item.items.length * this.data.eleFoodHeight);
+        if (item.length>0){
+          heightCount += item.length * this.data.eleFoodHeight + this.data.eleCateTitleHeight
+          fh.push(heightCount)
+        }
+      })
+      this.setData({
+        foodAreaHeight: fh
+      })
+    }, 100)
+
+  },
+  /**
+     * 滚动到右边的高度
+     * @param {*} e 
+     */
+  scrollToCategory(e) {
+    //let id = e.currentTarget.dataset.id
+    let index = parseInt(e.currentTarget.dataset.index);
+    //let itemid = e.currentTarget.dataset.itemid
+    this.setData({
+      //toView: id,
+      curIndex: index
+    })
+    console.log(e.currentTarget.dataset);
+    let idx = e.currentTarget.dataset.index
+    var top;
+    if(idx>0){
+      top = idx * 10
+    }
+    this.setData({
+      listViewScrollTop: (this.data.foodAreaHeight[idx] + idx * this.data.eleCateTitleHeight)
+    })
+  },
+  /**商品滚动，分类高亮 */
+  foodListScrolling(event) {
+    let scrollTop = event.detail.scrollTop
+    let foodAreaHeight = this.data.foodAreaHeight
+    foodAreaHeight.forEach((item, index) => {
+      if (scrollTop >= foodAreaHeight[index] && scrollTop < foodAreaHeight[index + 1]) {
+        this.setData({ cateListActiveIndex: index })
+      }
+    })
+  },
+  toDetail: function(e){
+    var goodId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: constants.PagePath_GoodsDetail + "?goodId=" + goodId,
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

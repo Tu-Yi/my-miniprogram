@@ -11,8 +11,12 @@ Page({
   data: {
     store_name: '',
     notice: '',
-    new_user_reduction: '',
+    newUserReduction: '',
     minaDiscount: '',
+    startSendPrice: '',
+    startSendPrice_poor: '',
+    deliveryFee: '',
+    deliveryDistance: '',
     img_first: '../../' + constants.img_first,
     img_mina: '../../' + constants.img_mina,
     ico_logo: '../../' + constants.ico_logo,
@@ -26,7 +30,13 @@ Page({
     foodAreaHeight: [],
     eleCateTitleHeight: '',
     eleFoodHeight: '',
-    cateListActiveIndex: 0
+    cateListActiveIndex: 0,
+    isOrder: false,
+    originalMoney: '',
+    totalMoney: '',
+    totalNum: 0,
+    cartArray:[],
+    isNewUser:true //是否是新用户标志，先暂时放这个，后面从数据库获取
   },
 
   /**
@@ -39,10 +49,12 @@ Page({
       success: function (res) {
         that.setData({
           store_name: res.data.store_name || '店铺名称',
-          new_user_reduction: res.data.new_user_reduction || "0",
+          newUserReduction: res.data.new_user_reduction || "0",
           minaDiscount: 10 - (+(res.data.weixin_order_reduction || "0")) * 10 + '',
-          notice: utils.cutstr((res.data.notice || constants.notice_default), 80)
-
+          notice: utils.cutstr((res.data.notice || constants.notice_default), 80),
+          startSendPrice: res.data.start_send_price || "0",
+          deliveryFee: res.data.delivery_fee || 0,
+          deliveryDistance: res.data.delivery_distance || 0
         })
       },
       fail: function (err) {
@@ -59,6 +71,78 @@ Page({
     })
     this.getGoodsList();
     
+  },
+  onNumChange:function(e){
+    console.log(e)
+    this.numHandle(e);
+    this.priceHandle(e);
+  },
+  priceHandle:function(e){
+    var price = e.detail.goodprice + e.detail.goodsWrapPrice;
+    var oMoney = this.data.originalMoney;
+    var tMoney = this.data.totalMoney;
+    if (e.detail.type === 'add') {
+      oMoney = oMoney + price;
+    }else{
+      oMoney = oMoney - price;
+    }
+    this.setData({
+      originalMoney: oMoney
+    })
+    if (this.data.isNewUser){
+      if (this.data.originalMoney > this.data.newUserReduction){
+        tMoney = (this.data.originalMoney - this.data.newUserReduction) * (this.data.minaDiscount / 10)
+      }else{
+        tMoney = 0;
+      }
+    }else{
+      tMoney = this.data.originalMoney * (this.data.minaDiscount/10);
+    } 
+    this.setData({
+      totalMoney: tMoney
+    })
+    if(this.data.totalMoney>this.data.start_send_price){
+      
+    }else{
+      var poor = 0;
+      this.setData({
+        startSendPrice_poor: poor
+      })
+    }
+  },
+  numHandle:function(e){
+    var num = this.data.totalNum
+    if (e.detail.type === 'add') {
+      this.setData({
+        totalNum: num + 1
+      })
+    } else {
+      this.setData({
+        totalNum: num - 1
+      })
+    }
+    if (this.data.totalNum > 0) {
+      this.setData({
+        img_cart: '../../' + constants.img_cartt
+      })
+    } else {
+      this.setData({
+        img_cart: '../../' + constants.img_cart
+      })
+    }
+    var goodList = this.data.list;
+    goodList.forEach(types => {
+      if (types.goods_type_id === e.detail.goodtypeid) {
+        if (e.detail.type === 'add') {
+          types.sell_num++;
+        } else {
+          types.sell_num--;
+        }
+      }
+    })
+    this.setData({
+      list: goodList
+    })
   },
   /**错误页面按钮 */
   failOnclick: function () {

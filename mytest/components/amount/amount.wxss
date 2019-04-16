@@ -1,0 +1,25 @@
+.num_wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+.num_wrap .btn{
+  box-sizing: border-box;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  background: #ff8557;
+  text-align: center;
+  border-radius: 50%;
+  color: #333;
+}
+.num_wrap .text {
+  box-sizing: border-box;
+  width: 60rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+}
+.btn::after{
+  border: none;
+}

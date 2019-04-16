@@ -1,0 +1,6 @@
+<!--components/amount/amount.wxml-->
+<view class='num_wrap'>
+  <view class='btn sub' style='opacity: {{opacity}}' catchtap='substract'>-</view>
+  <view class='text' style='opacity: {{opacity}}'>{{count}}</view>
+  <view class='btn add' catchtap='add'>+</view>
+</view>

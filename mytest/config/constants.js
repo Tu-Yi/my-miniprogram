@@ -24,6 +24,7 @@ module.exports = {
   ico_share: 'static/images/share.png',
   img_wechat: 'static/images/wechat.png',
   img_cart: 'static/images/cart.png',
+  img_cartt: 'static/images/cartt.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",

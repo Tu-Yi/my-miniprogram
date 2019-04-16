@@ -15,7 +15,7 @@
       <view class='content'>
         <view class='activity'>
           <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:20px; height: 20px;' />
-          <text>新用户首单立减{{new_user_reduction}}元</text>
+          <text>新用户首单立减{{newUserReduction}}元</text>
         </view>
         <view class='activity'>
           <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:16px; height: 16px;' />
@@ -30,11 +30,14 @@
         <block wx:for="{{list}}" wx:key='{{index}}'>
           <view wx-if='{{item.goods.length}}' class="nav_left_items item {{index==cateListActiveIndex && 'nav_left_item-active'}}" data-id='b{{index}}' data-index="{{index}}" bindtap="scrollToCategory" data-itemid='{{item.goods_type_id}}'>
             {{item.goods_type}}
+             <view class='shownum' wx:if='{{item.sell_num>0}}'>
+                  {{item.sell_num}}
+              </view>
           </view>
         </block>
       </scroll-view>
     </view>
-    <view>
+    <view style='flex:1;'>
       <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}"  bindscroll="foodListScrolling" scroll-with-animation='true'>
         <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
           <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
@@ -49,7 +52,12 @@
               <view class='good_content_detail'>{{goods.goods_detail}}</view>
               <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
               <view class='good_content_price'>
-                <text>￥</text>{{goods.goods_price}}</view>
+                  <text>￥</text>{{goods.goods_price}}
+                </view>
+              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" 
+              goodtypeid="{{item.goods_type_id}}"  goodsWrapPrice="{{goods.goods_wrap_price}}"
+              class="amount" 
+              bind:numEvent="onNumChange"></amount>
             </view>
           </view>
         </block>
@@ -57,20 +65,33 @@
     </view>
   </view>
   <view class='footer'>
-    <!-- <view class='service'>
-      <view>
-        <image src='{{img_wechat}}' style='width:28px;height:28px;'/>
-      </view>
-      <view>
-        <text>客服</text>
-      </view>
-      
-    </view> -->
     <view class='cart'>
-      <image src='{{img_cart}}' style='width:32px;height:32px;' />
+      <image src='{{img_cart}}' style='width:64px;height:36px;' />
+      <view class='cart-mark' wx:if="{{totalNum>0}}">{{totalNum}}</view>
     </view>
-    <view class='order'>
-      <text>15元起送</text>
+    <view class='state-normal' wx:if="{{totalNum==0}}" >
+      购物车是空的
+    </view>
+    <view class='state' wx:if="{{totalNum>0}}">
+      <view class='priceInfo'>
+        <view class='price'>
+          <text style='font-size:13px;'>￥</text><text style='color:#ff8557;font-weight:bold;margin-right:5rpx;'>{{totalMoney}}</text><text style='font-size:13px;color:#888888;text-decoration: line-through;'>{{originalMoney}}</text>
+        </view>
+        <view style='font-size:11px;color:#888888;line-height:1;'>
+          另需配送费{{deliveryFee}}元
+        </view>
+      </view>
+      <view class='state-hd'>
+        <view style='margin-right:10rpx;'>
+          小程序{{minaDiscount}}折
+        </view>
+        <view wx:if='{{isNewUser}}'>
+          首单减{{newUserReduction}}元
+        </view>
+      </view>
+    </view>
+    <view class='order order-normal'>
+      <text>去下单</text>
     </view>
   </view>
 </view>

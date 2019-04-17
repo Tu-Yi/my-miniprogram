@@ -939,3 +939,269 @@ getGoodsList: function () {
     </view>  
 ```
 
+## 页面遮罩
+
+```html
+<view class='shade' wx:if='{{isCart}}' bindtap='showMain'></view>
+```
+
+```css
+.shade {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #999;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+```
+
+## 滚动区域高度计算
+
+```javascript
+setGoodListHeight:function(){
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        var h;
+        var query = wx.createSelectorQuery();
+        query.select('#categrays').boundingClientRect(function (rect) {
+          h = res.windowHeight - rect.top
+          that.setData({
+            height: h - res.windowHeight * 0.08
+          })
+        }).exec();
+      },
+    })
+  },
+```
+
+## 菜单商品左右联动
+
+```html
+<view style='display:flex;margin-top:10rpx;' id="categrays">
+    <view>
+      <scroll-view class="nav_left" scroll-y style='height:{{height}}px'>
+        <block wx:for="{{list}}" wx:key='{{index}}'>
+          <view wx-if='{{item.goods.length}}' class="nav_left_items item {{index==cateListActiveIndex && 'nav_left_item-active'}}" data-id='b{{index}}' data-index="{{index}}" bindtap="scrollToCategory" data-itemid='{{item.goods_type_id}}'>
+            {{item.goods_type}}
+             <view class='shownum' wx:if='{{item.sell_num>0}}'>
+                  {{item.sell_num}}
+              </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view style='flex:1;'>
+      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}"  bindscroll="foodListScrolling" scroll-with-animation='true'>
+        <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
+          <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
+            {{item.goods_type}}
+          </view>
+          <view class="good" wx:for='{{item.goods}}' wx:for-item="goods" wx:key='{{index}}' data-id="{{goods.goods_id}}" bindtap='toDetail'>
+            <view class='good_img'>
+              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;' />
+            </view>
+            <view class='good_content'>
+              <text class='good_content_title'>{{goods.goods_name}}</text>
+              <view class='good_content_detail'>{{goods.goods_detail}}</view>
+              <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
+              <view class='good_content_price'>
+                  <text>￥</text>{{goods.goods_price}}
+                </view>
+              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" 
+              goodtypeid="{{item.goods_type_id}}"  goodsWrapPrice="{{goods.goods_wrap_price}}"
+              class="amount" 
+              bind:numEvent="onNumChange"></amount>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+```
+
+```javascript
+/** 获取每类商品界面高度数组*/
+  setFoodListAreaHeight() {
+    let query = wx.createSelectorQuery();
+    let that = this;
+    //分类栏的高度
+    query.select('.type_title').boundingClientRect(function (rect) {
+      that.setData({
+        eleCateTitleHeight: rect.height
+      })
+    }).exec();
+    //商品item的高度
+    query.select('.good').boundingClientRect(function (rect) {
+      that.setData({
+        eleFoodHeight: rect.height
+      })
+    }).exec();
+
+    //把商品列表每个分类的区间高度计算，并放进数组
+    //上面获取元素的高度可能不是同步的，所以把下面的放在setTimeout里面
+    let fh = [0]
+    let heightCount = 0
+    setTimeout(() => {
+      this.data.list.forEach((item, index) => {
+        //console.log(item.items.length * this.data.eleFoodHeight);
+        if (item.length>0){
+          heightCount += item.length * this.data.eleFoodHeight + this.data.eleCateTitleHeight
+          fh.push(heightCount)
+        }
+      })
+      this.setData({
+        foodAreaHeight: fh
+      })
+    }, 100)
+
+  },
+  /**
+     * 滚动到右边的高度
+     * @param {*} e 
+     */
+  scrollToCategory(e) {
+    //let id = e.currentTarget.dataset.id
+    let index = parseInt(e.currentTarget.dataset.index);
+    //let itemid = e.currentTarget.dataset.itemid
+    this.setData({
+      //toView: id,
+      curIndex: index
+    })
+    let idx = e.currentTarget.dataset.index
+    var top;
+    if(idx>0){
+      top = idx * 10
+    }
+    this.setData({
+      listViewScrollTop: (this.data.foodAreaHeight[idx] + idx * this.data.eleCateTitleHeight)
+    })
+  },
+  /**商品滚动，分类高亮 */
+  foodListScrolling(event) {
+    let scrollTop = event.detail.scrollTop
+    let foodAreaHeight = this.data.foodAreaHeight
+    foodAreaHeight.forEach((item, index) => {
+      if (scrollTop >= foodAreaHeight[index] && scrollTop < foodAreaHeight[index + 1]) {
+        this.setData({ cateListActiveIndex: index })
+      }
+    })
+  },
+```
+
+## 控制元素显示
+
+```html
+wx:if='{{item.sell_num>0}}'
+wx:if='{{isCart}}'
+wx:if='{{startSendPrice_poor<=0 && originalMoney>0}}'
+```
+
+## 控制元素样式
+
+```html
+class="order {{startSendPrice_poor<=0 ? 'order-active' : 'order-normal'}}"
+```
+
+## 控制元素事件
+
+```html
+bindtap="{{totalNum>0?'showCart':''}}"
+```
+
+## 组件
+
+```html
+{
+  "usingComponents": {
+    "amount": "/components/amount/amount"
+  }
+}
+
+<amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" 
+              goodtypeid="{{item.goods_type_id}}"  goodsWrapPrice="{{goods.goods_wrap_price}}"
+              class="amount" 
+              bind:numEvent="onNumChange"></amount>
+```
+
+## 组件传递事件
+
+```javascript
+add(){
+      var count = this.data.count;
+      this.setData({
+        count: ++count,
+        opacity: 1
+      })
+      var eventDetail = {
+        val: this.data.count,
+        type: 'add',
+        goodname: this.data.goodname,
+        goodprice: this.data.goodprice,
+        goodtypeid: this.data.goodtypeid,
+        goodsWrapPrice: this.data.goodsWrapPrice
+      }
+      this.triggerEvent('numEvent', eventDetail)
+    },
+```
+
+## 控制元素向左显示
+
+```html
+<view class='num_wrap'>
+  <view class='btn sub' style='opacity: {{opacity}}' catchtap='substract'>-</view>
+  <view class='text' style='opacity: {{opacity}}'>{{count}}</view>
+  <view class='btn add' catchtap='add'>+</view>
+</view>
+```
+
+## 阴影样式
+
+```css
+box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+```
+
+## 处理购物车
+
+```javascript
+/**处理购物车 */
+  cartHandle:function(e){
+    var name = utils.cutstr(e.detail.goodname,12)
+    var item = {
+      name: name,
+      typeid: e.detail.goodtypeid,
+      price: e.detail.goodprice,
+      count: e.detail.val
+    }
+    let carts = this.data.cartArray;
+    let isIn=0;
+    let goodindex=-1
+    if (carts){
+      carts.forEach((good,index)=>{
+        if(good.name === item.name){
+          e.detail.type === 'add' ? (good.price += item.price) : (good.price -= item.price);
+          good.count = item.count;
+          if(good.count===0){
+            goodindex = index;
+          }
+          isIn=true;
+        }
+      })
+      if(goodindex>=0){
+        carts.splice(goodindex,1);
+      }
+      if(!isIn){
+        carts.push(item);
+      }
+    }else{
+      carts.push(item);
+    }
+    this.setData({
+      cartArray: carts
+    })
+  },
+```
+

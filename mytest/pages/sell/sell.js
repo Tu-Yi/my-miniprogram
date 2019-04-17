@@ -9,34 +9,43 @@ Page({
    * 页面的初始数据
    */
   data: {
-    store_name: '',
-    notice: '',
-    newUserReduction: '',
-    minaDiscount: '',
-    startSendPrice: '',
-    startSendPrice_poor: '',
-    deliveryFee: '',
-    deliveryDistance: '',
+    /**图片数据 */
     img_first: '../../' + constants.img_first,
     img_mina: '../../' + constants.img_mina,
     ico_logo: '../../' + constants.ico_logo,
     img_wechat: '../../' + constants.img_wechat,
     img_cart: '../../' + constants.img_cart,
+    ico_clear: '../../' + constants.ico_clear,
+    /**店铺数据 */
+    store_name: '',
+    notice: '',
+    newUserReduction: 0,
+    minaDiscount: 0,
+    startSendPrice: 0,
+    startSendPrice_poor: 0,
+    deliveryFee: 0,
+    deliveryDistance: 0,
+    /**判断数据 */
+    isShow: true, //是否显示错误页面
+    isNewUser: true, //是否是新用户标志，先暂时放这个，后面从数据库获取
+    isCart: false, //是否显示购物车
+    /**商品数据 */
     list: [],
     curIndex: 0,
-    isShow: true,
     toView: '',
-    height: '',
+    height: 0,
     foodAreaHeight: [],
-    eleCateTitleHeight: '',
-    eleFoodHeight: '',
+    eleCateTitleHeight: 0,
+    eleFoodHeight: 0,
     cateListActiveIndex: 0,
-    isOrder: false,
-    originalMoney: '',
-    totalMoney: '',
+    /**数量、价格数据 */
+    originalMoney: 0,
+    goodsMoney: 0,
+    wrapperMoney: 0,
+    totalMoney: 0,
     totalNum: 0,
-    cartArray:[],
-    isNewUser:true //是否是新用户标志，先暂时放这个，后面从数据库获取
+    /**购物车 */
+    cartArray:[]
   },
 
   /**
@@ -48,68 +57,111 @@ Page({
       key: constants.Storage_StoreInfo,
       success: function (res) {
         that.setData({
-          store_name: res.data.store_name || '店铺名称',
-          newUserReduction: res.data.new_user_reduction || "0",
-          minaDiscount: 10 - (+(res.data.weixin_order_reduction || "0")) * 10 + '',
+          store_name: res.data.store_name || constants.title_default,
+          newUserReduction: res.data.new_user_reduction || 0,
+          minaDiscount: 10 - (+(res.data.weixin_order_reduction || 0)) * 10,
           notice: utils.cutstr((res.data.notice || constants.notice_default), 80),
-          startSendPrice: res.data.start_send_price || "0",
+          startSendPrice: res.data.start_send_price || 0,
+          startSendPrice_poor: res.data.start_send_price || 0,
           deliveryFee: res.data.delivery_fee || 0,
           deliveryDistance: res.data.delivery_distance || 0
         })
       },
       fail: function (err) {
         that.setData({
-          store_name: '店铺名称',
-          new_user_reduction: "0",
-          minaDiscount: '0',
+          store_name: constants.title_default,
           notice: constants.notice_default
         })
         utils.showErrorToast(constants.Msg_DataError);
         console.log(err)
-
       }
     })
     this.getGoodsList();
-    
   },
   onNumChange:function(e){
-    console.log(e)
     this.numHandle(e);
     this.priceHandle(e);
+    this.cartHandle(e);
   },
-  priceHandle:function(e){
-    var price = e.detail.goodprice + e.detail.goodsWrapPrice;
-    var oMoney = this.data.originalMoney;
-    var tMoney = this.data.totalMoney;
-    if (e.detail.type === 'add') {
-      oMoney = oMoney + price;
+  /**处理购物车 */
+  cartHandle:function(e){
+    var name = utils.cutstr(e.detail.goodname,12)
+    var item = {
+      name: name,
+      typeid: e.detail.goodtypeid,
+      price: e.detail.goodprice,
+      count: e.detail.val
+    }
+    let carts = this.data.cartArray;
+    let isIn=0;
+    let goodindex=-1
+    if (carts){
+      carts.forEach((good,index)=>{
+        if(good.name === item.name){
+          e.detail.type === 'add' ? (good.price += item.price) : (good.price -= item.price);
+          good.count = item.count;
+          if(good.count===0){
+            goodindex = index;
+          }
+          isIn=true;
+        }
+      })
+      if(goodindex>=0){
+        carts.splice(goodindex,1);
+      }
+      if(!isIn){
+        carts.push(item);
+      }
     }else{
-      oMoney = oMoney - price;
+      carts.push(item);
     }
     this.setData({
-      originalMoney: oMoney
+      cartArray: carts
+    })
+  },
+  /**
+   * 起送计算：商品原总价+包装费
+   * 价格计算：商品价格优惠后+包装价
+   */
+  priceHandle:function(e){
+    var price = e.detail.goodprice + e.detail.goodsWrapPrice;
+    var gMoney = this.data.goodsMoney;
+    var wMoney = this.data.wrapperMoney;
+    var oMoney = this.data.originalMoney;
+    var tMoney = this.data.totalMoney;
+    
+    if (e.detail.type === 'add') {
+      oMoney = utils.roundFractional((oMoney + price),2);
+      gMoney = utils.roundFractional((gMoney + e.detail.goodprice), 2);
+      wMoney = utils.roundFractional((wMoney + e.detail.goodsWrapPrice), 2);
+    }else{
+      oMoney = utils.roundFractional((oMoney - price), 2);
+      gMoney = utils.roundFractional((gMoney - e.detail.goodprice), 2);
+      wMoney = utils.roundFractional((wMoney - e.detail.goodsWrapPrice), 2);
+    }
+    this.setData({
+      originalMoney: oMoney,
+      goodsMoney: gMoney,
+      wrapperMoney: wMoney
     })
     if (this.data.isNewUser){
-      if (this.data.originalMoney > this.data.newUserReduction){
-        tMoney = (this.data.originalMoney - this.data.newUserReduction) * (this.data.minaDiscount / 10)
+      if (this.data.goodsMoney > this.data.newUserReduction){
+        tMoney = utils.roundFractional((this.data.goodsMoney - this.data.newUserReduction) * (this.data.minaDiscount / 10),2)
       }else{
         tMoney = 0;
       }
     }else{
-      tMoney = this.data.originalMoney * (this.data.minaDiscount/10);
-    } 
-    this.setData({
-      totalMoney: tMoney
-    })
-    if(this.data.totalMoney>this.data.start_send_price){
-      
-    }else{
-      var poor = 0;
-      this.setData({
-        startSendPrice_poor: poor
-      })
+      tMoney = utils.roundFractional(this.data.goodsMoney * (this.data.minaDiscount/10),2);
     }
+    this.setData({
+      totalMoney: (tMoney + wMoney)
+    })
+    var poor = utils.roundFractional((this.data.startSendPrice - this.data.originalMoney),2);
+    this.setData({
+      startSendPrice_poor: poor
+    })
   },
+  /**处理商品数量 */
   numHandle:function(e){
     var num = this.data.totalNum
     if (e.detail.type === 'add') {
@@ -144,6 +196,23 @@ Page({
       list: goodList
     })
   },
+  /**控制购物车 */
+  showMain:function(){
+    this.setData({
+      isCart: false
+    })
+  },
+  showCart:function(){
+    this.setData({
+      isCart: true
+    })
+  },
+  /**清空购物车 */
+  clearCart:function(){
+    wx.reLaunch({
+      url: constants.PagePath_Sell,
+    })
+  },
   /**错误页面按钮 */
   failOnclick: function () {
     var pages = getCurrentPages();
@@ -159,26 +228,11 @@ Page({
     var that = this;
     utils.request(api.Goods_List, { shopId: app.globalData.storeId }).then(
       res => {
-        console.log(res)
         that.setData({
           list: res
         })
-        /**设置商品列表高度 */
-        wx.getSystemInfo({
-          success: function (res) {
-            console.log("123 " + res.windowHeight)
-            var h;
-            var query = wx.createSelectorQuery();
-            query.select('#categrays').boundingClientRect(function (rect) {
-              h = res.windowHeight - rect.top
-              that.setData({
-                height: h - res.windowHeight*0.08
-              })
-            }).exec();
-          },
-        })
-        /**获取每类商品界面高度数组 */
-        this.setFoodListAreaHeight()
+        this.setGoodListHeight();
+        this.setFoodListAreaHeight();
       },
       err => {
         wx.hideLoading();
@@ -195,6 +249,22 @@ Page({
    */
   onReady: function () {
 
+  },
+  /**设置右侧高度 */
+  setGoodListHeight:function(){
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        var h;
+        var query = wx.createSelectorQuery();
+        query.select('#categrays').boundingClientRect(function (rect) {
+          h = res.windowHeight - rect.top
+          that.setData({
+            height: h - res.windowHeight * 0.08
+          })
+        }).exec();
+      },
+    })
   },
   /** 获取每类商品界面高度数组*/
   setFoodListAreaHeight() {
@@ -243,7 +313,6 @@ Page({
       //toView: id,
       curIndex: index
     })
-    console.log(e.currentTarget.dataset);
     let idx = e.currentTarget.dataset.index
     var top;
     if(idx>0){

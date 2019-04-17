@@ -1,4 +1,5 @@
 <view wx:if='{{isShow}}' class='all'>
+  <view class='shade' wx:if='{{isCart}}' bindtap='showMain'></view>
   <view class='allInfo'>
     <view class='header'>
     </view>
@@ -24,7 +25,7 @@
       </view>
     </view>
   </view>
-  <view style='display:flex;margin-top:10rpx;' id="categrays">
+  <view id="categrays">
     <view>
       <scroll-view class="nav_left" scroll-y style='height:{{height}}px'>
         <block wx:for="{{list}}" wx:key='{{index}}'>
@@ -65,14 +66,14 @@
     </view>
   </view>
   <view class='footer'>
-    <view class='cart'>
+    <view class='cart' bindtap="{{totalNum>0?'showCart':''}}">
       <image src='{{img_cart}}' style='width:64px;height:36px;' />
       <view class='cart-mark' wx:if="{{totalNum>0}}">{{totalNum}}</view>
     </view>
-    <view class='state-normal' wx:if="{{totalNum==0}}" >
+    <view class='state-normal' wx:if="{{totalNum==0}}" bindtap="{{totalNum>0?'showCart':''}}">
       购物车是空的
     </view>
-    <view class='state' wx:if="{{totalNum>0}}">
+    <view class='state' wx:if="{{totalNum>0}}" bindtap="{{totalNum>0?'showCart':''}}">
       <view class='priceInfo'>
         <view class='price'>
           <text style='font-size:13px;'>￥</text><text style='color:#ff8557;font-weight:bold;margin-right:5rpx;'>{{totalMoney}}</text><text style='font-size:13px;color:#888888;text-decoration: line-through;'>{{originalMoney}}</text>
@@ -90,10 +91,23 @@
         </view>
       </view>
     </view>
-    <view class='order order-normal'>
-      <text>去下单</text>
+    <view class="order {{startSendPrice_poor<=0 ? 'order-active' : 'order-normal'}}">
+      <text wx:if='{{startSendPrice_poor<=0 && originalMoney>0}}'>去下单</text>
+      <text wx:else>还差{{startSendPrice_poor}}</text>
     </view>
   </view>
+  <view wx:if='{{isCart}}' class='footer-cart'>
+      <view class='clear'><image src='{{ico_clear}}' style='width:16px;height:16px;' /> <text bindtap='clearCart'>清空购物车</text></view>
+      <view wx:for='{{cartArray}}' wx:for-item='good' class='goodlist' wx:key='{{index}}'>
+        <view class='name'>{{good.name}}</view>
+        <view class='price'><text>￥</text><text>{{good.price}}</text></view>
+        <view class='count'>{{good.count}}</view>
+      </view>
+      <view class='wrapper'>
+        <view>包装费</view>
+        <view><text>￥</text><text>{{wrapperMoney}}</text></view>
+      </view>
+    </view>
 </view>
 <import src="../template/fail/fail.wxml" />
 <view bindtap='failOnclick'>

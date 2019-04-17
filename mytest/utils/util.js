@@ -169,6 +169,10 @@ function getAddress(latitude, longitude,cal){
     }
   })
 }
+/**处理浮点数运算 */
+function roundFractional(x, n) {
+  return Math.round(x * Math.pow(10, n)) / Math.pow(10, n);
+}
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
@@ -181,5 +185,6 @@ module.exports = {
   cutstr: cutstr,
   getLocation: getLocation,
   getAddress: getAddress,
-  getUserLocationInfo: getUserLocationInfo
+  getUserLocationInfo: getUserLocationInfo,
+  roundFractional: roundFractional
 }

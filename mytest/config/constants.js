@@ -22,6 +22,7 @@ module.exports = {
   img_drop: 'static/images/drop.png',
   ico_logo: 'static/images/logo.png',
   ico_share: 'static/images/share.png',
+  ico_clear: 'static/images/clear.png',
   img_wechat: 'static/images/wechat.png',
   img_cart: 'static/images/cart.png',
   img_cartt: 'static/images/cartt.png',
@@ -37,6 +38,7 @@ module.exports = {
   phone_default: '商家未预留电话',
   time_default: '请联系店家',
   notice_default: '暂无公告',
+  title_default: '店铺名称',
   /**提示信息 */
   Msg_DataError:'获取数据失败',
   Msg_AddrError: '获取地址失败',
@@ -48,5 +50,6 @@ module.exports = {
   Scope_UserLocation: 'scope.userLocation',
   /**页面地址 */
   AppHome: '/pages/index/index',
+  PagePath_Sell: '/pages/sell/sell',
   PagePath_GoodsDetail: '/pages/sell/good/good'
 };

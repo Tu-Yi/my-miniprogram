@@ -1,12 +1,16 @@
 /* pages/sell/sell.wxss */
+
 page {
   box-sizing: border-box;
 }
+
 .header {
   height: 100rpx;
   background-color: #ff8557;
 }
+
 /*头部*/
+
 .info {
   position: relative;
   display: flex;
@@ -23,6 +27,9 @@ page {
 
 .info .title {
   font-weight: bold;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .info .content {
@@ -64,11 +71,14 @@ page {
   height: 100rpx;
   border-radius: 50%;
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
+  background: #dbdbdb;
 }
+
 /*中间*/
+
 #categrays {
   margin-top: 10rpx;
-  display:flex;
+  display: flex;
 }
 
 .nav_left {
@@ -355,6 +365,9 @@ page {
 
 .footer-cart .goodlist .name {
   letter-spacing: 1rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .footer-cart .goodlist .price text:first-child {

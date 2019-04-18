@@ -1205,3 +1205,108 @@ box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1);
   },
 ```
 
+## 页面数据
+
+页面相同类型的业务变量最好放入对象或数组中，方便管理和传值
+
+## 行文本溢出显示省略号
+
+单行
+
+```css
+overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+```
+
+多行
+
+```css
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+overflow: hidden;
+```
+
+## 数据默认显示直接在页面判断
+
+```html
+<view class='address'>
+    <text>{{user.detailInfo?user.detailInfo:'选择收货地址'}}</text>
+    <image src='{{img_rightnav}}' style='width:12px;height:12px;' />
+  </view>
+  <view class='user'>
+    <text>{{user.userName || ''}}</text>
+    <text>{{user.telNumber || ''}}</text>
+  </view>
+```
+
+##  图片默认背景
+
+```css
+<image src='{{goods.img}}' style='width:80rpx;height:80rpx;background:#cdcdcf' />
+```
+
+## 使用微信收货地址
+
+```javascript
+wx.getStorage({
+      key: 'userAddress',
+      success: function(res) {
+        that.setAddress(res.data);
+      },
+    })
+getAddress:function(){
+    var that=this
+    wx.chooseAddress({
+      success(res) {
+        that.setAddress(res);
+        wx.setStorage({
+          key: 'userAddress',
+          data: that.data.user,
+        })
+      },
+      fail(err){
+        console.log(err)
+        utils.showErrorToast(constants.Msg_WxAddrError);
+      }
+    })
+  },
+  setAddress:function(res){
+    var user = {
+      userName: res.userName,
+      postalCode: res.postalCode,
+      provinceName: res.provinceName,
+      cityName: res.cityName,
+      countyName: res.countyName,
+      detailInfo: res.detailInfo,
+      nationalCode: res.nationalCode,
+      telNumber: res.telNumber
+    }
+    this.setData({
+      user: user
+    })
+  },
+```
+
+## 数值计算不要忘了Number
+
+```javascript
+accountPrice: function(){
+    let reduced = 0;
+    let final = 0;
+    console.log(Number(this.data.accountInfo[2].totalMoney) + Number(this.data.accountInfo[1].deliveryFee))
+  
+    final = utils.roundFractional((Number(this.data.accountInfo[2].totalMoney) + Number(this.data.accountInfo[1].deliveryFee)), 1)
+    if (this.data.isNewUser) {
+      reduced = utils.roundFractional((Number(this.data.accountInfo[2].discountMoney) + Number(this.data.accountInfo[1].newUserReduction)),1)
+    }else{
+      reduced = this.data.accountInfo[2].discountMoney
+    }
+    this.setData({
+      reducedMoney: reduced,
+      finalPrice: final
+    })
+  },
+```
+

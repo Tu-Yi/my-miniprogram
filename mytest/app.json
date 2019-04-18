@@ -2,6 +2,7 @@
   "pages":[
     "pages/sell/sell",
     "pages/sell/good/good",
+    "pages/sell/account/account",
     "pages/index/index",
     "pages/index/pictures/pictures",
     "pages/order/order",

@@ -1,0 +1,89 @@
+<view class='header-address' bindtap='getAddress'>
+  <text class='desc'>订单配送至</text>
+  <!-- <view class='address'><text>{{address}}</text><text>></text></view>
+  <view class='user'><text>{{username}}</text><text>{{phone}}</text> </view> -->
+  <view class='address'>
+    <text>{{user.detailInfo?user.detailInfo:'选择收货地址'}}</text>
+    <image src='{{img_rightnav}}' style='width:20rpx;height:20rpx;' />
+  </view>
+  <view class='user'>
+    <text>{{user.userName || ''}}</text>
+    <text>{{user.telNumber || ''}}</text>
+  </view>
+</view>
+
+<view class="weui-cells weui-cells_after-title cells-show">
+    <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none" open-type="reLaunch">
+        <view class="weui-cell__bd cell-title">送达时间</view>
+        <view class="weui-cell__ft  cell-desc">尽快送达</view>
+    </navigator>
+    <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none">
+        <view class="weui-cell__bd cell-title">支付方式</view>
+        <view class="weui-cell__ft  cell-desc">微信支付</view>
+    </navigator>
+</view>
+<view class='account'>
+  <view class='storename'>
+    {{accountInfo[1].storeName}}
+  </view>
+  <view class="good" wx:for='{{accountInfo[0]}}' wx:for-item="goods" wx:key='{{index}}'>
+ 
+      <image src='{{goods.img}}' style='width:80rpx;height:80rpx;background:#cdcdcf' />
+
+     <view class='good_title'>{{goods.name}}</view>
+      <view class='good_count'>
+        <text>{{goods.count}}</text>
+      </view>
+      <view class='good_price'>
+          <text class='cmb'>￥</text>{{goods.price}}
+      </view>
+  </view>
+  <view class='info'>
+    <text>包装</text>
+    <view>
+      <text class='cmb'>￥</text><text>{{accountInfo[2].wrapperMoney}}</text>
+    </view>
+  </view>
+  <view class='info'>
+    <text>配送费</text>
+    <view>
+      <text class='cmb'>￥</text><text>{{accountInfo[1].deliveryFee}}</text>
+    </view>
+  </view>
+  <view class='activity' wx:if='{{isNewUser}}'>
+    <view class='mask'>
+      <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:40rpx; height: 40rpx;' />
+      <text>首单立减</text>
+    </view>
+    <view class='price'>
+      <text>-</text>
+      <text class='cmb'>￥</text>
+      <text>{{accountInfo[1].newUserReduction}}</text>
+    </view>
+  </view>
+  <view class='activity'>
+    <view class='mask'>
+      <image src='{{img_mina}}' style='margin-right: 10rpx;width:32rpx; height: 32rpx;' />
+      <text>小程序下单{{accountInfo[1].minaDiscount}}折</text>
+    </view>
+    <view class='price'>
+      <text>-</text>
+      <text class='cmb'>￥</text>
+      <text>{{accountInfo[2].discountMoney}}</text>
+    </view>
+  </view>
+  <view class='totalPrice'>
+    <view class='reduced'>
+      <text>已优惠</text>
+      <view>
+        <text class='cmb'>￥</text><text>{{reducedMoney}}</text>
+      </view>
+    </view>
+    <view class='final'>
+      <text>小计</text>
+      <view>
+        <text class='cmb'>￥</text><text>{{finalPrice}}</text>
+      </view>
+    </view>
+  </view>
+</view>

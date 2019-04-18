@@ -5,7 +5,7 @@
     </view>
     <view class='info' id="storeInfo">
       <view class='logo'>
-        <image src='{{ico_logo}}' />
+        <image wx:if='{{store_logo!=""}}' src='{{store_logo}}' />
       </view>
       <view class='page__title title'>
         <text>{{store_name}}</text>
@@ -15,11 +15,11 @@
       </view>
       <view class='content'>
         <view class='activity'>
-          <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:20px; height: 20px;' />
+          <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:40rpx; height: 40rpx;' />
           <text>新用户首单立减{{newUserReduction}}元</text>
         </view>
         <view class='activity'>
-          <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:16px; height: 16px;' />
+          <image src='{{img_mina}}' style='margin-right: 10rpx;vertical-align: middle;width:32rpx; height: 32rpx;' />
           <text>小程序下单享{{minaDiscount}}折</text>
         </view>
       </view>
@@ -46,7 +46,7 @@
           </view>
           <view class="good" wx:for='{{item.goods}}' wx:for-item="goods" wx:key='{{index}}' data-id="{{goods.goods_id}}" bindtap='toDetail'>
             <view class='good_img'>
-              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;' />
+              <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;background:#cdcdcf' />
             </view>
             <view class='good_content'>
               <text class='good_content_title'>{{goods.goods_name}}</text>
@@ -55,7 +55,7 @@
               <view class='good_content_price'>
                   <text>￥</text>{{goods.goods_price}}
                 </view>
-              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" 
+              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" goodsimg="{{goods.goods_img}}"
               goodtypeid="{{item.goods_type_id}}"  goodsWrapPrice="{{goods.goods_wrap_price}}"
               class="amount" 
               bind:numEvent="onNumChange"></amount>
@@ -91,7 +91,7 @@
         </view>
       </view>
     </view>
-    <view class="order {{startSendPrice_poor<=0 ? 'order-active' : 'order-normal'}}">
+    <view class="order {{startSendPrice_poor<=0 ? 'order-active' : 'order-normal'}}" bindtap="{{startSendPrice_poor<=0 && originalMoney>0 ? 'toAccount':''}}">
       <text wx:if='{{startSendPrice_poor<=0 && originalMoney>0}}'>去下单</text>
       <text wx:else>还差{{startSendPrice_poor}}</text>
     </view>

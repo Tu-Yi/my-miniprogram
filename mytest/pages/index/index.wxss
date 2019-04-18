@@ -1,53 +1,64 @@
 /**轮播图图片宽高自适应**/
+
 swiper {
   z-index: -1;
 }
-.swiper-img{
-    width: 100%;
-    height: auto;
-    display: block;
+
+.swiper-img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
+
 .header {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #cdcdcf;
 }
+
 .cell-image {
-  margin-right:5px;
-  vertical-align:middle;
-  width:20px;
-  height:20px;
+  margin-right: 5px;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
 }
+
 .cell-image-view {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.cell-bg{
+
+.cell-bg {
   background-color: #fff;
 }
+
 .weui-cell_font {
-  font-size:14px;
-  padding-top:4px;
+  font-size: 14px;
+  padding-top: 4px;
 }
+
 .cells-show {
-  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 }
+
 .content {
-  margin-top:20rpx;
+  margin-top: 20rpx;
   background-color: #fff;
   border-top: 1px solid #ededed;
   border-bottom: 1px solid #ededed;
-  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 }
+
 .content .activity {
   padding-left: 20rpx;
   padding-bottom: 20rpx;
   display: flex;
   font-size: 14px;
 }
+
 .cus_address {
   margin-left: 20rpx;
   padding-top: 10rpx;
@@ -55,4 +66,10 @@ swiper {
   display: flex;
   align-items: center;
   font-weight: bold;
+}
+
+.spill {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

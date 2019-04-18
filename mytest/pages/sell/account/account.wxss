@@ -1,0 +1,155 @@
+/* pages/sell/account/account.wxss */
+.cells-show {
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+}
+page{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.header-address {
+  padding:20rpx;
+  background: #ff8557;
+  color: #fff;
+}
+.header-address .desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8)
+}
+.header-address .user {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8)
+}
+.header-address .user text:first-child{
+  margin-right: 10rpx;
+}
+.header-address .address {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-address .address text {
+  text-align: left;
+  letter-spacing: 2rpx;
+  width:90%;
+  margin-right: 20rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.cell-title {
+  font-size: 13px;
+  font-weight: bold;
+}
+.cell-desc {
+  font-size: 13px;
+  color: #ff8557;
+}
+.account {
+  margin-top:20rpx;
+  background: #fff;
+  padding:20rpx;
+}
+.account .storename {
+  font-weight: bold;
+  border-bottom: 2px solid #ededed;
+  padding: 5rpx 0;
+}
+.account .good {
+  padding:20rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,1);
+}
+.account .good .good_title {
+  margin-left: 20rpx;
+  text-align: left;
+  width: 60%;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.account .good .good_price {
+  text-align: right;
+  width:15%;
+}
+.cmb {
+  font-size: 11px;
+}
+.account .good .good_count {
+  font-size: 13px;
+  width: 20%;
+}
+.account .info {
+  padding: 10rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,1);
+}
+.account .info>text {
+  font-size: 13px;
+}
+.account .activity {
+  padding: 10rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,1);
+}
+.account .activity .mask {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.account .activity .price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff8557;
+}
+.account .activity .price text {
+  display: inline-block;
+  line-height: 1;
+}
+.account .activity .price text:first-child {
+  margin-top:-4rpx;
+}
+.account .activity .price .cmb {
+  vertical-align: bottom;
+  margin-bottom: -4rpx;
+}
+.account .totalPrice {
+  padding-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.account .totalPrice .reduced {
+  display: flex;
+  align-items: flex-end;
+  color: #888888;
+  text-align: left;
+  font-size: 13px;
+  margin-right: 20rpx;
+  margin-bottom: -4rpx;
+}
+.account .totalPrice .final {
+  align-items: center;
+  display: flex;
+}
+.account .totalPrice .final>text {
+  font-size: 14px;
+}
+.account .totalPrice .final view{
+  color: #f33b3d;
+  font-weight: bold;
+}
+

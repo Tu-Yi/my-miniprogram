@@ -18,6 +18,7 @@ Page({
     ico_clear: '../../' + constants.ico_clear,
     /**店铺数据 */
     store_name: '',
+    store_logo: '',
     notice: '',
     newUserReduction: 0,
     minaDiscount: 0,
@@ -44,8 +45,9 @@ Page({
     wrapperMoney: 0,
     totalMoney: 0,
     totalNum: 0,
+    discountMoney: 0,
     /**购物车 */
-    cartArray:[]
+    cartArray: []
   },
 
   /**
@@ -56,8 +58,10 @@ Page({
     wx.getStorage({
       key: constants.Storage_StoreInfo,
       success: function (res) {
+        console.log(res)
         that.setData({
           store_name: res.data.store_name || constants.title_default,
+          store_logo: res.data.store_logo,
           newUserReduction: res.data.new_user_reduction || 0,
           minaDiscount: 10 - (+(res.data.weixin_order_reduction || 0)) * 10,
           notice: utils.cutstr((res.data.notice || constants.notice_default), 80),
@@ -77,42 +81,43 @@ Page({
       }
     })
     this.getGoodsList();
+    app.globalData.isNewUser = this.data.isNewUser
   },
-  onNumChange:function(e){
+  onNumChange: function (e) {
     this.numHandle(e);
     this.priceHandle(e);
     this.cartHandle(e);
   },
   /**处理购物车 */
-  cartHandle:function(e){
-    var name = utils.cutstr(e.detail.goodname,12)
+  cartHandle: function (e) {
     var item = {
-      name: name,
+      name: e.detail.goodname,
       typeid: e.detail.goodtypeid,
       price: e.detail.goodprice,
-      count: e.detail.val
+      count: e.detail.val,
+      img: e.detail.goodsimg
     }
     let carts = this.data.cartArray;
-    let isIn=0;
-    let goodindex=-1
-    if (carts){
-      carts.forEach((good,index)=>{
-        if(good.name === item.name){
+    let isIn = 0;
+    let goodindex = -1
+    if (carts.length > 0) {
+      carts.forEach((good, index) => {
+        if (good.name === item.name) {
           e.detail.type === 'add' ? (good.price += item.price) : (good.price -= item.price);
           good.count = item.count;
-          if(good.count===0){
+          if (good.count === 0) {
             goodindex = index;
           }
-          isIn=true;
+          isIn = true;
         }
       })
-      if(goodindex>=0){
-        carts.splice(goodindex,1);
+      if (goodindex >= 0) {
+        carts.splice(goodindex, 1);
       }
-      if(!isIn){
+      if (!isIn) {
         carts.push(item);
       }
-    }else{
+    } else {
       carts.push(item);
     }
     this.setData({
@@ -123,18 +128,19 @@ Page({
    * 起送计算：商品原总价+包装费
    * 价格计算：商品价格优惠后+包装价
    */
-  priceHandle:function(e){
+  priceHandle: function (e) {
     var price = e.detail.goodprice + e.detail.goodsWrapPrice;
     var gMoney = this.data.goodsMoney;
     var wMoney = this.data.wrapperMoney;
     var oMoney = this.data.originalMoney;
     var tMoney = this.data.totalMoney;
-    
+    var dMoney = this.data.discountMoney;
+
     if (e.detail.type === 'add') {
-      oMoney = utils.roundFractional((oMoney + price),2);
+      oMoney = utils.roundFractional((oMoney + price), 2);
       gMoney = utils.roundFractional((gMoney + e.detail.goodprice), 2);
       wMoney = utils.roundFractional((wMoney + e.detail.goodsWrapPrice), 2);
-    }else{
+    } else {
       oMoney = utils.roundFractional((oMoney - price), 2);
       gMoney = utils.roundFractional((gMoney - e.detail.goodprice), 2);
       wMoney = utils.roundFractional((wMoney - e.detail.goodsWrapPrice), 2);
@@ -144,25 +150,31 @@ Page({
       goodsMoney: gMoney,
       wrapperMoney: wMoney
     })
-    if (this.data.isNewUser){
-      if (this.data.goodsMoney > this.data.newUserReduction){
-        tMoney = utils.roundFractional((this.data.goodsMoney - this.data.newUserReduction) * (this.data.minaDiscount / 10),2)
-      }else{
+    if (this.data.isNewUser) {
+      if (this.data.goodsMoney > this.data.newUserReduction) {
+        tMoney = utils.roundFractional((this.data.goodsMoney - this.data.newUserReduction) * (this.data.minaDiscount / 10), 2);
+        dMoney = utils.roundFractional((this.data.goodsMoney - this.data.newUserReduction) * ((10 - this.data.minaDiscount) / 10), 2)
+      } else {
         tMoney = 0;
+        dMoney = 0;
       }
-    }else{
-      tMoney = utils.roundFractional(this.data.goodsMoney * (this.data.minaDiscount/10),2);
+    } else {
+      tMoney = utils.roundFractional(this.data.goodsMoney * (this.data.minaDiscount / 10), 2);
+      dMoney = utils.roundFractional(this.data.goodsMoney * ((10 - this.data.minaDiscount) / 10), 2);
     }
     this.setData({
       totalMoney: (tMoney + wMoney)
     })
-    var poor = utils.roundFractional((this.data.startSendPrice - this.data.originalMoney),2);
+    this.setData({
+      discountMoney: dMoney
+    })
+    var poor = utils.roundFractional((this.data.startSendPrice - this.data.originalMoney), 2);
     this.setData({
       startSendPrice_poor: poor
     })
   },
   /**处理商品数量 */
-  numHandle:function(e){
+  numHandle: function (e) {
     var num = this.data.totalNum
     if (e.detail.type === 'add') {
       this.setData({
@@ -197,18 +209,18 @@ Page({
     })
   },
   /**控制购物车 */
-  showMain:function(){
+  showMain: function () {
     this.setData({
       isCart: false
     })
   },
-  showCart:function(){
+  showCart: function () {
     this.setData({
       isCart: true
     })
   },
   /**清空购物车 */
-  clearCart:function(){
+  clearCart: function () {
     wx.reLaunch({
       url: constants.PagePath_Sell,
     })
@@ -251,7 +263,7 @@ Page({
 
   },
   /**设置右侧高度 */
-  setGoodListHeight:function(){
+  setGoodListHeight: function () {
     var that = this
     wx.getSystemInfo({
       success: function (res) {
@@ -290,7 +302,7 @@ Page({
     setTimeout(() => {
       this.data.list.forEach((item, index) => {
         //console.log(item.items.length * this.data.eleFoodHeight);
-        if (item.length>0){
+        if (item.length > 0) {
           heightCount += item.length * this.data.eleFoodHeight + this.data.eleCateTitleHeight
           fh.push(heightCount)
         }
@@ -315,7 +327,7 @@ Page({
     })
     let idx = e.currentTarget.dataset.index
     var top;
-    if(idx>0){
+    if (idx > 0) {
       top = idx * 10
     }
     this.setData({
@@ -332,10 +344,31 @@ Page({
       }
     })
   },
-  toDetail: function(e){
+  toDetail: function (e) {
     var goodId = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: constants.PagePath_GoodsDetail + "?goodId=" + goodId,
+    })
+  },
+  toAccount: function () {
+    var cart = this.data.cartArray
+    let storeInfo = {
+      storeName: this.data.store_name,
+      deliveryFee: this.data.deliveryFee,
+      newUserReduction: this.data.newUserReduction,
+      minaDiscount: this.data.minaDiscount
+    }
+    let goodsInfo = {
+      wrapperMoney: this.data.wrapperMoney,
+      totalMoney: this.data.totalMoney,
+      originalMoney: this.data.originalMoney,
+      discountMoney: this.data.discountMoney
+    }
+    app.globalData.accountInfo.push(cart)
+    app.globalData.accountInfo.push(storeInfo)
+    app.globalData.accountInfo.push(goodsInfo)
+    wx.navigateTo({
+      url: constants.PagePath_Account
     })
   },
   /**

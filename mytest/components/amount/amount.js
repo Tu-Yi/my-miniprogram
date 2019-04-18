@@ -12,6 +12,10 @@ Component({
       type:Number,
       value:0
     },
+    goodsimg:{
+      type:String,
+      value:''
+    },
     goodtypeid:{
       type:String,
       value:''
@@ -49,7 +53,8 @@ Component({
         goodname: this.data.goodname,
         goodprice: this.data.goodprice,
         goodtypeid: this.data.goodtypeid,
-        goodsWrapPrice: this.data.goodsWrapPrice
+        goodsWrapPrice: this.data.goodsWrapPrice,
+        goodsimg: this.data.goodsimg
       }
       this.triggerEvent('numEvent', eventDetail)
     },
@@ -68,7 +73,8 @@ Component({
         goodname: this.data.goodname,
         goodprice: this.data.goodprice,
         goodtypeid: this.data.goodtypeid,
-        goodsWrapPrice: this.data.goodsWrapPrice
+        goodsWrapPrice: this.data.goodsWrapPrice,
+        goodsimg: this.data.goodsimg
       }
       this.triggerEvent('numEvent', eventDetail)
     }

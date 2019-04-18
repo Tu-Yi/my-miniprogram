@@ -26,10 +26,12 @@ module.exports = {
   img_wechat: 'static/images/wechat.png',
   img_cart: 'static/images/cart.png',
   img_cartt: 'static/images/cartt.png',
+  img_rightnav: 'static/images/rightnav.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",
   PageTitle_GoodsDetail: "详情",
+  PageTitle_Account: "确认订单",
   /**缺省设置 */
   img_fail: 'static/images/fail.png',
   img_default: 'static/images/default.png',
@@ -43,6 +45,7 @@ module.exports = {
   Msg_DataError:'获取数据失败',
   Msg_AddrError: '获取地址失败',
   Msg_PhoneError: '拨打电话失败',
+  Msg_WxAddrError: '获取收货地址失败',
   /**缓存名称 */
   Storage_StoreInfo: 'storeInfo',
   Storage_UserLocation: 'userLocationInfo',
@@ -51,5 +54,6 @@ module.exports = {
   /**页面地址 */
   AppHome: '/pages/index/index',
   PagePath_Sell: '/pages/sell/sell',
-  PagePath_GoodsDetail: '/pages/sell/good/good'
+  PagePath_GoodsDetail: '/pages/sell/good/good',
+  PagePath_Account: '/pages/sell/account/account'
 };

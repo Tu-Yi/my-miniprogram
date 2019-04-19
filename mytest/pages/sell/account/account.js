@@ -15,9 +15,12 @@ Page({
     reducedMoney: 0,
     finalPrice: 0,
     user: {},
+    array: constants.Array_Table,
+    index: 0,
     img_rightnav: '../../../' + constants.img_rightnav,
     img_first: '../../../' + constants.img_first,
-    img_mina: '../../../' + constants.img_mina
+    img_mina: '../../../' + constants.img_mina,
+    remarkInfo: ''
   },
 
   /**
@@ -25,12 +28,18 @@ Page({
    */
   onLoad: function (options) {
     var that=this
+    var remark = '口味、要求等';
     utils.setPageTitle(constants.PageTitle_Account);
+    console.log(options)
+    if(app.globalData.remarkInfo){
+      remark = app.globalData.remarkInfo
+    }
     this.setData({
       accountInfo: app.globalData.accountInfo,
-      isNewUser: app.globalData.isNewUser
+      isNewUser: app.globalData.isNewUser,
+      remarkInfo : remark
     })
-    app.globalData.accountInfo = [];
+    //app.globalData.accountInfo = [];
     console.log(this.data.accountInfo)
     this.accountPrice();
     wx.getStorage({
@@ -39,6 +48,7 @@ Page({
         that.setAddress(res.data);
       },
     })
+    
   },
   accountPrice: function(){
     let reduced = 0;
@@ -85,6 +95,16 @@ Page({
     }
     this.setData({
       user: user
+    })
+  },
+  bindPickerChange:function(e){
+    this.setData({
+      index: e.detail.value
+    })
+  },
+  toRemark:function(){
+    wx.navigateTo({
+      url: constants.PagePath_Remark
     })
   },
   /**

@@ -1310,3 +1310,124 @@ accountPrice: function(){
   },
 ```
 
+## 普通选择器
+
+```html
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="weui-cell__ft_in-access">
+        {{array[index]}}
+      </view>
+    </picker>
+```
+
+```javascript
+bindPickerChange:function(e){
+    this.setData({
+      index: e.detail.value
+    })
+  },
+```
+
+## 右侧箭头样式
+
+```html
+weui-cell__ft_in-access
+```
+
+## textarea
+
+```html
+<form bindsubmit="bindFormSubmit">
+        <view class="header">
+            <textarea name="textarea" bindinput='bindWord' class="textarea" value="{{value}}" placeholder="{{placeholder}}" placeholder-class="placeholder" maxlength="{{maxlength}}" focus="{{focus}}" auto-height="{{autoheight}}" adjust-position="{{adjustposition}}" show-confirm-bar="{{show-confirm-bar}}" />
+            <view class="info">
+                <view class="keywords" wx:for='{{keywords}}' wx:key='{{index}}' data-index='{{index}}' bindtap="toTextArea">{{item}}</view>
+            </view>
+        </view>
+        <button form-type="submit">完成</button>
+    </form>
+```
+
+```javascript
+keywords: constants.Remark_Keywords,
+    value: "",
+    placeholder: "口味、要求等，100个字以内",
+    maxlength: 100,
+    focus: true,
+    autoheight: false,
+    adjustposition: true,
+    inValue: ""
+
+bindWord: function(e){
+    this.setData({
+      inValue: e.detail.value
+    })
+  },
+  toTextArea:function(e){
+    var key = this.data.keywords[e.currentTarget.dataset.index];
+    var newValue = this.data.inValue + key;
+    this.setData({
+      inValue: newValue,
+      value: newValue,
+      focus: true
+    })
+  },
+  bindFormSubmit:function(e){
+    console.log(e.detail.value.textarea)
+    if(e.detail.value.textarea){
+      app.globalData.remarkInfo = e.detail.value.textarea;
+      wx.navigateTo({
+        url: constants.PagePath_Account,
+      })
+    }else{
+      wx.showToast({
+        title: constants.Msg_RemarkInfo,
+        icon: "none"
+      })
+    }
+    
+  },
+```
+
+```css
+.main {
+    padding:0 20rpx;
+    padding-top: 10rpx;
+}
+.header {
+    background: #fff;
+    margin-bottom: 30rpx;
+    padding:0 20rpx 0 0;   //textarea宽度100%会溢出
+}
+.textarea {
+    font-size: 15px;
+    background-color: #eeeeee;
+    height: 100px;
+    padding:10rpx;
+    margin-bottom: 20rpx;
+    height: 350rpx;
+    width:100%;
+}
+.placeholder {
+    font-size: 15px;
+    color: gray;
+}
+```
+
+## 横向排列，左右上下有间距
+
+```css
+.keywords {
+    padding:10rpx;
+    line-height: 1.2;
+    border: 1px solid #eeeeee;
+    margin-right: 20rpx;
+    font-size: 12px;
+    color: #888888;
+    margin-bottom: 20rpx;
+}
+.keywords:last-child {
+    margin-right: 0;
+}
+```
+

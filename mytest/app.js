@@ -37,6 +37,7 @@ App({
     userInfo: null,
     storeId: 'mjmf',
     isNewUser: true,
-    accountInfo: []
+    accountInfo: [],
+    remarkInfo: ""
   }
 })

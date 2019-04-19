@@ -87,3 +87,27 @@
     </view>
   </view>
 </view>
+<view class="remark">
+<view class='info'>
+  <text>餐具</text>
+  <view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="weui-cell__ft_in-access">
+        {{array[index]}}
+      </view>
+    </picker>
+  </view>
+</view>
+<view class='info' style="border-bottom:0;" bindtap="toRemark">
+  <text>备注</text>
+  <view class="weui-cell__ft_in-access remarkInfo">
+    {{remarkInfo}}
+  </view>
+</view>
+</view>
+<view class="footer">
+  <view class="price">
+    <text class='cmb'>￥</text><text>{{finalPrice}}</text>
+  </view>
+  <view class="order" bindtap="">去支付</view>
+</view>

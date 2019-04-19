@@ -32,6 +32,7 @@ module.exports = {
   PageTitle_Location: "地图位置",
   PageTitle_GoodsDetail: "详情",
   PageTitle_Account: "确认订单",
+  PageTitle_remark: "填写备注",
   /**缺省设置 */
   img_fail: 'static/images/fail.png',
   img_default: 'static/images/default.png',
@@ -46,6 +47,7 @@ module.exports = {
   Msg_AddrError: '获取地址失败',
   Msg_PhoneError: '拨打电话失败',
   Msg_WxAddrError: '获取收货地址失败',
+  Msg_RemarkInfo: '请输入备注信息',
   /**缓存名称 */
   Storage_StoreInfo: 'storeInfo',
   Storage_UserLocation: 'userLocationInfo',
@@ -55,5 +57,9 @@ module.exports = {
   AppHome: '/pages/index/index',
   PagePath_Sell: '/pages/sell/sell',
   PagePath_GoodsDetail: '/pages/sell/good/good',
-  PagePath_Account: '/pages/sell/account/account'
+  PagePath_Account: '/pages/sell/account/account',
+  PagePath_Remark: '/pages/sell/remark/remark',
+  /**数组 */
+  Array_Table: ['无需餐具', '1人', '2人', '3人', '4人', '5人', '6人', '7人', '8人', '9人', '10人', '10人以上'],
+  Remark_Keywords: ['不放辣','少放辣','多放辣','不要葱','不要蒜','不要姜','不要香菜','多放糖','少放糖','不放糖']
 };

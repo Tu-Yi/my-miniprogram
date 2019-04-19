@@ -1,0 +1,11 @@
+<view class="main">
+    <form bindsubmit="bindFormSubmit">
+        <view class="header">
+            <textarea name="textarea" bindinput='bindWord' class="textarea" value="{{value}}" placeholder="{{placeholder}}" placeholder-class="placeholder" maxlength="{{maxlength}}" focus="{{focus}}" auto-height="{{autoheight}}" adjust-position="{{adjustposition}}" show-confirm-bar="{{show-confirm-bar}}" />
+            <view class="info">
+                <view class="keywords" wx:for='{{keywords}}' wx:key='{{index}}' data-index='{{index}}' bindtap="toTextArea">{{item}}</view>
+            </view>
+        </view>
+        <button form-type="submit">完成</button>
+    </form>
+</view>

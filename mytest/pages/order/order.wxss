@@ -1,1 +1,151 @@
-/* pages/order/order.wxss */
+page{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.board {
+  padding: 20rpx;
+  padding-bottom: 0;
+  background: #ff8557;
+}
+.board .orderState {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+}
+.reason {
+  padding:20rpx;
+  background: #fff;
+  color: #888888;
+  font-size: 13px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+.account {
+  margin-top:20rpx;
+  background: #fff;
+  padding:25rpx;
+}
+.account .storename {
+  font-weight: bold;
+  border-bottom: 2px solid #ededed;
+  padding: 5rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.account .good {
+  padding:20rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,0.4);
+}
+.account .good .good_title {
+  margin-left: 20rpx;
+  text-align: left;
+  width: 60%;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.account .good .good_price {
+  text-align: right;
+  width:15%;
+  font-size: 14px;
+}
+.cmb {
+  font-size: 11px;
+}
+.account .good .good_count {
+  font-size: 13px;
+  width: 20%;
+}
+.account .info {
+  padding: 10rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,0.4);
+}
+.account .info>text {
+  font-size: 13px;
+}
+.account .info>view{
+  font-size: 14px;
+}
+.account .activity {
+  padding: 10rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,0.4);
+}
+.account .activity .mask {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.account .activity .price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff8557;
+}
+.account .activity .price text {
+  display: inline-block;
+  line-height: 1;
+}
+.account .activity .price text:first-child {
+  margin-top:-4rpx;
+}
+.account .activity .price .cmb {
+  vertical-align: bottom;
+  margin-bottom: -4rpx;
+}
+.account .totalPrice {
+  padding-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.account .totalPrice .reduced {
+  display: flex;
+  align-items: flex-end;
+  color: #888888;
+  text-align: left;
+  font-size: 13px;
+  margin-right: 20rpx;
+  margin-bottom: -4rpx;
+}
+.account .totalPrice .final {
+  align-items: center;
+  display: flex;
+}
+.account .totalPrice .final>text {
+  font-size: 14px;
+}
+.account .totalPrice .final view{
+  color: #f33b3d;
+  font-weight: bold;
+}
+.delivery {
+  font-size:13px;
+  color: #888888;
+}
+.rAddress {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  text-align:right;
+  width: 80%;
+}
+.orderId text:last-child {
+  color: #ff8557;
+}

@@ -1,13 +1,13 @@
 {
   "pages":[
+    "pages/mine/mine",
+    "pages/order/order",
     "pages/sell/sell",
     "pages/sell/good/good",
     "pages/sell/account/account",
     "pages/sell/remark/remark",
     "pages/index/index",
     "pages/index/pictures/pictures",
-    "pages/order/order",
-    "pages/mine/mine",
     "pages/logs/logs"
   ],
   "window":{

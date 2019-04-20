@@ -1,11 +1,13 @@
-// pages/mine/mine.js
+var constants = require('../../config/constants.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    img_mineorder: '../../' + constants.img_mineorder,
+    img_mineweixin: '../../' + constants.img_mineweixin,
+    img_mineaddress: '../../' + constants.img_mineaddress
   },
 
   /**

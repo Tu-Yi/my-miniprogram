@@ -1,2 +1,28 @@
-<!--pages/mine/mine.wxml-->
-<text>我的</text>
+<view class='header'>
+  <view class='userinfo-avatar'>
+    <open-data type="userAvatarUrl"></open-data>
+  </view>
+  <view class='userinfo-name'>
+    <open-data type="userNickName" lang="zh_CN"></open-data>
+  </view>
+</view>
+<view class='main'>
+  <view class='menu'>
+    <image src='{{img_mineorder}}' style='width:48px;height:48px;'/>
+    <view>
+      我的订单
+    </view>
+  </view>
+  <view class='menu'>
+    <image src='{{img_mineweixin}}' style='width:48px;height:48px;'/>
+    <view>
+      联系客服
+    </view>
+  </view>
+  <view class='menu'>
+    <image src='{{img_mineaddress}}' style='width:48px;height:48px;'/>
+    <view>
+      我的地址
+    </view>
+  </view>
+</view>

@@ -1431,3 +1431,68 @@ bindWord: function(e){
 }
 ```
 
+## 地图
+
+```html
+<map id="myMap" style="width: 100%; height: 600rpx;" 
+      latitude="{{map.latitude}}" longitude="{{map.longitude}}" markers="{{map.markers}}" show-location></map>
+```
+
+```javascript
+map: {
+      latitude: 23.099994,
+      longitude: 113.324520,
+      markers: []
+    }
+ that.setData({
+          ["storeInfo.name"]: res.data.store_name,
+          ["storeInfo.phone"]: res.data.phone,
+          ["map.latitude"]: res.data.latitude,
+          ["map.longitude"]: res.data.longitude,
+          ["map.markers"]: [{
+            id: 1,
+            latitude: res.data.latitude,
+            longitude: res.data.longitude,
+            title: res.data.store_name,
+            iconPath: res.data.store_logo,
+            width:32,
+            height:32,
+            callout: {
+              content: that.data.orderStatus,
+              color: "#ff8557",
+              fontSize: "14",
+              borderRadius: "5",
+              bgColor: "#ffffff",
+              padding: "3",
+              display: "ALWAYS"
+            }
+          }]
+        })
+onReady: function () {
+    this.mapCtx = wx.createMapContext('myMap')
+  },
+```
+
+## setData 对象和数组
+
+```javascript
+["map.markers[0].callout.content"]: res.order_status
+```
+
+## 复制到剪贴板
+
+```javascript
+copyOrderId:function(){
+    var that = this;
+    wx.setClipboardData({
+      data: that.data.orderDetail.order_id,
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+          icon: 'none'
+        });
+      }
+    });
+  },
+```
+

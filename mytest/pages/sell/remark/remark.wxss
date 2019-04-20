@@ -36,7 +36,6 @@ page{
 .textarea {
     font-size: 15px;
     background-color: #eeeeee;
-    height: 100px;
     padding:10rpx;
     margin-bottom: 20rpx;
     height: 350rpx;

@@ -1,2 +1,158 @@
-<!--pages/order/order.wxml-->
-<text>订单</text>
+<view wx:if='{{isShow}}'>
+  <view class='header'>
+    <view class='map' wx:if='{{isShowMap}}'>
+      <map id="myMap" style="width: 100%; height: 600rpx;" 
+      latitude="{{map.latitude}}" longitude="{{map.longitude}}" markers="{{map.markers}}" show-location></map>
+    </view>
+    <view class='board' wx:if='{{!isShowMap}}'>
+      <view class='orderState'>
+        {{orderStatus}}
+      </view>
+      <view class='reason' wx:if='{{isShowRefund}}'>
+        <view>
+          理由为[{{orderDetail.order_cancel_reason}}]
+        </view>
+        退款
+        <text class='cmb'>￥</text>
+        <text>{{orderDetail.final_price}}</text>
+        将于最迟2个工作日内原路退回，退款时间取决于银行处理时间
+      </view>
+    </view>
+  </view>
+  <view class='main'>
+    <view class='account'>
+      <view class='storename'>
+        <view>
+          {{storeInfo.name}}
+        </view>
+        <view bindtap='callSellerPhone'>
+          <image src='{{img_call}}' style="vertical-align: middle;width:23px; height: 23px;" />
+        </view>
+      </view>
+      <view class="good" wx:for='{{orderDetail.goods}}' wx:for-item="goods" wx:key='{{index}}'>
+        <image src='{{goods.goods_img}}' style='width:80rpx;height:80rpx;background:#cdcdcf' />
+        <view class='good_title'>{{goods.goods_name}}</view>
+        <view class='good_count'>
+          <text>{{goods.goods_count}}</text>
+        </view>
+        <view class='good_price'>
+          <text class='cmb'>￥</text>{{goods.goods_price}}
+        </view>
+      </view>
+      <view class='info'>
+        <text>包装</text>
+        <view>
+          <text class='cmb'>￥</text>
+          <text>{{orderDetail.packing_fee}}</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>配送费</text>
+        <view>
+          <text class='cmb'>￥</text>
+          <text>{{orderDetail.delivery_fee}}</text>
+        </view>
+      </view>
+      <view class='activity' wx:if='{{isNewUser}}'>
+        <view class='mask'>
+          <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:40rpx; height: 40rpx;' />
+          <text>首单立减</text>
+        </view>
+        <view class='price'>
+          <text>-</text>
+          <text class='cmb'>￥</text>
+          <text>{{orderDetail.new_user_reduction}}</text>
+        </view>
+      </view>
+      <view class='activity'>
+        <view class='mask'>
+          <image src='{{img_mina}}' style='margin-right: 10rpx;width:32rpx; height: 32rpx;' />
+          <text>小程序下单</text>
+        </view>
+        <view class='price'>
+          <text>-</text>
+          <text class='cmb'>￥</text>
+          <text>{{orderDetail.weixin_order_reduction}}</text>
+        </view>
+      </view>
+      <view class='totalPrice'>
+        <view class='reduced'>
+          <text>已优惠</text>
+          <view>
+            <text class='cmb'>￥</text>
+            <text>{{orderDetail.discount_money}}</text>
+          </view>
+        </view>
+        <view class='final'>
+          <text>小计</text>
+          <view>
+            <text class='cmb'>￥</text>
+            <text>{{orderDetail.final_price}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='account'>
+      <view class='storename'>
+        <view>
+          配送信息
+        </view>
+      </view>
+      <view class='info'>
+        <text>送达时间</text>
+        <view class='delivery'>
+          <text>{{orderDetail.except_delivery_time}}</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>收货地址</text>
+        <view class='delivery rAddress'>
+          <text>{{orderDetail.receiver_address}}</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>收货电话</text>
+        <view class='delivery'>
+          <text>{{orderDetail.receiver_phone}}</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>配送方式</text>
+        <view class='delivery'>
+          <text>{{orderDetail.delivery_service}}</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>配送骑手</text>
+        <view class='delivery' bindtap='callRiderPhone' wx:if='{{orderDetail.delivery_rider!=""}}'>
+          <text>{{orderDetail.delivery_rider}}</text>
+          <image src='{{img_call}}' style="vertical-align: middle;width:23px; height: 23px;margin-left:20rpx;" />
+        </view>
+      </view>
+    </view>
+     <view class='account'>
+      <view class='storename'>
+        <view>
+          订单信息
+        </view>
+      </view>
+      <view class='info'>
+        <text>订单号</text>
+        <view class='delivery orderId'>
+          <text>{{orderDetail.order_id}}</text> | 
+          <text bindtap='copyOrderId'>复制</text>
+        </view>
+      </view>
+      <view class='info'>
+        <text>下单时间</text>
+        <view class='delivery rAddress'>
+          <text>{{orderDetail.order_time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<import src="../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+  <template is="failPage" data="{{isShow}}" />
+</view>

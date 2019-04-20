@@ -38,6 +38,7 @@ App({
     storeId: 'mjmf',
     isNewUser: true,
     accountInfo: [],
-    remarkInfo: ""
+    orderStatus: '',
+    remarkInfo: "",
   }
 })

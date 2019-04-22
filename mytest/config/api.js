@@ -4,5 +4,6 @@ module.exports = {
   Store_Detail: url + root + '/detail',
   Goods_List: url + root + '/lists',
   Goods_Detail: url + root + '/goodsDetail',
-  Order_Detail: url + root + '/orderdetail'
+  Order_Detail: url + root + '/orderdetail',
+  Order_List: url + root + '/orderlist'
 }

@@ -7,20 +7,22 @@
   </view>
 </view>
 <view class='main'>
-  <view class='menu'>
-    <image src='{{img_mineorder}}' style='width:48px;height:48px;'/>
+  <view class='menu' bindtap='toOrderList'>
+    <image src='{{img_mineorder}}' style='width:48px;height:48px;' />
     <view>
       我的订单
     </view>
   </view>
   <view class='menu'>
-    <image src='{{img_mineweixin}}' style='width:48px;height:48px;'/>
-    <view>
-      联系客服
-    </view>
+    <button open-type='contact'>
+      <image src='{{img_mineweixin}}' style='width:48px;height:48px;' />
+      <view>
+        联系客服
+      </view>
+    </button>
   </view>
-  <view class='menu'>
-    <image src='{{img_mineaddress}}' style='width:48px;height:48px;'/>
+  <view class='menu' bindtap='myAddress'>
+    <image src='{{img_mineaddress}}' style='width:48px;height:48px;' />
     <view>
       我的地址
     </view>

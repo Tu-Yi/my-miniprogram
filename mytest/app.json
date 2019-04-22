@@ -1,12 +1,14 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/mine/mine",
     "pages/order/order",
+    "pages/order/list/list",
     "pages/sell/sell",
     "pages/sell/good/good",
     "pages/sell/account/account",
     "pages/sell/remark/remark",
-    "pages/index/index",
+    
     "pages/index/pictures/pictures",
     "pages/logs/logs"
   ],
@@ -34,7 +36,7 @@
       "selectedIconPath": "static/images/sells.png"
     },
     {
-      "pagePath": "pages/order/order",
+      "pagePath": "pages/order/list/list",
       "text": "订单",
       "iconPath": "static/images/order.png",
       "selectedIconPath": "static/images/orders.png"

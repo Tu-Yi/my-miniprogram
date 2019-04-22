@@ -12,6 +12,7 @@ Page({
     isNewUser: true,
     isShowMap: true,
     isShowRefund:false,
+    orderId: '',
     orderStatus: '',
     orderDetail: {},
     storeInfo: {
@@ -26,6 +27,10 @@ Page({
   },
   onLoad: function (options) {
     utils.setPageTitle(constants.PageTitle_Order);
+    console.log(options)
+    this.setData({
+      orderId: options.order_id
+    })
     this.getStoreInfo();
     this.getOrderDetail();
   },
@@ -96,7 +101,7 @@ Page({
   /**获取订单信息 */
   getOrderDetail:function(){
     var that = this;
-    utils.request(api.Order_Detail, { orderId: '123123123123123123' }).then(
+    utils.request(api.Order_Detail, { order_id: this.data.orderId }).then(
       res => {
         that.setData({
           orderDetail: res,

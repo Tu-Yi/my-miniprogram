@@ -1,4 +1,5 @@
 var constants = require('../../config/constants.js');
+var utils = require('../../utils/util.js');
 Page({
 
   /**
@@ -9,7 +10,26 @@ Page({
     img_mineweixin: '../../' + constants.img_mineweixin,
     img_mineaddress: '../../' + constants.img_mineaddress
   },
-
+  toOrderList:function(){
+    wx.switchTab({
+      url: constants.PagePath_OrderList,
+    })
+  },
+  myAddress:function(){
+    var that = this
+    wx.chooseAddress({
+      success(res) {
+        that.setAddress(res);
+        wx.setStorage({
+          key: 'userAddress',
+          data: that.data.user,
+        })
+      },
+      fail(err) {
+        console.log(err)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

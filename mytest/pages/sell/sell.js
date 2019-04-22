@@ -238,7 +238,7 @@ Page({
   /**获取商品列表 */
   getGoodsList: function () {
     var that = this;
-    utils.request(api.Goods_List, { shopId: app.globalData.storeId }).then(
+    utils.request(api.Goods_List, { store_id: app.globalData.storeId }).then(
       res => {
         that.setData({
           list: res

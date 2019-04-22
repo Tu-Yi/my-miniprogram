@@ -1,26 +1,29 @@
 page {
   box-sizing: border-box;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
+
 .header {
   background: #ff8557;
-  padding:20rpx;
+  padding: 20rpx;
   display: flex;
-  justify-content:flex-start;
+  justify-content: flex-start;
   align-items: center;
 }
-.userinfo-avatar {  
-  overflow:hidden;  
-  display: block;  
-  width: 160rpx;  
-  height: 160rpx;  
-  margin: 20rpx;  
-  margin-top: 50rpx;  
-  border-radius: 50%;  
-  border: 2px solid #fff;  
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);  
+
+.userinfo-avatar {
+  overflow: hidden;
+  display: block;
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+  margin-top: 50rpx;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
+
 .userinfo-name {
   color: #fff;
   font-size: 17px;
@@ -28,22 +31,51 @@ page {
   flex-direction: column;
   justify-content: center;
 }
+
 .main {
-  padding:40rpx 60rpx;
+  padding: 40rpx 60rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .menu {
   margin-bottom: 20rpx;
   width: 27%;
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
+
 .menu + .menu {
   margin-left: 20rpx;
+}
+
+button::after {
+  border: none;
+}
+
+input {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button view {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 14px;
+  line-height: 1;
+  margin-top: 8rpx;
 }

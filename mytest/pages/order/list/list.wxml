@@ -1,0 +1,28 @@
+<view class='body' wx:if='{{isShow}}'>
+  <view class='container' wx:for='{{list}}' wx:for-item='order' wx:key='{{index}}' bindtap='toOrder' data-id='{{order.order_id}}'>
+    <view class='store'>
+      <image src='{{storeInfo.logo}}' style='width:40px;height:40px;' />
+      <view>
+        {{storeInfo.name}}
+      </view>
+      <view class='weui-cell__ft_in-access'>{{order.order_status}}</view>
+    </view>
+    <view class='good'>
+      <view>
+        <text>{{order.goods_first}}</text>
+        <text> 等{{order.goods_count}}件商品</text>
+      </view>
+      <view>
+        <text>￥</text>
+        <text>{{order.final_price}}</text>
+      </view>
+    </view>
+    <view class='status'>
+      <text>{{order.order_time}}</text>
+    </view>
+  </view>
+</view>
+<import src="../../template/fail/fail.wxml" />
+<view bindtap='failOnclick'>
+  <template is="failPage" data="{{isShow}}" />
+</view>

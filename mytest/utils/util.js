@@ -173,6 +173,18 @@ function getAddress(latitude, longitude,cal){
 function roundFractional(x, n) {
   return Math.round(x * Math.pow(10, n)) / Math.pow(10, n);
 }
+/**将wx的callback形式的API转换成支持Promise的形式 */
+function promisify(api){
+  return (options, ...params) => {
+    return new Promise((resolve, reject) => {
+      const extras = {
+        success: resolve,
+        fail: reject
+      }
+      api({ ...options, ...extras }, ...params)
+    })
+  }
+}
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
@@ -186,5 +198,6 @@ module.exports = {
   getLocation: getLocation,
   getAddress: getAddress,
   getUserLocationInfo: getUserLocationInfo,
-  roundFractional: roundFractional
+  roundFractional: roundFractional,
+  promisify: promisify
 }

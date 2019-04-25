@@ -2,96 +2,105 @@
 
 page {
   box-sizing: border-box;
-}
-
-.header {
-  height: 100rpx;
-  background-color: #ff8557;
+  margin: 0;
+  padding: 0;
 }
 
 /*头部*/
 
-.info {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  margin-top: -80rpx;
+.header {
+  box-sizing: border-box;
   padding: 20rpx;
-  width: 90%;
-  background-color: #fff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  background-color: #ff8557;
+  display: flex;
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1);
 }
 
-.info .title {
+.header .content {
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #fbfbfb;
+}
+
+.header .content .title {
   font-weight: bold;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.info .content {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10rpx;
+.header .content .notice {
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
-.info .content .activity {
-  display: flex;
-  font-size: 14px;
-}
-
-.info .content .activity:first-child {
-  flex: 1.2;
-  margin-left: -3rpx;
-}
-
-.info .content .activity:first-child text {
-  margin-left: -2rpx;
-}
-
-.info .content .activity:last-child {
-  flex: 1;
-}
-
-.info .content .activity:last-child image {
-  margin-top: 6rpx;
-}
-
-.info .logo {
-  position: absolute;
-  right: -2px;
-  top: -10rpx;
-}
-
-.info .logo image {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
+.header .logo image {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 10rpx;
   background: #dbdbdb;
+}
+
+/*菜单*/
+
+.menu {
+  box-sizing: border-box;
+  display: flex;
+  background: #fff;
+  z-index: 50;
+  padding-left: 100rpx;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.menu .item {
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  color: #666;
+  padding: 15rpx 0;
+  margin-right: 100rpx;
+}
+
+.menu .item.active {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.menu .item.active:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #ff8557;
+  font-size: 24rpx;
+  color: #666;
 }
 
 /*中间*/
 
 #categrays {
-  margin-top: 10rpx;
   display: flex;
 }
 
 .nav_left {
   background: #f8f8f8;
-  width: 150rpx;
-  white-space: nowrap;
+  width: 170rpx;
 }
 
 .nav_right {
   background: #fff;
   padding-left: 20rpx;
   padding-right: 20rpx;
-  flex: 1;
 }
 
 ::-webkit-scrollbar {
@@ -366,7 +375,7 @@ page {
 .footer-cart .goodlist .name {
   letter-spacing: 1rpx;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

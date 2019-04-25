@@ -9,8 +9,8 @@
         {{orderStatus}}
       </view>
       <view class='reason' wx:if='{{isShowRefund}}'>
-        <view>
-          理由为[{{orderDetail.order_cancel_reason}}]
+        <view wx:if='{{isShowReason}}'>
+          原因为[{{orderCancelReason}}]
         </view>
         退款
         <text class='cmb'>￥</text>

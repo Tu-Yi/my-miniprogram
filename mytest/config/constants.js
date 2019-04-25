@@ -1,6 +1,7 @@
 module.exports = {
   /**腾讯地图key */
   Map_Key: 'GKSBZ-OK33D-TQF4Y-HJDZX-KQEE6-GGFRZ',
+  Image_key: 'eval_images',
   /** 全局常量*/
   AppTitle: '喵姐米粉',
   AppDesc: '最正宗的南充米粉，小时候的味道!',
@@ -16,6 +17,7 @@ module.exports = {
   ico_time: 'static/images/time.png',
   ico_picture: 'static/images/picture.png',
   ico_notice: 'static/images/notice.png',
+  ico_cha: 'static/images/cha.png',
   img_call: 'static/images/call.png',
   img_mina: 'static/images/mina.png',
   img_first: 'static/images/first.png',
@@ -30,6 +32,8 @@ module.exports = {
   img_mineorder: 'static/images/mine_order.png',
   img_mineweixin: 'static/images/mine_weixin.png',
   img_mineaddress: 'static/images/mine_address.png',
+  img_star: 'static/images/star.png',
+  img_stars: 'static/images/stars.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",
@@ -69,6 +73,7 @@ module.exports = {
   /**数组 */
   Array_Table: ['无需餐具', '1人', '2人', '3人', '4人', '5人', '6人', '7人', '8人', '9人', '10人', '10人以上'],
   Remark_Keywords: ['不放辣','少放辣','多放辣','不要葱','不要蒜','不要姜','不要香菜','多放糖','少放糖','不放糖'],
+  Sell_Menu: ["菜单", "评价"],
   /**状态信息 */
   OrderStatus_Payed: '订单已支付',
   OrderStatus_WaitSeller: '商家未接单',

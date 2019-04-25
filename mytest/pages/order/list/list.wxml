@@ -19,8 +19,54 @@
     </view>
     <view class='status'>
       <text>{{order.order_time}}</text>
+      <view wx:if='{{order.evaluate_status=="0"}}'>
+        <view class='eva' data-id='{{order.order_id}}' catchtap='showDialog'>评价</view>
+      </view>
     </view>
   </view>
+  <dialog data-model="dialogvisible" visible="{{dialogvisible}}" position="{{position}}" title="{{title}}" fullscreen="{{options.fullscreen}}" opacity="{{opacity}}" show-close="{{options.showclose}}" show-footer="{{options.showfooter}}" width="{{width}}"
+    close-on-click-modal="{{options.closeonclickmodal}}" bindclose="handleClose" bindopen="handleOpen" bindconfirm="handleConfirm">
+    <view style='height:70vh;'>
+      <view class='main'>
+        <view class='eval'>
+          <text>口味</text>
+          <view class='stars'>
+            <view wx:for="{{stars_taste}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='taste' bindtap='score'></view>
+          </view>
+        </view>
+        <view class='eval'>
+          <text>包装</text>
+          <view class='stars'>
+            <view wx:for="{{stars_wrapper}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='wrapper' bindtap='score'></view>
+          </view>
+        </view>
+        <view class='eval'>
+          <text>配送</text>
+          <view class='stars'>
+            <view wx:for="{{stars_rider}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='rider' bindtap='score'></view>
+          </view>
+        </view>
+      </view>
+      <view class='content'>
+        <textarea name="textarea" bindinput='bindWord' class="textarea" value="{{value}}" placeholder="{{placeholder}}" placeholder-class="placeholder" maxlength="{{maxlength}}" focus="{{focus}}" auto-height="{{autoheight}}" adjust-position="{{adjustposition}}"
+          show-confirm-bar="{{show-confirm-bar}}" />
+        <view class="weui-uploader__bd">
+          <view class="weui-uploader__files" style='padding-left:40rpx;' id="uploaderFiles">
+            <block wx:for="{{evalInfo.images}}" wx:key="*this">
+              <view class="weui-uploader__file evalView" bindtap="previewImage" id="{{item}}">
+                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                <image class='evalImage' src='{{ico_cha}}' style='width:16px;height:16px;' data-idx="{{index}}" catchtap="removeImage" />
+              </view>
+            </block>
+          </view>
+          <view class="weui-uploader__input-box" wx:if="{{evalInfo.images.length < 6}}">
+            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </dialog>
 </view>
 <import src="../../template/fail/fail.wxml" />
 <view bindtap='failOnclick'>

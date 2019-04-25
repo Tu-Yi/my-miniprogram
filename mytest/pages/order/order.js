@@ -2,6 +2,7 @@ var utils = require('../../utils/util.js');
 var api = require('../../config/api.js');
 var constants = require('../../config/constants.js');
 var fail = require('../template/fail/fail.js');
+var dictionaries = require('../../config/dictionaries.js');
 var app = getApp();
 Page({
   data: {
@@ -12,8 +13,10 @@ Page({
     isNewUser: true,
     isShowMap: true,
     isShowRefund:false,
+    isShowReason: false,
     orderId: '',
     orderStatus: '',
+    orderCancelReason: '',
     orderDetail: {},
     storeInfo: {
       name: '',
@@ -104,11 +107,9 @@ Page({
     utils.request(api.Order_Detail, { order_id: this.data.orderId }).then(
       res => {
         that.setData({
-          orderDetail: res,
-          orderStatus: res.order_status,
-          ["map.markers[0].callout.content"]: res.order_status
+          orderDetail: res
         })
-        this.initOrderStatus();
+        this.initOrderStatus(res);
       },
       err => {
         wx.hideLoading();
@@ -121,54 +122,50 @@ Page({
     )
   },
   /**根据状态显示 */
-  initOrderStatus:function(){
+  initOrderStatus:function(res){
+    console.log(res)
     let isShowMap;
     let isShowRefund;
-    switch(this.data.orderStatus){
-      case constants.OrderStatus_Payed:
+    let isShowReason;
+    switch (+res.order_status){
+      case 0:
         isShowMap=true;
         isShowRefund=false;
+        isShowReason=false;
         break;
-      case constants.OrderStatus_WaitSeller:
+      case 1:
         isShowMap = true;
         isShowRefund = false;
+        isShowReason = false;
         break;
-      case constants.OrderStatus_SellerReceive:
-        isShowMap = true;
-        isShowRefund = false;
-        break;
-      case constants.OrderStatus_WaitRider:
-        isShowMap = true;
-        isShowRefund = false;
-        break;
-      case constants.OrderStatus_RiderReceive:
-        isShowMap = true;
-        isShowRefund = false;
-        break;
-      case constants.OrderStatus_RiderPicked:
-        isShowMap = true;
-        isShowRefund = false;
-        break;
-      case constants.OrderStatus_Reached:
+      case 2:
         isShowMap = false;
         isShowRefund = false;
+        isShowReason = false;
         break;
-      case constants.OrderStatus_UserCancel:
+      case 3:
         isShowMap = false;
         isShowRefund = true;
+        isShowReason = false;
         break;
-      case constants.OrderStatus_SystemCancel:
+      case 4:
         isShowMap = false;
         isShowRefund = true;
+        isShowReason = false;
         break;
-      case constants.OrderStatus_Exception:
+      case 5:
         isShowMap = false;
         isShowRefund = true;
+        isShowReason = true;
         break;
     }
     this.setData({
       isShowMap: isShowMap,
-      isShowRefund: isShowRefund
+      isShowRefund: isShowRefund,
+      isShowReason: isShowReason,
+      orderStatus: dictionaries.default.label('order_status', +res.order_status),
+      orderCancelReason: dictionaries.default.label('order_err_reason', +res.order_cancel_reason),
+      ["map.markers[0].callout.content"]: dictionaries.default.label('order_status', +res.order_status)
     })
   },
   /**复制订单号 */

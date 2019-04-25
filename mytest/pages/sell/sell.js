@@ -20,6 +20,8 @@ Page({
     store_name: '',
     store_logo: '',
     notice: '',
+    menu: constants.Sell_Menu,
+    currentMenu: 0,
     newUserReduction: 0,
     minaDiscount: 0,
     startSendPrice: 0,
@@ -371,11 +373,19 @@ Page({
       url: constants.PagePath_Account
     })
   },
+  menuTap: function(e){
+    var that = this;
+    that.setData({
+      currentMenu: e.currentTarget.dataset.idx
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      currentMenu: 0
+    })
   },
 
   /**

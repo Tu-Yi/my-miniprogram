@@ -1,45 +1,40 @@
 <view wx:if='{{isShow}}' class='all'>
   <view class='shade' wx:if='{{isCart}}' bindtap='showMain'></view>
-  <view class='allInfo'>
-    <view class='header'>
+  <view class='header'>
+    <view class='logo'>
+      <image wx:if='{{store_logo!=""}}' src='{{store_logo}}' />
     </view>
-    <view class='info' id="storeInfo">
-      <view class='logo'>
-        <image wx:if='{{store_logo!=""}}' src='{{store_logo}}' />
-      </view>
+    <view class='content'>
       <view class='page__title title'>
-        <text>{{store_name}}</text>
+       {{store_name}}
       </view>
-      <view class='page__desc'>
+      <view class='notice'>
         公告：{{notice}}
-      </view>
-      <view class='content'>
-        <view class='activity'>
-          <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:40rpx; height: 40rpx;' />
-          <text>新用户首单立减{{newUserReduction}}元</text>
-        </view>
-        <view class='activity'>
-          <image src='{{img_mina}}' style='margin-right: 10rpx;vertical-align: middle;width:32rpx; height: 32rpx;' />
-          <text>小程序下单享{{minaDiscount}}折</text>
-        </view>
       </view>
     </view>
   </view>
-  <view id="categrays">
-    <view>
+  <view class='menu'>
+    <view wx:for='{{menu}}' data-idx="{{index}}" wx:key="{{index}}" bindtap='menuTap' 
+    class="item {{currentMenu==index ? 'active' : ''}}">{{item}}</view>
+  </view>
+  <view id='eval' wx:if="{{currentMenu==1}}">
+    评价
+  </view>
+  <view id="categrays" wx:if="{{currentMenu==0}}">
+    <view style='flex:1;height:100%;'>
       <scroll-view class="nav_left" scroll-y style='height:{{height}}px'>
         <block wx:for="{{list}}" wx:key='{{index}}'>
           <view wx-if='{{item.goods.length}}' class="nav_left_items item {{index==cateListActiveIndex && 'nav_left_item-active'}}" data-id='b{{index}}' data-index="{{index}}" bindtap="scrollToCategory" data-itemid='{{item.goods_type_id}}'>
             {{item.goods_type}}
-             <view class='shownum' wx:if='{{item.sell_num>0}}'>
-                  {{item.sell_num}}
-              </view>
+            <view class='shownum' wx:if='{{item.sell_num>0}}'>
+              {{item.sell_num}}
+            </view>
           </view>
         </block>
       </scroll-view>
     </view>
-    <view style='flex:1;'>
-      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}"  bindscroll="foodListScrolling" scroll-with-animation='true'>
+    <view style='flex:1;height:100%;'>
+      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}" bindscroll="foodListScrolling" scroll-with-animation='true'>
         <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
           <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
             {{item.goods_type}}
@@ -53,12 +48,9 @@
               <view class='good_content_detail'>{{goods.goods_detail}}</view>
               <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>
               <view class='good_content_price'>
-                  <text>￥</text>{{goods.goods_price}}
-                </view>
-              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" goodsimg="{{goods.goods_img}}"
-              goodtypeid="{{item.goods_type_id}}"  goodsWrapPrice="{{goods.goods_wrap_price}}"
-              class="amount" 
-              bind:numEvent="onNumChange"></amount>
+                <text>￥</text>{{goods.goods_price}}
+              </view>
+              <amount goodname="{{goods.goods_name}}" goodprice="{{goods.goods_price}}" goodsimg="{{goods.goods_img}}" goodtypeid="{{item.goods_type_id}}" goodsWrapPrice="{{goods.goods_wrap_price}}" class="amount" bind:numEvent="onNumChange"></amount>
             </view>
           </view>
         </block>
@@ -76,7 +68,9 @@
     <view class='state' wx:if="{{totalNum>0}}" bindtap="{{totalNum>0?'showCart':''}}">
       <view class='priceInfo'>
         <view class='price'>
-          <text style='font-size:13px;'>￥</text><text style='color:#ff8557;font-weight:bold;margin-right:5rpx;'>{{totalMoney}}</text><text style='font-size:13px;color:#888888;text-decoration: line-through;'>{{originalMoney}}</text>
+          <text style='font-size:13px;'>￥</text>
+          <text style='color:#ff8557;font-weight:bold;margin-right:5rpx;'>{{totalMoney}}</text>
+          <text style='font-size:13px;color:#888888;text-decoration: line-through;'>{{originalMoney}}</text>
         </view>
         <view style='font-size:11px;color:#888888;line-height:1;'>
           另需配送费{{deliveryFee}}元
@@ -97,17 +91,26 @@
     </view>
   </view>
   <view wx:if='{{isCart}}' class='footer-cart'>
-      <view class='clear'><image src='{{ico_clear}}' style='width:16px;height:16px;' /> <text bindtap='clearCart'>清空购物车</text></view>
-      <view wx:for='{{cartArray}}' wx:for-item='good' class='goodlist' wx:key='{{index}}'>
-        <view class='name'>{{good.name}}</view>
-        <view class='price'><text>￥</text><text>{{good.price}}</text></view>
-        <view class='count'>{{good.count}}</view>
+    <view class='clear'>
+      <image src='{{ico_clear}}' style='width:16px;height:16px;' />
+      <text bindtap='clearCart'>清空购物车</text>
+    </view>
+    <view wx:for='{{cartArray}}' wx:for-item='good' class='goodlist' wx:key='{{index}}'>
+      <view class='name'>{{good.name}}</view>
+      <view class='price'>
+        <text>￥</text>
+        <text>{{good.price}}</text>
       </view>
-      <view class='wrapper'>
-        <view>包装费</view>
-        <view><text>￥</text><text>{{wrapperMoney}}</text></view>
+      <view class='count'>{{good.count}}</view>
+    </view>
+    <view class='wrapper'>
+      <view>包装费</view>
+      <view>
+        <text>￥</text>
+        <text>{{wrapperMoney}}</text>
       </view>
     </view>
+  </view>
 </view>
 <import src="../template/fail/fail.wxml" />
 <view bindtap='failOnclick'>

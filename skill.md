@@ -1496,3 +1496,527 @@ copyOrderId:function(){
   },
 ```
 
+## 客服
+
+去掉按钮样式
+
+```html
+<button open-type='contact'>
+      <image src='{{img_mineweixin}}' style='width:48px;height:48px;' />
+      <view>
+        联系客服
+      </view>
+    </button>
+```
+
+```css
+button::after {
+  border: none;
+}
+
+input {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+```
+
+## 模态框
+
+```html
+<dialog data-model="dialogvisible" visible="{{dialogvisible}}" position="{{position}}" title="{{title}}" fullscreen="{{options.fullscreen}}" opacity="{{opacity}}" show-close="{{options.showclose}}" show-footer="{{options.showfooter}}" width="{{width}}"
+    close-on-click-modal="{{options.closeonclickmodal}}" bindclose="handleClose" bindopen="handleOpen" bindconfirm="handleConfirm">
+    <view style='height:60vh;'>
+    </view>
+```
+
+```javascript
+dialogvisible: false,
+    options: {
+      showclose: true,
+      showfooter: true,
+      closeonclickmodal: true,
+      fullscreen: false
+    },
+    title: '评价',
+    opacity: '0.4',
+    width: '85',
+    position: 'center',
+showDialog: function (e) {
+    this.setData({
+      dialogvisible: true,
+      ["evalInfo.order_id"]: e.currentTarget.dataset.id
+    })
+
+  },
+  handleClose: function () {
+    wx.showToast({
+      title: 'close dialog',
+      icon: 'none'
+    })
+  },
+  handleOpen: function () {
+    wx.showToast({
+      title: 'open dialog',
+      icon: 'none'
+    })
+  },
+  handleConfirm: function () {
+    wx.showToast({
+      title: 'confirm',
+      icon: 'none'
+    })
+  },
+```
+
+## 评价打星星
+
+```html
+<view class='main'>
+        <view class='eval'>
+          <text>口味</text>
+          <view class='stars'>
+            <view wx:for="{{stars_taste}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='taste' bindtap='score'></view>
+          </view>
+        </view>
+        <view class='eval'>
+          <text>包装</text>
+          <view class='stars'>
+            <view wx:for="{{stars_wrapper}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='wrapper' bindtap='score'></view>
+          </view>
+        </view>
+        <view class='eval'>
+          <text>配送</text>
+          <view class='stars'>
+            <view wx:for="{{stars_rider}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='rider' bindtap='score'></view>
+          </view>
+        </view>
+```
+
+```css
+.eval {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+.stars {
+  display: flex;
+  margin-left: 20rpx;
+  align-items: center;
+}
+.stars view {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 30rpx;
+  background-size: 100% 100%;
+}
+```
+
+```javascript
+score: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.id;
+    for (var i = 0; i < 5; i++) {
+      var allItem = 'stars_'+id+'[' + i + '].flag';
+      that.setData({
+        [allItem]: 1
+      })
+    }
+    var index = e.currentTarget.dataset.index;
+    for (var i = 0; i <= index; i++) {
+      var item = 'stars_' + id + '[' + i + '].flag';
+      that.setData({
+        [item]: 2
+      })
+    }
+    if(id==='taste'){
+      that.setData({
+        ["evalInfo.taste_evaluate_level"]: index+1
+      })
+    }else if(id==='wrapper'){
+      that.setData({
+        ["evalInfo.pack_evaluate_level"]: index + 1
+      })
+    }else if(id==="rider"){
+      that.setData({
+        ["evalInfo.dispatch_evaluate_level"]: index + 1
+      })
+    }
+  },
+```
+
+## 字典类
+
+```javascript
+export default {
+  label(constMap = {}, value) {
+    if (typeof constMap === 'string') {
+      constMap = this[constMap]
+    }
+    for (var key in constMap) {
+      if (constMap[key].value === value) {
+        return constMap[key].label
+      }
+    }
+    return null
+  },
+  value(constMap = {}, label) {
+    if (typeof constMap === 'string') {
+      constMap = this[constMap]
+    }
+    for (var key in constMap) {
+      if (constMap[key].label === label) {
+        return constMap[key].value
+      }
+    }
+    return null
+  },
+  list(constMap = {}) {
+    let list = []
+    if (typeof constMap === 'string') {
+      constMap = this[constMap]
+    }
+    for (var key in constMap) {
+      list.push(constMap[key])
+    }
+    return list
+  },
+  evaluate_status: [
+    {
+      value: 0,
+      label: '未评价'
+    },
+    {
+      value: 1,
+      label: '已评价'
+    }
+  ],
+  order_status: [
+    {
+      value: 0,
+      label: '商家未接单'
+    },
+    {
+      value: 1,
+      label: '开始配送'
+    },
+    {
+      value: 2,
+      label: '订单已送达'
+    },
+    {
+      value: 3,
+      label: '买家取消订单'
+    },
+    {
+      value: 4,
+      label: '商家接单超时'
+    },
+    {
+      value: 5,
+      label: '订单异常'
+    }
+  ]
+}
+```
+
+## 文件上传
+
+```html
+<view class="weui-uploader__bd">
+          <view class="weui-uploader__files" style='padding-left:40rpx;' id="uploaderFiles">
+            <block wx:for="{{evalInfo.images}}" wx:key="*this">
+              <view class="weui-uploader__file evalView" bindtap="previewImage" id="{{item}}">
+                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                <image class='evalImage' src='{{ico_cha}}' style='width:16px;height:16px;' data-idx="{{index}}" catchtap="removeImage" />
+              </view>
+            </block>
+          </view>
+          <view class="weui-uploader__input-box" wx:if="{{evalInfo.images.length < 6}}">
+            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+          </view>
+        </view>
+```
+
+```css
+.evalView {
+  position: relative;
+}
+.evalImage {
+  position: absolute;
+  right: -5rpx;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  box-shadow:0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+```
+
+```javascript
+let orderId = this.data.evalInfo.order_id;
+let tastelevel = this.data.evalInfo.taste_evaluate_level;
+let packlevel = this.data.evalInfo.pack_evaluate_level;
+let dispatchlevel = this.data.evalInfo.dispatch_evaluate_level;
+let content = this.data.evalInfo.evaluate_content;
+let images = this.data.evalInfo.images;
+var that = this;
+if (orderId && tastelevel && packlevel && dispatchlevel && content) {
+    if (images.length > 0) {
+        const arr = []
+        for (let path of images) {
+            arr.push(wxUploadFile({
+                url: constants.Upload_Images,
+                filePath: path,
+                name: constants.Image_key,
+            }))
+        }
+        wx.showLoading({
+            title: '正在上传...',
+            mask: true
+        })
+        Promise.all(arr).then(res => {
+            return res.map(item => JSON.parse(item.data).url)
+        }).catch(err => {
+            console.log(">>>> upload images error:", err)
+        }).then(urls => {
+            return utils.request(api.Goods_List, {
+                order_id: orderId,
+                taste_evaluate_level: tastelevel,
+                pack_evaluate_level: packlevel,
+                dispatch_evaluate_level: dispatchlevel,
+                evaluate_content: content
+            })
+        }).then(res => {
+            wx.showToast({
+                title: '保存成功',
+            })
+        }).catch(err => {
+            console.log(">>>> save eval error:", err)
+            utils.showErrorToast(constants.Msg_DataError);
+            console.log(err)
+        }).then(() => {
+            wx.hideLoading()
+        })
+    } else {
+        utils.request(api.Goods_List, {
+            order_id: orderId,
+            taste_evaluate_level: tastelevel,
+            pack_evaluate_level: packlevel,
+            dispatch_evaluate_level: dispatchlevel,
+            evaluate_content: content
+        }).then(
+            res => {
+                wx.showToast({
+                    title: '保存成功',
+                })
+            },
+            err => {
+                wx.hideLoading();
+                utils.showErrorToast(constants.Msg_DataError);
+                console.log(err)
+            }
+        )
+    }
+} else {
+    wx.showToast({
+        title: '评价信息不完整',
+        icon: 'none'
+    })
+}
+```
+
+```javascript
+  chooseImage: function (e) {
+    var that = this;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        const images = that.data.evalInfo.images.concat(res.tempFilePaths)
+        that.setData({
+          ["evalInfo.images"]: images.length <= 6 ? images : images.slice(0, 6)
+        });
+      }
+    })
+  },
+  previewImage: function (e) {
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.evalInfo.images // 需要预览的图片http链接列表
+    })
+  },
+  removeImage: function (e) {
+    var images = this.data.evalInfo.images;
+    const idx = e.target.dataset.idx
+    images.splice(idx, 1);
+    this.setData({
+      ["evalInfo.images"]: images
+    })
+  },
+```
+
+## 确定取消框
+
+```javascript
+wx.showModal({
+    title: '确认关闭评价',
+    content: '关闭后当前信息不会保留',
+    confirmText: "继续",
+    cancelText: "关闭",
+    success: function (res) {
+        console.log(res);
+        if (res.confirm) {
+            console.log('继续评价')
+        } else {
+            that.closedialog();
+            that.triggerEvent('close');
+        }
+    }
+});
+```
+
+## 清空数据
+
+```javascript
+let evalInfo = this.data.evalInfo;
+    for (let key in evalInfo) {
+      if (key === "images") {
+        evalInfo[key] = []
+      } else {
+        evalInfo[key] = ''
+      }
+    }
+    this.setData({
+      evalInfo: evalInfo,
+      value: ""
+    })
+```
+
+## 根据状态显示
+
+```javascript
+  /**根据状态显示 */
+  initOrderStatus:function(res){
+    console.log(res)
+    let isShowMap;
+    let isShowRefund;
+    let isShowReason;
+    switch (+res.order_status){
+      case 0:
+        isShowMap=true;
+        isShowRefund=false;
+        isShowReason=false;
+        break;
+      case 1:
+        isShowMap = true;
+        isShowRefund = false;
+        isShowReason = false;
+        break;
+      case 2:
+        isShowMap = false;
+        isShowRefund = false;
+        isShowReason = false;
+        break;
+      case 3:
+        isShowMap = false;
+        isShowRefund = true;
+        isShowReason = false;
+        break;
+      case 4:
+        isShowMap = false;
+        isShowRefund = true;
+        isShowReason = false;
+        break;
+      case 5:
+        isShowMap = false;
+        isShowRefund = true;
+        isShowReason = true;
+        break;
+    }
+    this.setData({
+      isShowMap: isShowMap,
+      isShowRefund: isShowRefund,
+      isShowReason: isShowReason,
+      orderStatus: dictionaries.default.label('order_status', +res.order_status),
+      orderCancelReason: dictionaries.default.label('order_err_reason', +res.order_cancel_reason),
+      ["map.markers[0].callout.content"]: dictionaries.default.label('order_status', +res.order_status)
+    })
+  },
+```
+
+## tab菜单
+
+```html
+<view class='menu'>
+    <view wx:for='{{menu}}' data-idx="{{index}}" wx:key="{{index}}" bindtap='menuTap' 
+    class="item {{currentMenu==index ? 'active' : ''}}">{{item}}</view>
+  </view>
+  <view id='eval' wx:if="{{currentMenu==1}}">
+    评价
+  </view>
+  <view id="categrays" wx:if="{{currentMenu==0}}">
+```
+
+```css
+.menu {
+  box-sizing: border-box;
+  display: flex;
+  background: #fff;
+  z-index: 50;
+  padding-left: 100rpx;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.menu .item {
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  color: #666;
+  padding: 15rpx 0;
+  margin-right: 100rpx;
+}
+
+.menu .item.active {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.menu .item.active:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #ff8557;
+  font-size: 24rpx;
+  color: #666;
+}
+```
+
+```javascript
+menuTap: function(e){
+    var that = this;
+    that.setData({
+      currentMenu: e.currentTarget.dataset.idx
+    })
+  },
+```
+
+## 页面每次显示
+
+```javascript
+onShow: function () {
+    this.setData({
+      currentMenu: 0
+    })
+  },
+```
+

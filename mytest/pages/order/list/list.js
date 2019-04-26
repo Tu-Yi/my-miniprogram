@@ -246,13 +246,15 @@ Page({
         }).catch(err => {
           console.log(">>>> upload images error:", err)
         }).then(urls => {
-          return utils.request(api.Goods_List, {
+          return utils.request(api.Post_Eval, {
             order_id: orderId,
+            openid: app.globalData.openid,
             taste_evaluate_level: tastelevel,
             pack_evaluate_level: packlevel,
             dispatch_evaluate_level: dispatchlevel,
-            evaluate_content: content
-          })
+            evaluate_content: content,
+            images: urls
+          }, "POST")
         }).then(res => {
           wx.showToast({
             title: '保存成功',
@@ -265,13 +267,15 @@ Page({
           wx.hideLoading()
         })
       } else {
-        utils.request(api.Goods_List, {
+        utils.request(api.Post_Eval, {
           order_id: orderId,
+          openid: app.globalData.openid,
           taste_evaluate_level: tastelevel,
           pack_evaluate_level: packlevel,
           dispatch_evaluate_level: dispatchlevel,
-          evaluate_content: content
-        }).then(
+          evaluate_content: content,
+          images: []
+        },"POST").then(
           res => {
             wx.showToast({
               title: '保存成功',
@@ -402,6 +406,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: constants.AppTitle,
+      desc: constants.AppDesc,
+      path: constants.AppHome
+    }
   }
 })

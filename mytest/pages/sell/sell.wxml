@@ -6,7 +6,7 @@
     </view>
     <view class='content'>
       <view class='page__title title'>
-       {{store_name}}
+        {{store_name}}
       </view>
       <view class='notice'>
         公告：{{notice}}
@@ -14,11 +14,45 @@
     </view>
   </view>
   <view class='menu'>
-    <view wx:for='{{menu}}' data-idx="{{index}}" wx:key="{{index}}" bindtap='menuTap' 
-    class="item {{currentMenu==index ? 'active' : ''}}">{{item}}</view>
+    <view wx:for='{{menu}}' data-idx="{{index}}" wx:key="{{index}}" bindtap='menuTap' class="item {{currentMenu==index ? 'active' : ''}}">{{item}}</view>
   </view>
   <view id='eval' wx:if="{{currentMenu==1}}">
-    评价
+    <view class='evalItem' wx:for="{{evalList}}" wx:key="{{index}}">
+      <view class='avatar'>
+        <image src='{{item.userAvatarUrl}}' style='width:32px;height:32px;' />
+      </view>
+      <view class='content'>
+        <view class='name'>
+          <text>{{item.userNickName}}</text>
+          <text>{{item.update_date}}</text>
+        </view>
+        <view class='level'>
+          <view class='eval'>
+            <text>口味</text><text>{{item.taste_evaluate_level}}</text><text>分</text>
+          </view>
+         <view class='eval'>
+            <text>包装</text><text>{{item.pack_evaluate_level}}</text><text>分</text>
+          </view>
+          <view class='eval'>
+            <text>配送</text><text>{{item.dispatch_evaluate_level}}</text><text>分</text>
+          </view>
+        </view>
+        <view class='evalImages'>
+          <view class="weui-uploader__bd">
+          <view class="weui-uploader__files" id="uploaderFiles">
+            <block wx:for="{{item.images}}" wx:key="*this">
+              <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+              </view>
+            </block>
+          </view>
+        </view>
+        </view>
+        <view class='storeReply' wx:if='{{item.store_reply}}'>
+          商家回复：{{item.store_reply}}
+        </view>
+      </view>
+    </view>
   </view>
   <view id="categrays" wx:if="{{currentMenu==0}}">
     <view style='flex:1;height:100%;'>
@@ -34,8 +68,9 @@
       </scroll-view>
     </view>
     <view style='flex:1;height:100%;'>
-      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}" bindscroll="foodListScrolling" scroll-with-animation='true'>
-        <block wx:for='{{list}}' wx:for-item="item" wx:key='{{index}}'>
+      <!-- <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}" bindscroll="foodListScrolling" scroll-with-animation='true'> -->
+      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y='true' scroll-into-view="{{toView}}" bindscroll="foodListScrolling" scroll-with-animation='true'>
+        <block wx:for='{{list}}' wx:key='{{index}}'>
           <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
             {{item.goods_type}}
           </view>

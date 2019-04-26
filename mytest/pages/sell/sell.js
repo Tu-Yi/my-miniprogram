@@ -19,6 +19,8 @@ Page({
     /**店铺数据 */
     store_name: '',
     store_logo: '',
+    lat: '',
+    lng: '',
     notice: '',
     menu: constants.Sell_Menu,
     currentMenu: 0,
@@ -34,6 +36,8 @@ Page({
     isCart: false, //是否显示购物车
     /**商品数据 */
     list: [],
+    evalList: [],
+    evalPage: 1,
     curIndex: 0,
     toView: '',
     height: 0,
@@ -70,7 +74,9 @@ Page({
           startSendPrice: res.data.start_send_price || 0,
           startSendPrice_poor: res.data.start_send_price || 0,
           deliveryFee: res.data.delivery_fee || 0,
-          deliveryDistance: res.data.delivery_distance || 0
+          deliveryDistance: res.data.delivery_distance || 0,
+          lat: res.data.latitude,
+          lng: res.data.longitude
         })
       },
       fail: function (err) {
@@ -266,19 +272,22 @@ Page({
   },
   /**设置右侧高度 */
   setGoodListHeight: function () {
-    var that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        var h;
-        var query = wx.createSelectorQuery();
-        query.select('#categrays').boundingClientRect(function (rect) {
-          h = res.windowHeight - rect.top
-          that.setData({
-            height: h - res.windowHeight * 0.08
-          })
-        }).exec();
-      },
-    })
+    var that = this;
+    let h_screen, h_header, h_menu, h_footer;
+    let query = wx.createSelectorQuery();
+    query.select('.header').boundingClientRect(function (rect) {
+      h_header = rect.height;
+    }).exec();
+    query.select('.menu').boundingClientRect(function (rect) {
+      h_menu = rect.height;
+    }).exec();
+    query.select('.footer').boundingClientRect(function (rect) {
+      h_screen = wx.getSystemInfoSync().windowHeight;
+      h_footer = rect.height;
+      that.setData({
+        height: h_screen - h_header - h_menu - h_footer
+      })
+    }).exec();
   },
   /** 获取每类商品界面高度数组*/
   setFoodListAreaHeight() {
@@ -320,21 +329,23 @@ Page({
      * @param {*} e 
      */
   scrollToCategory(e) {
-    //let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id
     let index = parseInt(e.currentTarget.dataset.index);
     //let itemid = e.currentTarget.dataset.itemid
     this.setData({
-      //toView: id,
-      curIndex: index
+      toView: id,
+      curIndex: index,
+      cateListActiveIndex: index
     })
-    let idx = e.currentTarget.dataset.index
-    var top;
-    if (idx > 0) {
-      top = idx * 10
-    }
-    this.setData({
-      listViewScrollTop: (this.data.foodAreaHeight[idx] + idx * this.data.eleCateTitleHeight)
-    })
+    // let idx = e.currentTarget.dataset.index
+    // var top;
+    // if (idx > 0) {
+    //   top = idx * 10
+    // }
+    // console.log(this.data.foodAreaHeight[idx])
+    // this.setData({
+    //   listViewScrollTop: this.data.foodAreaHeight[idx] + 40
+    // })
   },
   /**商品滚动，分类高亮 */
   foodListScrolling(event) {
@@ -358,7 +369,10 @@ Page({
       storeName: this.data.store_name,
       deliveryFee: this.data.deliveryFee,
       newUserReduction: this.data.newUserReduction,
-      minaDiscount: this.data.minaDiscount
+      minaDiscount: this.data.minaDiscount,
+      lat: this.data.lat,
+      lng: this.data.lng,
+      deliveryDistance: this.data.deliveryDistance
     }
     let goodsInfo = {
       wrapperMoney: this.data.wrapperMoney,
@@ -373,10 +387,44 @@ Page({
       url: constants.PagePath_Account
     })
   },
-  menuTap: function(e){
+  menuTap: function (e) {
     var that = this;
     that.setData({
       currentMenu: e.currentTarget.dataset.idx
+    })
+    if (this.data.currentMenu === 1 && this.data.evalList.length === 0) {
+      that.getEvalList();
+    }
+  },
+  getEvalList: function () {
+    var that=this;
+    utils.request(api.Eval_List, { store_id: app.globalData.storeId, page: that.data.evalPage }).then(
+      res => {
+        console.log(res)
+        var evalList = that.data.evalList;
+
+        for (var i = 0; i < res.length; i++) {
+          evalList.push(res[i]);
+        }
+        // 设置数据
+        that.setData({
+          evalList: evalList
+        })
+      },
+      err => {
+        wx.hideLoading();
+        that.setData({
+          isShow: false
+        })
+        utils.showErrorToast(constants.Msg_DataError);
+        console.log(err)
+      }
+    )
+  },
+  previewImage: function (e) {
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.id // 当前显示图片的http链接
     })
   },
   /**
@@ -413,13 +461,23 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var that = this;
+    var page = this.data.evalPage;
+    page = page + 1
+    that.setData({
+      evalPage: page
+    })
+    this.getEvalList();
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: constants.AppTitle,
+      desc: constants.AppDesc,
+      path: constants.AppHome
+    }
   }
 })

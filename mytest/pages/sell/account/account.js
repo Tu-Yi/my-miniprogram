@@ -70,10 +70,29 @@ Page({
     var that=this
     wx.chooseAddress({
       success(res) {
-        that.setAddress(res);
-        wx.setStorage({
-          key: 'userAddress',
-          data: that.data.user,
+        console.log(res)
+        let addr = res;
+        let address = res.provinceName + res.cityName + res.countyName+ res.detailInfo;
+        utils.getCoorByAddress(address,function(res){
+          let distance = utils.getDistance(res.location.lat, res.location.lng, that.data.accountInfo[1].lat, that.data.accountInfo[1].lng);
+          console.log(res.location.lat)
+          console.log(res.location.lng)
+          console.log(that.data.accountInfo[1].lat)
+          console.log(that.data.accountInfo[1].lng)
+          console.log(distance)
+          console.log(that.data.accountInfo[1].deliveryDistance)
+          if (distance > +that.data.accountInfo[1].deliveryDistance){
+            wx.showToast({
+              title: constants.Msg_AddressOutOfRange,
+              icon: 'none'
+            })
+          }else{
+            that.setAddress(addr);
+            wx.setStorage({
+              key: 'userAddress',
+              data: that.data.user,
+            })
+          }
         })
       },
       fail(err){
@@ -146,13 +165,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

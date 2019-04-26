@@ -6,5 +6,7 @@ module.exports = {
   Goods_Detail: url + root + '/goodsDetail',
   Order_Detail: url + root + '/orderdetail',
   Order_List: url + root + '/orderlist',
-  Upload_Images: url + root + '/image/upload'
+  Upload_Images: url + root + '/image/upload',
+  Post_Eval: url + root + '/add',
+  Eval_List: url + root + '/evallist'
 }

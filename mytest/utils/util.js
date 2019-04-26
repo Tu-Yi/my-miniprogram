@@ -169,6 +169,26 @@ function getAddress(latitude, longitude,cal){
     }
   })
 }
+/**通过地址获取坐标 */
+function getCoorByAddress(addr,cal){
+  let qqmapsdk = new QQMapWX({
+    key: constants.Map_Key
+  })
+  console.log("13123")
+  qqmapsdk.geocoder({
+    address: addr,
+    success(res) {
+      cal(res.result)
+    },
+    fail(error) {
+      console.error(error);
+      wx.showToast({
+        title: constants.Msg_AddressFail,
+        icon: 'none'
+      })
+    }
+  })
+}
 /**处理浮点数运算 */
 function roundFractional(x, n) {
   return Math.round(x * Math.pow(10, n)) / Math.pow(10, n);
@@ -185,6 +205,18 @@ function promisify(api){
     })
   }
 }
+/**获取坐标直线距离 */
+function getDistance(lat1, lng1, lat2, lng2) {
+  var radLat1 = lat1 * Math.PI / 180.0;
+  var radLat2 = lat2 * Math.PI / 180.0;
+  var a = radLat1 - radLat2;
+  var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+  var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+  s = s * 6378.137;// EARTH_RADIUS;
+  s = Math.round(s * 10000) / 10000;
+  return s;
+}
 module.exports = {
   formatTime: formatTime,
   getImageScale: getImageScale,
@@ -199,5 +231,7 @@ module.exports = {
   getAddress: getAddress,
   getUserLocationInfo: getUserLocationInfo,
   roundFractional: roundFractional,
-  promisify: promisify
+  promisify: promisify,
+  getCoorByAddress: getCoorByAddress,
+  getDistance: getDistance
 }

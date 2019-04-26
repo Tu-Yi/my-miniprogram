@@ -2020,3 +2020,122 @@ onShow: function () {
   },
 ```
 
+## 分享
+
+```javascript
+onShareAppMessage: function () {
+    return {
+      title: constants.AppTitle,
+      desc: constants.AppDesc,
+      path: constants.AppHome
+    }
+  }
+```
+
+## 通过地址获取坐标
+
+```javascript
+/**通过地址获取坐标 */
+function getCoorByAddress(addr,cal){
+  let qqmapsdk = new QQMapWX({
+    key: constants.Map_Key
+  })
+  console.log("13123")
+  qqmapsdk.geocoder({
+    address: addr,
+    success(res) {
+      cal(res.result)
+    },
+    fail(error) {
+      console.error(error);
+      wx.showToast({
+        title: constants.Msg_AddressFail,
+        icon: 'none'
+      })
+    }
+  })
+}
+```
+
+## 获取坐标直线距离
+
+```javascript
+/**获取坐标直线距离 */
+function getDistance(lat1, lng1, lat2, lng2) {
+  var radLat1 = lat1 * Math.PI / 180.0;
+  var radLat2 = lat2 * Math.PI / 180.0;
+  var a = radLat1 - radLat2;
+  var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+  var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+  s = s * 6378.137;// EARTH_RADIUS;
+  s = Math.round(s * 10000) / 10000;
+  return s;
+}
+```
+
+## 上拉加载
+
+```javascript
+ /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var that = this;
+    var page = this.data.evalPage;
+    page = page + 1
+    that.setData({
+      evalPage: page
+    })
+    this.getEvalList();
+  },
+      getEvalList: function () {
+          var that=this;
+          utils.request(api.Eval_List, { store_id: app.globalData.storeId, page: that.data.evalPage }).then(
+              res => {
+                  console.log(res)
+                  var evalList = that.data.evalList;
+
+                  for (var i = 0; i < res.length; i++) {
+                      evalList.push(res[i]);
+                  }
+                  // 设置数据
+                  that.setData({
+                      evalList: evalList
+                  })
+              },
+              err => {
+                  wx.hideLoading();
+                  that.setData({
+                      isShow: false
+                  })
+                  utils.showErrorToast(constants.Msg_DataError);
+                  console.log(err)
+              }
+          )
+      },
+```
+
+## 获取各种高度
+
+```javascript
+setGoodListHeight: function () {
+    var that = this;
+    let h_screen, h_header, h_menu, h_footer;
+    let query = wx.createSelectorQuery();
+    query.select('.header').boundingClientRect(function (rect) {
+      h_header = rect.height;
+    }).exec();
+    query.select('.menu').boundingClientRect(function (rect) {
+      h_menu = rect.height;
+    }).exec();
+    query.select('.footer').boundingClientRect(function (rect) {
+      h_screen = wx.getSystemInfoSync().windowHeight;
+      h_footer = rect.height;
+      that.setData({
+        height: h_screen - h_header - h_menu - h_footer
+      })
+    }).exec();
+  },
+```
+

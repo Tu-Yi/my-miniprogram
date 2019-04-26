@@ -40,5 +40,6 @@ App({
     accountInfo: [],
     orderStatus: '',
     remarkInfo: "",
+    openid: ''
   }
 })

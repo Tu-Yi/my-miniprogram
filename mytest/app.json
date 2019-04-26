@@ -5,13 +5,10 @@
     "pages/mine/mine",
     "pages/order/order",
     "pages/order/list/list",
-    "pages/order/eval/eval",
-    
     "pages/sell/good/good",
     "pages/sell/account/account",
     "pages/sell/remark/remark",
-    "pages/index/pictures/pictures",
-    "pages/logs/logs"
+    "pages/index/pictures/pictures"
   ],
   "window":{
     "navigationBarBackgroundColor": "#ff8557",

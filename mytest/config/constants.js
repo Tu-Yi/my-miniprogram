@@ -57,6 +57,8 @@ module.exports = {
   Msg_PhoneError: '拨打电话失败',
   Msg_WxAddrError: '获取收货地址失败',
   Msg_RemarkInfo: '请输入备注信息',
+  Msg_AddressOutOfRange: '收货地址超出商家配送范围',
+  Msg_AddressFail: '收货地址不正确',
   /**缓存名称 */
   Storage_StoreInfo: 'storeInfo',
   Storage_UserLocation: 'userLocationInfo',
@@ -73,16 +75,5 @@ module.exports = {
   /**数组 */
   Array_Table: ['无需餐具', '1人', '2人', '3人', '4人', '5人', '6人', '7人', '8人', '9人', '10人', '10人以上'],
   Remark_Keywords: ['不放辣','少放辣','多放辣','不要葱','不要蒜','不要姜','不要香菜','多放糖','少放糖','不放糖'],
-  Sell_Menu: ["菜单", "评价"],
-  /**状态信息 */
-  OrderStatus_Payed: '订单已支付',
-  OrderStatus_WaitSeller: '商家未接单',
-  OrderStatus_SellerReceive: '商家已接单',
-  OrderStatus_WaitRider: '等待配送',
-  OrderStatus_RiderReceive: '骑手前往商家',
-  OrderStatus_RiderPicked: '骑手已取货',
-  OrderStatus_Reached: '订单已送达',
-  OrderStatus_UserCancel: '您取消了订单',
-  OrderStatus_SystemCancel: '系统取消了订单',
-  OrderStatus_Exception: '订单异常'
+  Sell_Menu: ["菜单", "评价"]
 };

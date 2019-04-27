@@ -93,7 +93,7 @@ function showSuccessToast(msg) {
  */
 function getLocalStorage(key,cal,fail){
   wx.getStorage({
-    key: 'storeInfo',
+    key: key,
     success: function (res) {
       cal(res)
     },

@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/sell/sell",
     "pages/index/index",
+    "pages/sell/sell",
     "pages/mine/mine",
     "pages/order/order",
     "pages/order/list/list",

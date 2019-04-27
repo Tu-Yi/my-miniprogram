@@ -1,15 +1,4 @@
 /**轮播图图片宽高自适应**/
-
-swiper {
-  z-index: -1;
-}
-
-.swiper-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .header {
   background-position: center center;
   background-repeat: no-repeat;
@@ -18,7 +7,7 @@ swiper {
 }
 
 .cell-image {
-  margin-right: 5px;
+  margin-right: 10rpx;
   vertical-align: middle;
   width: 20px;
   height: 20px;
@@ -37,7 +26,7 @@ swiper {
 
 .weui-cell_font {
   font-size: 14px;
-  padding-top: 4px;
+  padding-top: 8rpx;
 }
 
 .cells-show {

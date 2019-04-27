@@ -23,9 +23,8 @@ Page({
     img_mina: '../../' + constants.img_mina,
     img_first: '../../' + constants.img_first,
     img_drop: '../../' + constants.img_drop,
-    isShow: true,
-    storeImg: '',
     height: 0,
+    storeImg: '',
     address: '',
     phone: '',
     delivery_time: '',
@@ -35,39 +34,34 @@ Page({
     longitude: '',
     notice: '',
     cAdddress: '',
-    cAddIsShow: true
+    cAddIsShow: true,
+    isShow: true,
   },
   failOnclick: function(){
     var pages = getCurrentPages();
-    console.log(pages)
-    console.log(fail)
     fail.default.onReflash(pages);
     this.setData({
       isShow: true
     })
   },
-  setHeight: function (e) {
-    let sheight = utils.getImageScale(e);
-    console.log(sheight)
-    this.setData({
-      height: sheight
-    })
-  },
+  /**获取店铺数据 */
   getStoreDetail: function(){
     var that = this;
-    utils.request(api.Store_Detail, { shopId: app.globalData.storeId}).then(
+    utils.request(api.Store_Detail, { store_id: app.globalData.storeId}).then(
       res=>{
-        console.log(res)
         wx.setNavigationBarTitle({
           title: res.store_name || constants.title_default
-        }),
+        })
+        //设置图片高度
+        let sheight = utils.getImageScale();
         that.setData({ 
+          height: sheight,
           storeImg: res.store_img || '../../' + constants.img_default,
-          address: utils.cutstr((res.address || constants.address_default),34),
+          address: res.address || constants.address_default,
           phone: res.phone || constants.phone_default,
           delivery_time: res.delivery_time || constants.time_default,
-          new_user_reduction: res.new_user_reduction || "0",
-          minaDiscount: 10 - (+(res.weixin_order_reduction || "0"))*10 + '',
+          new_user_reduction: res.new_user_reduction || 0,
+          minaDiscount: 10 - (+(res.weixin_order_reduction || 0) * 10),
           notice: utils.cutstr((res.notice || constants.notice_default),80)
         })
         wx.setStorage({
@@ -89,11 +83,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setHeight();
     this.getStoreDetail();
     this.getCustomLocation();
     
   },
+  /**打开商家地图位置 */
   openLocation:function(){
     if (this.data.address === constants.address_default) {
       utils.showErrorToast(constants.Msg_AddrError);
@@ -117,6 +111,7 @@ Page({
         console.log(err)
     })
   },
+  /**打电话 */
   callPhone: function(){
     if (this.data.phone === constants.phone_default){
       utils.showErrorToast(constants.Msg_PhoneError);
@@ -127,6 +122,7 @@ Page({
       console.log(err)
     })
   },
+  /**获取用户位置 */
   getCustomLocation: function(){
     var that = this
     wx.getSetting({
@@ -159,48 +155,6 @@ Page({
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
   /**
    * 用户点击右上角分享
    */

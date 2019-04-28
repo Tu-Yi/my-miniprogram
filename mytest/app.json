@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/sell/sell",
     "pages/mine/mine",
@@ -10,10 +10,10 @@
     "pages/sell/remark/remark",
     "pages/index/pictures/pictures"
   ],
-  "window":{
+  "window": {
     "navigationBarBackgroundColor": "#ff8557",
     "navigationBarTitleText": "",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "backgroundColor": "#ffffff",
@@ -21,30 +21,30 @@
     "selectedColor": "#ff8557",
     "color": "#666666",
     "list": [
-    {
-      "pagePath": "pages/index/index",
-      "text": "首页",
-      "iconPath": "static/images/home.png",
-      "selectedIconPath": "static/images/homes.png"
-    },
-    {
-      "pagePath": "pages/sell/sell",
-      "text": "外卖",
-      "iconPath": "static/images/sell.png",
-      "selectedIconPath": "static/images/sells.png"
-    },
-    {
-      "pagePath": "pages/order/list/list",
-      "text": "订单",
-      "iconPath": "static/images/order.png",
-      "selectedIconPath": "static/images/orders.png"
-    },
-    {
-      "pagePath": "pages/mine/mine",
-      "text": "我的",
-      "iconPath": "static/images/mine.png",
-      "selectedIconPath": "static/images/mines.png"
-    }
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/homes.png"
+      },
+      {
+        "pagePath": "pages/sell/sell",
+        "text": "外卖",
+        "iconPath": "static/images/sell.png",
+        "selectedIconPath": "static/images/sells.png"
+      },
+      {
+        "pagePath": "pages/order/list/list",
+        "text": "订单",
+        "iconPath": "static/images/order.png",
+        "selectedIconPath": "static/images/orders.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "static/images/mine.png",
+        "selectedIconPath": "static/images/mines.png"
+      }
     ]
   },
   "networkTimeout": {
@@ -57,5 +57,6 @@
     "scope.userLocation": {
       "desc": "小程序将获取您的用餐位置"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

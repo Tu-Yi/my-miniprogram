@@ -164,7 +164,7 @@ page {
 .good .good_content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 350rpx;
 }
 
@@ -187,14 +187,15 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 10rpx;
   width: 100%;
+  line-height: 1;
 }
 
 .good .good_content .good_content_count {
   color: #888;
   text-align: left;
   font-size: 14px;
+  line-height: 1;
 }
 
 .good .good_content .good_content_price {
@@ -202,6 +203,7 @@ page {
   font-weight: bold;
   text-align: left;
   margin-right: 100rpx;
+  line-height: 1;
 }
 
 .good .good_content .good_content_price text {

@@ -25,18 +25,13 @@ Page({
       isShow: true
     })
   },
-  setHeight: function (e) {
-    let sheight = utils.getImageScale(e);
-    this.setData({
-      height: sheight
-    })
-  },
   getGoodsDetail: function () {
     var that = this;
     utils.request(api.Goods_Detail, { goods_id: that.data.goodId }).then(
       res => {
-        console.log(res)
+        let sheight = utils.getImageScale();
         that.setData({
+          height: sheight,
           goodsImg: res.goods_img || '../../../' + constants.img_default,
           goodsName: res.goods_name || '',
           goodsDetail: res.goods_detail || '',
@@ -53,7 +48,6 @@ Page({
         console.log(err)
       }
     )
-    this.setHeight()
   },
   /**
    * 生命周期函数--监听页面加载
@@ -66,49 +60,6 @@ Page({
     })
     this.getGoodsDetail();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
   /**
    * 用户点击右上角分享
    */

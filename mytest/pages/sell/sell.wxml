@@ -78,7 +78,7 @@
             <view class='good_img'>
               <image src='{{goods.goods_img}}' style='width:180rpx;height:180rpx;background:#cdcdcf' />
             </view>
-            <view class='good_content'>
+            <view class='good_content' style='height:180rpx;'>
               <text class='good_content_title'>{{goods.goods_name}}</text>
               <view class='good_content_detail'>{{goods.goods_detail}}</view>
               <view class='good_content_count'>月售{{goods.goods_month_sellcount}}</view>

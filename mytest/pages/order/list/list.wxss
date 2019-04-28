@@ -1,52 +1,63 @@
 /* pages/order/list/list.wxss */
+
 page {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 .body {
   padding: 10rpx;
 }
+
 .container {
   background: #fff;
   margin-bottom: 20rpx;
-  padding:20rpx;
+  padding: 20rpx;
 }
+
 .store {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
+
 .store image {
   margin-right: 10rpx;
 }
+
 .store view {
   flex-grow: 1;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: bold;
   font-size: 14px;
 }
+
 .store view:last-child {
   text-align: right;
   font-weight: 400;
 }
+
 .good {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-left: 48px;
+  padding-left: 45px;
   font-size: 13px;
 }
+
 .good view:first-child {
-  color: #888888;
+  color: #888;
 }
+
 .good view:last-child {
   font-weight: bold;
 }
+
 .status {
   margin-top: 15rpx;
   display: flex;
@@ -55,12 +66,15 @@ page {
   align-items: center;
   font-size: 14px;
 }
+
 .status text:first-child {
-  color: #888888;
+  color: #888;
 }
+
 .status> view {
   padding-left: 20rpx;
 }
+
 .status .eva {
   width: 100rpx;
   height: 50rpx;
@@ -70,51 +84,60 @@ page {
   text-align: center;
   border-radius: 5rpx;
 }
+
 .eval {
   display: flex;
   align-items: center;
   margin-top: 10rpx;
 }
+
 .stars {
   display: flex;
   margin-left: 20rpx;
   align-items: center;
 }
+
 .stars view {
   width: 32rpx;
   height: 32rpx;
   margin-right: 30rpx;
   background-size: 100% 100%;
 }
+
 .main {
   width: 400rpx;
   margin: 0 auto;
 }
+
 .content {
-  padding:0 20rpx 0 0;
+  padding: 0 20rpx 0 0;
 }
+
 .textarea {
-    margin-top:20rpx;
-    font-size: 13px;
-    background-color: #eeeeee;
-    padding:10rpx;
-    margin-bottom: 20rpx;
-    height: 200rpx;
-    width:100%;
+  margin-top: 20rpx;
+  font-size: 13px;
+  background-color: #eee;
+  padding: 10rpx;
+  margin-bottom: 20rpx;
+  height: 200rpx;
+  width: 100%;
 }
+
 .placeholder {
-    font-size: 11px;
-    color: gray;
+  font-size: 11px;
+  color: gray;
 }
+
 .evalView {
   position: relative;
 }
+
 .evalImage {
   position: absolute;
   right: -5rpx;
   top: 0;
   width: 16px;
   height: 16px;
-  box-shadow:0px 0px 1px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1);
   z-index: 9999;
 }

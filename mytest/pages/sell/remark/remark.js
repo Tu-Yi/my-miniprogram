@@ -12,7 +12,7 @@ Page({
   data: {
     keywords: constants.Remark_Keywords,
     value: "",
-    placeholder: "口味、要求等，100个字以内",
+    placeholder: constants.Remark_default,
     maxlength: 100,
     focus: true,
     autoheight: false,
@@ -44,10 +44,9 @@ Page({
     })
   },
   bindFormSubmit:function(e){
-    console.log(e.detail.value.textarea)
     if(e.detail.value.textarea){
       app.globalData.remarkInfo = e.detail.value.textarea;
-      wx.navigateTo({
+      wx.redirectTo({
         url: constants.PagePath_Account,
       })
     }else{
@@ -56,47 +55,5 @@ Page({
         icon: "none"
       })
     }
-    
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   }
 })

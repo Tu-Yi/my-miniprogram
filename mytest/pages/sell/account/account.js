@@ -28,9 +28,8 @@ Page({
    */
   onLoad: function (options) {
     var that=this
-    var remark = '口味、要求等';
+    var remark = constants.table_default;
     utils.setPageTitle(constants.PageTitle_Account);
-    console.log(options)
     if(app.globalData.remarkInfo){
       remark = app.globalData.remarkInfo
     }
@@ -40,7 +39,6 @@ Page({
       remarkInfo : remark
     })
     //app.globalData.accountInfo = [];
-    console.log(this.data.accountInfo)
     this.accountPrice();
     wx.getStorage({
       key: 'userAddress',
@@ -48,13 +46,11 @@ Page({
         that.setAddress(res.data);
       },
     })
-    
   },
+  /**计算价格 */
   accountPrice: function(){
     let reduced = 0;
     let final = 0;
-    console.log(Number(this.data.accountInfo[2].totalMoney) + Number(this.data.accountInfo[1].deliveryFee))
-  
     final = utils.roundFractional((Number(this.data.accountInfo[2].totalMoney) + Number(this.data.accountInfo[1].deliveryFee)), 1)
     if (this.data.isNewUser) {
       reduced = utils.roundFractional((Number(this.data.accountInfo[2].discountMoney) + Number(this.data.accountInfo[1].newUserReduction)),1)
@@ -66,21 +62,15 @@ Page({
       finalPrice: final
     })
   },
+  /**收货地址 */
   getAddress:function(){
     var that=this
     wx.chooseAddress({
       success(res) {
-        console.log(res)
         let addr = res;
         let address = res.provinceName + res.cityName + res.countyName+ res.detailInfo;
         utils.getCoorByAddress(address,function(res){
           let distance = utils.getDistance(res.location.lat, res.location.lng, that.data.accountInfo[1].lat, that.data.accountInfo[1].lng);
-          console.log(res.location.lat)
-          console.log(res.location.lng)
-          console.log(that.data.accountInfo[1].lat)
-          console.log(that.data.accountInfo[1].lng)
-          console.log(distance)
-          console.log(that.data.accountInfo[1].deliveryDistance)
           if (distance > +that.data.accountInfo[1].deliveryDistance){
             wx.showToast({
               title: constants.Msg_AddressOutOfRange,
@@ -101,6 +91,7 @@ Page({
       }
     })
   },
+  /**设置收货地址 */
   setAddress:function(res){
     var user = {
       userName: res.userName,
@@ -116,55 +107,28 @@ Page({
       user: user
     })
   },
+  /**选择餐具 */
   bindPickerChange:function(e){
     this.setData({
       index: e.detail.value
     })
   },
+  /**填写备注 */
   toRemark:function(){
     wx.navigateTo({
       url: constants.PagePath_Remark
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onHide:function(){
+    console.log(123)
+    wx.navigateTo({
+      url: constants.PagePath_Sell,
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  onUnload:function(){
+    console.log(234)
+    wx.navigateBack({
+      delta: 2
+    })
   }
 })

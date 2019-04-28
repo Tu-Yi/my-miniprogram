@@ -30,7 +30,6 @@ Page({
   },
   onLoad: function (options) {
     utils.setPageTitle(constants.PageTitle_Order);
-    console.log(options)
     this.setData({
       orderId: options.order_id
     })
@@ -43,8 +42,6 @@ Page({
   /**错误页面按钮 */
   failOnclick: function () {
     var pages = getCurrentPages();
-    console.log(pages)
-    console.log(fail)
     fail.default.onReflash(pages);
     this.setData({
       isShow: true
@@ -53,10 +50,8 @@ Page({
   /**获取店铺信息 */
   getStoreInfo:function(){
     var that = this
-    wx.getStorage({
-      key: constants.Storage_StoreInfo,
-      success: function (res) {
-        console.log(res)
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res => {
         that.setData({
           ["storeInfo.name"]: res.data.store_name,
           ["storeInfo.phone"]: res.data.phone,
@@ -68,8 +63,8 @@ Page({
             longitude: res.data.longitude,
             title: res.data.store_name,
             iconPath: res.data.store_logo,
-            width:32,
-            height:32,
+            width: 32,
+            height: 32,
             callout: {
               content: that.data.orderStatus,
               color: "#ff8557",
@@ -82,11 +77,10 @@ Page({
           }]
         })
       },
-      fail: function (err) {
+      err => {
         utils.showErrorToast(constants.Msg_DataError);
         console.log(err)
-      }
-    })
+      })
   },
   /**打电话 */
   callSellerPhone:function(){
@@ -106,10 +100,7 @@ Page({
     var that = this;
     utils.request(api.Order_Detail, { order_id: this.data.orderId }).then(
       res => {
-        that.setData({
-          orderDetail: res
-        })
-        this.initOrderStatus(res);
+        this.initOrder(res);
       },
       err => {
         wx.hideLoading();
@@ -122,7 +113,7 @@ Page({
     )
   },
   /**根据状态显示 */
-  initOrderStatus:function(res){
+  initOrder:function(res){
     console.log(res)
     let isShowMap;
     let isShowRefund;
@@ -160,6 +151,7 @@ Page({
         break;
     }
     this.setData({
+      orderDetail: res,
       isShowMap: isShowMap,
       isShowRefund: isShowRefund,
       isShowReason: isShowReason,
@@ -175,25 +167,10 @@ Page({
       data: that.data.orderDetail.order_id,
       success: function (res) {
         wx.showToast({
-          title: '复制成功',
+          title: constants.Msg_CopySuccess,
           icon: 'none'
         });
       }
     });
-  },
-  onShow: function () {
-
-  },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
-  },
-  onReachBottom: function () {
-
   }
 })

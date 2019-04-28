@@ -51,6 +51,7 @@ module.exports = {
   time_default: '请联系店家',
   notice_default: '暂无公告',
   title_default: '店铺名称',
+  table_default: '口味、要求等',
   /**提示信息 */
   Msg_DataError:'获取数据失败',
   Msg_AddrError: '获取地址失败',
@@ -59,6 +60,7 @@ module.exports = {
   Msg_RemarkInfo: '请输入备注信息',
   Msg_AddressOutOfRange: '收货地址超出商家配送范围',
   Msg_AddressFail: '收货地址不正确',
+  Msg_CopySuccess: '复制成功',
   /**缓存名称 */
   Storage_StoreInfo: 'storeInfo',
   Storage_UserLocation: 'userLocationInfo',
@@ -75,5 +77,7 @@ module.exports = {
   /**数组 */
   Array_Table: ['无需餐具', '1人', '2人', '3人', '4人', '5人', '6人', '7人', '8人', '9人', '10人', '10人以上'],
   Remark_Keywords: ['不放辣','少放辣','多放辣','不要葱','不要蒜','不要姜','不要香菜','多放糖','少放糖','不放糖'],
-  Sell_Menu: ["菜单", "评价"]
+  Sell_Menu: ["菜单", "评价"],
+  /**placeholder */
+  Remark_default: '口味、要求等，100个字以内'
 };

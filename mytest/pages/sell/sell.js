@@ -61,10 +61,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    wx.getStorage({
-      key: constants.Storage_StoreInfo,
-      success: function (res) {
-        console.log(res)
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res => {
         that.setData({
           store_name: res.data.store_name || constants.title_default,
           store_logo: res.data.store_logo,
@@ -79,16 +77,16 @@ Page({
           lng: res.data.longitude
         })
       },
-      fail: function (err) {
+      err => {
         that.setData({
           store_name: constants.title_default,
           notice: constants.notice_default
         })
         utils.showErrorToast(constants.Msg_DataError);
         console.log(err)
-      }
-    })
+      })
     this.getGoodsList();
+    //更新全局变量
     app.globalData.isNewUser = this.data.isNewUser
   },
   onNumChange: function (e) {
@@ -236,8 +234,6 @@ Page({
   /**错误页面按钮 */
   failOnclick: function () {
     var pages = getCurrentPages();
-    console.log(pages)
-    console.log(fail)
     fail.default.onReflash(pages);
     this.setData({
       isShow: true
@@ -357,12 +353,14 @@ Page({
       }
     })
   },
+  /**跳转商品详情 */
   toDetail: function (e) {
     var goodId = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: constants.PagePath_GoodsDetail + "?goodId=" + goodId,
     })
   },
+  /**跳转结算 */
   toAccount: function () {
     var cart = this.data.cartArray
     let storeInfo = {
@@ -396,13 +394,12 @@ Page({
       that.getEvalList();
     }
   },
+  /**获取评价列表 */
   getEvalList: function () {
     var that=this;
     utils.request(api.Eval_List, { store_id: app.globalData.storeId, page: that.data.evalPage }).then(
       res => {
-        console.log(res)
         var evalList = that.data.evalList;
-
         for (var i = 0; i < res.length; i++) {
           evalList.push(res[i]);
         }
@@ -440,7 +437,6 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
   },
 
   /**

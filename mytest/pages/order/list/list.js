@@ -6,7 +6,6 @@ var dictionaries = require('../../../config/dictionaries.js');
 var app = getApp();
 const wxUploadFile = utils.promisify(wx.uploadFile)
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -16,6 +15,14 @@ Page({
     storeInfo: {
       name: '',
       logo: ''
+    },
+    evalInfo: {
+      order_id: '',
+      taste_evaluate_level: '',
+      pack_evaluate_level: '',
+      dispatch_evaluate_level: '',
+      evaluate_content: '',
+      images: []
     },
     value: "",
     placeholder: "",
@@ -35,14 +42,6 @@ Page({
     opacity: '0.4',
     width: '85',
     position: 'center',
-    evalInfo: {
-      order_id: '',
-      taste_evaluate_level: '',
-      pack_evaluate_level: '',
-      dispatch_evaluate_level: '',
-      evaluate_content: '',
-      images: []
-    },
     ico_cha: '../../../' + constants.ico_cha,
     stars_taste: [{
       flag: 1,
@@ -121,8 +120,7 @@ Page({
       bgImg: '../../../' + constants.img_star,
       bgfImg: '../../../' + constants.img_stars
     }
-    ],
-    images: []
+    ]
   },
   failOnclick: function () {
     var pages = getCurrentPages();
@@ -140,36 +138,36 @@ Page({
     this.getStoreInfo();
     this.getOrderList();
   },
+  /**获取店铺信息 */
   getStoreInfo: function () {
     var that = this
-    wx.getStorage({
-      key: constants.Storage_StoreInfo,
-      success: function (res) {
-        console.log(res)
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res => {
         that.setData({
           ["storeInfo.name"]: res.data.store_name,
           ["storeInfo.logo"]: res.data.store_logo
         })
       },
-      fail: function (err) {
+      err => {
         utils.showErrorToast(constants.Msg_DataError);
         console.log(err)
-      }
-    })
+      })
   },
+  /**获取订单信息 */
   getOrderList: function () {
     var that = this;
     utils.request(api.Order_List, {
       store_id: app.globalData.storeId,
-      openid: '1'
+      openid: app.globalData.openid
     }).then(
       res => {
-        console.log(res)
+        console.log(123)
         that.setData({
           list: res
         })
       },
       err => {
+        console.log(isShow)
         wx.hideLoading();
         that.setData({
           isShow: false
@@ -179,20 +177,21 @@ Page({
       }
     )
   },
+  /**跳转订单详情 */
   toOrder: function (e) {
-    let storeId = e.currentTarget.dataset.id
-    console.log(constants.PagePath_Order + "?order_id=" + storeId)
+    let orderId = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: constants.PagePath_Order + "?order_id=" + storeId,
+      url: constants.PagePath_Order + "?order_id=" + orderId,
     })
   },
+  /**显示评价 */
   showDialog: function (e) {
     this.setData({
       dialogvisible: true,
       ["evalInfo.order_id"]: e.currentTarget.dataset.id
     })
-
   },
+  /**关闭模态窗口 */
   handleClose: function () {
     let evalInfo = this.data.evalInfo;
     for (let key in evalInfo) {
@@ -206,16 +205,19 @@ Page({
       evalInfo: evalInfo,
       value: ""
     })
+    let stars_taste = this.data.stars_taste
+    let stars_wrapper = this.data.stars_wrapper
+    let stars_rider = this.data.stars_rider
     for (var i = 0; i < 5; i++) {
-      var tasteItem = 'stars_taste' + '[' + i + '].flag';
-      var wrapperItem = 'stars_wrapper' + '[' + i + '].flag';
-      var riderItem = 'stars_rider' + '[' + i + '].flag';
-      this.setData({
-        [tasteItem]: 1,
-        [wrapperItem]: 1,
-        [riderItem]: 1
-      })
+      stars_taste[i].flag = 1;
+      stars_wrapper[i].flag = 1;
+      stars_rider[i].flag = 1;
     }
+    this.setData({
+      stars_taste: stars_taste,
+      stars_wrapper: stars_wrapper,
+      stars_rider: stars_rider
+    })
   },
   handleOpen: function () {
   },
@@ -295,23 +297,25 @@ Page({
       })
     }
   },
+  /**评价打分 */
   score: function (e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
     var id = e.currentTarget.dataset.id;
+    let stars = that.data['stars_' + id];
     for (var i = 0; i < 5; i++) {
-      var allItem = 'stars_' + id + '[' + i + '].flag';
-      that.setData({
-        [allItem]: 1
-      })
+      stars[i].flag = 1;
     }
+    that.setData({
+      ['stars_' + id]: stars
+    })
     var index = e.currentTarget.dataset.index;
     for (var i = 0; i <= index; i++) {
-      var item = 'stars_' + id + '[' + i + '].flag';
-      that.setData({
-        [item]: 2
-      })
+      stars[i].flag = 2;
     }
+    that.setData({
+      ['stars_' + id]: stars
+    })
     if (id === 'taste') {
       that.setData({
         ["evalInfo.taste_evaluate_level"]: index + 1
@@ -326,6 +330,7 @@ Page({
       })
     }
   },
+  /**获取评价内容 */
   bindWord: function (e) {
     this.setData({
       ["evalInfo.evaluate_content"]: e.detail.value
@@ -345,13 +350,14 @@ Page({
       }
     })
   },
+  /**预览图片 */
   previewImage: function (e) {
-    console.log(e)
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.evalInfo.images // 需要预览的图片http链接列表
     })
   },
+  /**删除图片 */
   removeImage: function (e) {
     var images = this.data.evalInfo.images;
     const idx = e.target.dataset.idx
@@ -360,34 +366,6 @@ Page({
       ["evalInfo.images"]: images
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -401,7 +379,6 @@ Page({
   onReachBottom: function () {
 
   },
-
   /**
    * 用户点击右上角分享
    */

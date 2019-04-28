@@ -2,7 +2,6 @@ var constants = require('../../../config/constants.js');
 var utils = require('../../../utils/util.js');
 var fail = require('../../template/fail/fail.js');
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -14,14 +13,11 @@ Page({
   },
   failOnclick: function () {
     var pages = getCurrentPages();
-    console.log(pages)
-    console.log(fail)
     fail.default.onReflash(pages);
     this.setData({
       isShow: true
     })
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -31,75 +27,24 @@ Page({
       title: constants.LoadingTitle,
     });
     var that = this;
-    wx.getStorage({
-      key: constants.Storage_StoreInfo,
-      success: function(res) {
+    utils.getLocalStorage(constants.Storage_StoreInfo,
+      res => {
+        let sheight = utils.getImageScale();
         wx.hideLoading();
         that.setData({
-          imgUrls: res.data.store_imgs || ''
+          imgUrls: res.data.store_imgs || '',
+          height: sheight
         })
       },
-      fail: function(err){
+      err => {
         wx.hideLoading();
         that.setData({
           isShow: false
         })
         utils.showErrorToast(constants.Msg_DataError);
         console.log(err)
-
-      }
-    }),
-    this.setHeight();
+      })
   },
-  setHeight: function (e) {
-    let sheight = utils.getImageScale(e);
-    console.log(sheight)
-    this.setData({
-      height: sheight
-    })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
   /**
    * 用户点击右上角分享
    */

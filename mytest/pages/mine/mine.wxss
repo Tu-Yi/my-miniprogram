@@ -69,6 +69,7 @@ button {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding:0;
 }
 
 button view {

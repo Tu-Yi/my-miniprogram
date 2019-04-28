@@ -152,7 +152,6 @@ function getLocation(cal){
   wx.getLocation({
     success(res) {
       that.getAddress(res.latitude, res.longitude,function(addr){
-        console.log("getLocation"+addr)
         cal(addr);
       })
     }

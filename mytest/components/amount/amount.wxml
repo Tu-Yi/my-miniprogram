@@ -1,6 +1,10 @@
 <!--components/amount/amount.wxml-->
 <view class='num_wrap'>
-  <view class='btn sub' style='opacity: {{opacity}}' catchtap='substract'>-</view>
+  <view class='btn sub' style='opacity: {{opacity}}' catchtap='substract'>
+    <image src='{{img_minus}}' style='width:24px;height:24px;'/>
+  </view>
   <view class='text' style='opacity: {{opacity}}'>{{count}}</view>
-  <view class='btn add' catchtap='add'>+</view>
+  <view class='btn add' catchtap='add'>
+    <image src='{{img_add}}' style='width:24px;height:24px;'/>
+  </view>
 </view>

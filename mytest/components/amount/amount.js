@@ -1,4 +1,5 @@
 // components/amount/amount.js
+var constants = require('../../config/constants.js');
 Component({
   /**
    * 组件的属性列表
@@ -34,7 +35,9 @@ Component({
    * 组件的初始数据
    */
   data: {
-    opacity: 0
+    opacity: 0,
+    img_add: '../../' + constants.img_add,
+    img_minus: '../../' + constants.img_minus
   },
 
   /**

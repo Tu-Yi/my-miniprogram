@@ -173,7 +173,6 @@ function getCoorByAddress(addr,cal){
   let qqmapsdk = new QQMapWX({
     key: constants.Map_Key
   })
-  console.log("13123")
   qqmapsdk.geocoder({
     address: addr,
     success(res) {

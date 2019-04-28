@@ -153,7 +153,7 @@ page {
 
 .amount {
   position: absolute;
-  left: 400rpx;
+  left: 370rpx;
   bottom: 30rpx;
 }
 

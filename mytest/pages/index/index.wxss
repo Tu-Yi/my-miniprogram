@@ -46,6 +46,8 @@
   padding-bottom: 20rpx;
   display: flex;
   font-size: 14px;
+  align-items: center;
+
 }
 
 .cus_address {

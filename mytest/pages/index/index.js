@@ -83,9 +83,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
     this.getStoreDetail();
-    this.getCustomLocation();
-    
+    //this.getCustomLocation();
+    utils.getUserLocationInfo(function (addr) {
+      that.setData({
+        cAddress: addr.formatted_addresses.recommend,
+        cAddIsShow: true
+      })
+    })
   },
   /**打开商家地图位置 */
   openLocation:function(){
@@ -127,31 +133,57 @@ Page({
     var that = this
     wx.getSetting({
       success: function(res){
+        console.log(1)
         if (res.authSetting[constants.Scope_UserLocation]) {
+          console.log(2)
           utils.getUserLocationInfo(function(addr){
+            console.log(3)
             that.setData({
               cAddress: addr.formatted_addresses.recommend,
               cAddIsShow: true
             })
           })
         }else{
-          wx.openSetting({
+          wx.showModal({
+            title: '位置',
+            content: '获取用户所在位置',
             success: function(res){
-              if (res.authSetting[constants.Scope_UserLocation]) {
-                utils.getUserLocationInfo(function (addr) {
+              if (res.confirm) {
+                wx.openSetting({
+                  success: function (res) {
+                    console.log(4)
+                    if (res.authSetting[constants.Scope_UserLocation]) {
+                      console.log(5)
+                      utils.getUserLocationInfo(function (addr) {
+                        console.log(6)
+                        that.setData({
+                          cAddress: addr.formatted_addresses.recommend,
+                          cAddIsShow: true
+                        })
+                      })
+                    } else {
+                      console.log(7)
+                      that.setData({
+                        cAddIsShow: false
+                      })
+                    }
+                  },
+                  fail: function (err) {
+                    console.log(8)
+                    console.log(err)
+                  }
+                })
+              } else if (res.cancel) {
                   that.setData({
-                    cAddress: addr.formatted_addresses.recommend,
-                    cAddIsShow: true
+                    cAddIsShow: false
                   })
-                })
-              }else{
-                that.setData({
-                  cAddIsShow: false
-                })
               }
             }
           })
         }
+      },
+      fail:function(err){
+        console.log(err)
       }
     })
   },

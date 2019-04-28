@@ -45,80 +45,80 @@ Page({
     ico_cha: '../../../' + constants.ico_cha,
     stars_taste: [{
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     }
     ],
     stars_wrapper: [{
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     }
     ],
     stars_rider: [{
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     },
     {
       flag: 1,
-      bgImg: '../../../' + constants.img_star,
-      bgfImg: '../../../' + constants.img_stars
+      bgImg: constants.img_star,
+      bgfImg: constants.img_stars
     }
     ]
   },

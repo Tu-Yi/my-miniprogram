@@ -27,23 +27,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('account')
     var that=this
-    var remark = constants.table_default;
     utils.setPageTitle(constants.PageTitle_Account);
-    if(app.globalData.remarkInfo){
-      remark = app.globalData.remarkInfo
-    }
+    
     this.setData({
       accountInfo: app.globalData.accountInfo,
-      isNewUser: app.globalData.isNewUser,
-      remarkInfo : remark
+      isNewUser: app.globalData.isNewUser
     })
     //app.globalData.accountInfo = [];
     this.accountPrice();
     wx.getStorage({
       key: 'userAddress',
       success: function(res) {
-        that.setAddress(res.data);
+        if (Object.keys(res.data).length > 0) {
+          let addr = res.data;
+          let address = res.data.provinceName + res.data.cityName + res.data.countyName + res.data.detailInfo;
+          utils.getCoorByAddress(address, function (res) {
+            let distance = utils.getDistance(res.location.lat, res.location.lng, that.data.accountInfo[1].lat, that.data.accountInfo[1].lng);
+            if (distance > +that.data.accountInfo[1].deliveryDistance) {
+              wx.showToast({
+                title: constants.Msg_AddressOutOfRange,
+                icon: 'none'
+              })
+            } else {
+              that.setAddress(addr);
+            }
+          })
+        }
       },
     })
   },
@@ -69,25 +80,29 @@ Page({
       success(res) {
         let addr = res;
         let address = res.provinceName + res.cityName + res.countyName+ res.detailInfo;
-        utils.getCoorByAddress(address,function(res){
-          let distance = utils.getDistance(res.location.lat, res.location.lng, that.data.accountInfo[1].lat, that.data.accountInfo[1].lng);
-          if (distance > +that.data.accountInfo[1].deliveryDistance){
-            wx.showToast({
-              title: constants.Msg_AddressOutOfRange,
-              icon: 'none'
-            })
-          }else{
-            that.setAddress(addr);
-            wx.setStorage({
-              key: 'userAddress',
-              data: that.data.user,
-            })
-          }
-        })
+        that.calAddress(addr,address);
       },
       fail(err){
         console.log(err)
         utils.showErrorToast(constants.Msg_WxAddrError);
+      }
+    })
+  },
+  calAddress: function (addr, address){
+    var that=this;
+    utils.getCoorByAddress(address, function (res) {
+      let distance = utils.getDistance(res.location.lat, res.location.lng, that.data.accountInfo[1].lat, that.data.accountInfo[1].lng);
+      if (distance > +that.data.accountInfo[1].deliveryDistance) {
+        wx.showToast({
+          title: constants.Msg_AddressOutOfRange,
+          icon: 'none'
+        })
+      } else {
+        that.setAddress(addr);
+        wx.setStorage({
+          key: 'userAddress',
+          data: that.data.user,
+        })
       }
     })
   },
@@ -121,14 +136,20 @@ Page({
   },
   onHide:function(){
     console.log(123)
+  },
+  onUnload:function(e){
+    console.log(234)
     wx.navigateTo({
-      url: constants.PagePath_Sell,
+      url: constants.PagePath_Sell
     })
   },
-  onUnload:function(){
-    console.log(234)
-    wx.navigateBack({
-      delta: 2
+  onShow:function(){
+    var remark = constants.table_default;
+    if (app.globalData.remarkInfo) {
+      remark = app.globalData.remarkInfo
+    }
+    this.setData({
+      remarkInfo: remark
     })
   }
 })

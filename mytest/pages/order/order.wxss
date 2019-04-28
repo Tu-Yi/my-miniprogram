@@ -148,4 +148,6 @@ page{
 }
 .orderId text:last-child {
   color: #ff8557;
+  width: 20%;
+  height: 48rpx;
 }

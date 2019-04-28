@@ -46,8 +46,8 @@ Page({
   bindFormSubmit:function(e){
     if(e.detail.value.textarea){
       app.globalData.remarkInfo = e.detail.value.textarea;
-      wx.redirectTo({
-        url: constants.PagePath_Account,
+      wx.navigateBack({
+        delta:1
       })
     }else{
       wx.showToast({

@@ -32,8 +32,10 @@ module.exports = {
   img_mineorder: 'static/images/mine_order.png',
   img_mineweixin: 'static/images/mine_weixin.png',
   img_mineaddress: 'static/images/mine_address.png',
-  img_star: 'static/images/star.png',
-  img_stars: 'static/images/stars.png',
+  img_star: 'https://minatest-1252830662.cos.ap-chengdu.myqcloud.com/mjmf/star.png',
+  img_stars: 'https://minatest-1252830662.cos.ap-chengdu.myqcloud.com/mjmf/stars.png',
+  img_add: 'static/images/add.png',
+  img_minus: 'static/images/minus.png',
   /**页面标题 */
   PageTitle_Pictures: "店铺图片",
   PageTitle_Location: "地图位置",

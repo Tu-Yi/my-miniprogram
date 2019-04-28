@@ -3,6 +3,7 @@ var api = require('../../config/api.js');
 var constants = require('../../config/constants.js');
 var fail = require('../template/fail/fail.js');
 var app = getApp();
+var isPreView;
 Page({
 
   /**
@@ -330,7 +331,7 @@ Page({
     //let itemid = e.currentTarget.dataset.itemid
     this.setData({
       toView: id,
-      curIndex: index,
+      //curIndex: index,
       cateListActiveIndex: index
     })
     // let idx = e.currentTarget.dataset.index
@@ -420,14 +421,20 @@ Page({
   },
   previewImage: function (e) {
     console.log(e)
+    isPreView=true;
     wx.previewImage({
-      current: e.currentTarget.id // 当前显示图片的http链接
+      current: e.currentTarget.id,
+      urls: e.currentTarget.dataset.urls
     })
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (isPreView){
+      isPreView=false;
+      return;
+    }
     this.setData({
       currentMenu: 0
     })

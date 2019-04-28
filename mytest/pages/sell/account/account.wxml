@@ -13,46 +13,48 @@
 </view>
 
 <view class="weui-cells weui-cells_after-title cells-show">
-    <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none" open-type="reLaunch">
-        <view class="weui-cell__bd cell-title">送达时间</view>
-        <view class="weui-cell__ft  cell-desc">尽快送达</view>
-    </navigator>
-    <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none">
-        <view class="weui-cell__bd cell-title">支付方式</view>
-        <view class="weui-cell__ft  cell-desc">微信支付</view>
-    </navigator>
+  <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none" open-type="reLaunch">
+    <view class="weui-cell__bd cell-title">送达时间</view>
+    <view class="weui-cell__ft  cell-desc">尽快送达</view>
+  </navigator>
+  <navigator url="pictures/pictures" class="weui-cell weui-cell_access" hover-class="none">
+    <view class="weui-cell__bd cell-title">支付方式</view>
+    <view class="weui-cell__ft  cell-desc">微信支付</view>
+  </navigator>
 </view>
 <view class='account'>
   <view class='storename'>
     {{accountInfo[1].storeName}}
   </view>
   <view class="good" wx:for='{{accountInfo[0]}}' wx:for-item="goods" wx:key='{{index}}'>
- 
-      <image src='{{goods.img}}' style='width:80rpx;height:80rpx;background:#cdcdcf' />
 
-     <view class='good_title'>{{goods.name}}</view>
-      <view class='good_count'>
-        <text>{{goods.count}}</text>
-      </view>
-      <view class='good_price'>
-          <text class='cmb'>￥</text>{{goods.price}}
-      </view>
+    <image src='{{goods.img}}' style='width:80rpx;height:80rpx;background:#cdcdcf' />
+
+    <view class='good_title'>{{goods.name}}</view>
+    <view class='good_count'>
+      <text>{{goods.count}}</text>
+    </view>
+    <view class='good_price'>
+      <text class='cmb'>￥</text>{{goods.price}}
+    </view>
   </view>
   <view class='info'>
     <text>包装</text>
     <view>
-      <text class='cmb'>￥</text><text>{{accountInfo[2].wrapperMoney}}</text>
+      <text class='cmb'>￥</text>
+      <text>{{accountInfo[2].wrapperMoney}}</text>
     </view>
   </view>
   <view class='info'>
     <text>配送费</text>
     <view>
-      <text class='cmb'>￥</text><text>{{accountInfo[1].deliveryFee}}</text>
+      <text class='cmb'>￥</text>
+      <text>{{accountInfo[1].deliveryFee}}</text>
     </view>
   </view>
   <view class='activity' wx:if='{{isNewUser}}'>
     <view class='mask'>
-      <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:40rpx; height: 40rpx;' />
+      <image src='{{img_first}}' style='margin-right: 10rpx;vertical-align: middle;width:16px; height: 16px;' />
       <text>首单立减</text>
     </view>
     <view class='price'>
@@ -63,7 +65,7 @@
   </view>
   <view class='activity'>
     <view class='mask'>
-      <image src='{{img_mina}}' style='margin-right: 10rpx;width:32rpx; height: 32rpx;' />
+      <image src='{{img_mina}}' style='margin-right: 10rpx;width:16px; height: 16px;' />
       <text>小程序下单{{accountInfo[1].minaDiscount}}折</text>
     </view>
     <view class='price'>
@@ -76,38 +78,43 @@
     <view class='reduced'>
       <text>已优惠</text>
       <view>
-        <text class='cmb'>￥</text><text>{{reducedMoney}}</text>
+        <text class='cmb'>￥</text>
+        <text>{{reducedMoney}}</text>
       </view>
     </view>
     <view class='final'>
       <text>小计</text>
       <view>
-        <text class='cmb'>￥</text><text>{{finalPrice}}</text>
+        <text class='cmb'>￥</text>
+        <text>{{finalPrice}}</text>
       </view>
     </view>
   </view>
 </view>
-<view class="remark">
-<view class='info'>
-  <text>餐具</text>
-  <view>
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="weui-cell__ft_in-access">
-        {{array[index]}}
-      </view>
-    </picker>
+<view style='padding-bottom:90rpx;'>
+  <view class="remark">
+  <view class='info'>
+    <text>餐具</text>
+    <view>
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="weui-cell__ft_in-access">
+          {{array[index]}}
+        </view>
+      </picker>
+    </view>
   </view>
-</view>
-<view class='info' style="border-bottom:0;" bindtap="toRemark">
-  <text>备注</text>
-  <view class="weui-cell__ft_in-access remarkInfo">
-    {{remarkInfo}}
+  <view class='info' style="border-bottom:0;" bindtap="toRemark">
+    <text>备注</text>
+    <view class="weui-cell__ft_in-access remarkInfo">
+      {{remarkInfo}}
+    </view>
   </view>
 </view>
 </view>
 <view class="footer">
   <view class="price">
-    <text class='cmb'>￥</text><text>{{finalPrice}}</text>
+    <text class='cmb'>￥</text>
+    <text>{{finalPrice}}</text>
   </view>
   <view class="order" bindtap="">去支付</view>
 </view>

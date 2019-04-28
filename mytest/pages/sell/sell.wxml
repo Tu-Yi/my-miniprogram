@@ -40,9 +40,9 @@
         <view class='evalImages'>
           <view class="weui-uploader__bd">
           <view class="weui-uploader__files" id="uploaderFiles">
-            <block wx:for="{{item.images}}" wx:key="*this">
-              <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+            <block wx:for="{{item.images}}" wx:for-item='image' wx:key="*this">
+              <view class="weui-uploader__file" catchtap="previewImage" id="{{image}}" data-urls='{{item.images}}'>
+                <image class="weui-uploader__img" src="{{image}}" mode="aspectFill" />
               </view>
             </block>
           </view>

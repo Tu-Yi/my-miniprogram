@@ -31,19 +31,19 @@
         <view class='eval'>
           <text>口味</text>
           <view class='stars'>
-            <view wx:for="{{stars_taste}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='taste' bindtap='score'></view>
+            <view wx:for="{{stars_taste}}" wx:key="{{index}}" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='taste' bindtap='score'></view>
           </view>
         </view>
         <view class='eval'>
           <text>包装</text>
           <view class='stars'>
-            <view wx:for="{{stars_wrapper}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='wrapper' bindtap='score'></view>
+            <view wx:for="{{stars_wrapper}}" wx:key="{{index}}" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='wrapper' bindtap='score'></view>
           </view>
         </view>
         <view class='eval'>
           <text>配送</text>
           <view class='stars'>
-            <view wx:for="{{stars_rider}}" wx:key="" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='rider' bindtap='score'></view>
+            <view wx:for="{{stars_rider}}" wx:key="{{index}}" style='background:url("{{item.flag==1?item.bgImg:item.bgfImg}}") no-repeat center; background-size:100%;' data-index="{{index}}" data-id='rider' bindtap='score'></view>
           </view>
         </view>
       </view>

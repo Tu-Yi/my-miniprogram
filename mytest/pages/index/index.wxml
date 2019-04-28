@@ -56,11 +56,11 @@
       </view>
     </navigator>
     <view class='activity'>
-      <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:22px; height: 22px;' />
+      <image src='{{img_first}}' style='margin-right: 5px;vertical-align: middle;width:16px; height: 16px;' />
       <text>新用户首单立减{{new_user_reduction}}元</text>
     </view>
     <view class='activity'>
-      <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:22px; height: 22px;' />
+      <image src='{{img_mina}}' style='margin-right: 5px;vertical-align: middle;width:16px; height: 16px;' />
       <text>小程序下单享{{minaDiscount}}折</text>
     </view>
   </view>

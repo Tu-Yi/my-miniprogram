@@ -2139,3 +2139,68 @@ setGoodListHeight: function () {
   },
 ```
 
+## wx.preview会刷新页面处理方法
+
+
+
+```javascript
+//page外定义
+var isPreView;
+Page({
+    
+    onShow: function () {
+        if (isPreView){
+            isPreView=false;
+            return;
+        }
+        this.setData({
+            currentMenu: 0
+        })
+    },
+    previewImage: function (e) {
+        console.log(e)
+        isPreView=true;
+        wx.previewImage({
+            current: e.currentTarget.id,
+            urls: e.currentTarget.dataset.urls
+        })
+    },
+```
+
+## 获取用户位置不用授权，getlocation自己会调起授权
+
+```javascript
+utils.getUserLocationInfo(function (addr) {
+      console.log(3)
+      that.setData({
+        cAddress: addr.formatted_addresses.recommend,
+        cAddIsShow: true
+      })
+    })
+```
+
+## b背景图片一定要用网络图片
+
+## 底部固定，上面内容要有padding-bottom，maring-bottom没用
+
+## 页面返回
+
+页面中跳转，点击完成或确定回来，尽量使用back，否则会造成返回错乱
+
+```javascript
+wx.navigateBack({
+        delta:1
+})
+```
+
+## 页面Unload里不要写navigateback，手机里会自动退出小程序
+
+```javascript
+onUnload:function(e){
+    console.log(234)
+    wx.navigateTo({
+      url: constants.PagePath_Sell
+    })
+  },
+```
+

@@ -178,7 +178,6 @@ page{
 .remark {
   padding:0 20rpx;
   margin-top: 20rpx;
-  margin-bottom: 90rpx;
   background: #fff;
 }
 .remark .info {

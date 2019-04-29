@@ -43,8 +43,6 @@ Page({
     toView: '',
     height: 0,
     foodAreaHeight: [],
-    eleCateTitleHeight: 0,
-    eleFoodHeight: 0,
     cateListActiveIndex: 0,
     /**数量、价格数据 */
     originalMoney: 0,
@@ -250,6 +248,7 @@ Page({
         })
         this.setGoodListHeight();
         this.setFoodListAreaHeight();
+        wx.hideLoading();
       },
       err => {
         wx.hideLoading();
@@ -290,36 +289,35 @@ Page({
   setFoodListAreaHeight() {
     let query = wx.createSelectorQuery();
     let that = this;
+    let eleFoodHeight=0;
+    let eleCateTitleHeight=0;
     //分类栏的高度
     query.select('.type_title').boundingClientRect(function (rect) {
-      that.setData({
-        eleCateTitleHeight: rect.height
-      })
+      eleCateTitleHeight=rect.height
     }).exec();
     //商品item的高度
     query.select('.good').boundingClientRect(function (rect) {
-      that.setData({
-        eleFoodHeight: rect.height
-      })
+      eleFoodHeight=rect.height
+      let fh = [0]
+      let heightCount = 0
+      console.log(eleFoodHeight)
+      console.log(eleCateTitleHeight)
+      setTimeout(() => {
+        that.data.list.forEach((item, index) => {
+          //console.log(item.items.length * this.data.eleFoodHeight);
+          if (item.length > 0) {
+            console.log(eleFoodHeight)
+            console.log(eleCateTitleHeight)
+            heightCount += item.length * eleFoodHeight + eleCateTitleHeight
+            fh.push(heightCount)
+          }
+        })
+        console.log(fh)
+        that.setData({
+          foodAreaHeight: fh
+        })
+      }, 100)
     }).exec();
-
-    //把商品列表每个分类的区间高度计算，并放进数组
-    //上面获取元素的高度可能不是同步的，所以把下面的放在setTimeout里面
-    let fh = [0]
-    let heightCount = 0
-    setTimeout(() => {
-      this.data.list.forEach((item, index) => {
-        //console.log(item.items.length * this.data.eleFoodHeight);
-        if (item.length > 0) {
-          heightCount += item.length * this.data.eleFoodHeight + this.data.eleCateTitleHeight
-          fh.push(heightCount)
-        }
-      })
-      this.setData({
-        foodAreaHeight: fh
-      })
-    }, 100)
-
   },
   /**
      * 滚动到右边的高度
@@ -348,6 +346,8 @@ Page({
   foodListScrolling(event) {
     let scrollTop = event.detail.scrollTop
     let foodAreaHeight = this.data.foodAreaHeight
+    console.log(scrollTop)
+    console.log(foodAreaHeight)
     foodAreaHeight.forEach((item, index) => {
       if (scrollTop >= foodAreaHeight[index] && scrollTop < foodAreaHeight[index + 1]) {
         this.setData({ cateListActiveIndex: index })
@@ -408,6 +408,7 @@ Page({
         that.setData({
           evalList: evalList
         })
+        wx.hideLoading();
       },
       err => {
         wx.hideLoading();

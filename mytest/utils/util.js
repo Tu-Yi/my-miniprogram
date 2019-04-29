@@ -58,7 +58,7 @@ function request(url, data = {}, method='GET'){
         'Content-Type': method == 'GET' ? 'application/json' : 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        wx.hideLoading();
+        //wx.hideLoading();
         if (res.statusCode == 200) {
           resolve(res.data);
         } else {

@@ -2204,3 +2204,33 @@ onUnload:function(e){
   },
 ```
 
+## 查找元素也是回调，执行代码记得写到里面
+
+如果不写在里面，开发工具可能没问题，手机上就会出问题
+
+```javascript
+var that=this
+query.select('.good').boundingClientRect(function (rect) {
+      eleFoodHeight=rect.height
+      let fh = [0]
+      let heightCount = 0
+      console.log(eleFoodHeight)
+      console.log(eleCateTitleHeight)
+      setTimeout(() => {
+        that.data.list.forEach((item, index) => {
+          //console.log(item.items.length * this.data.eleFoodHeight);
+          if (item.length > 0) {
+            console.log(eleFoodHeight)
+            console.log(eleCateTitleHeight)
+            heightCount += item.length * eleFoodHeight + eleCateTitleHeight
+            fh.push(heightCount)
+          }
+        })
+        console.log(fh)
+        that.setData({
+          foodAreaHeight: fh
+        })
+      }, 100)
+    }).exec();
+```
+

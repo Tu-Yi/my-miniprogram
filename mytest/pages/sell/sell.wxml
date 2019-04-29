@@ -69,7 +69,7 @@
     </view>
     <view style='flex:1;height:100%;'>
       <!-- <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-top="{{listViewScrollTop}}" bindscroll="foodListScrolling" scroll-with-animation='true'> -->
-      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y='true' scroll-into-view="{{toView}}" bindscroll="foodListScrolling" scroll-with-animation='true'>
+      <scroll-view style='height:{{height}}px' class='nav_right' scroll-y scroll-into-view="{{toView}}" bindscroll="foodListScrolling" scroll-with-animation='true'>
         <block wx:for='{{list}}' wx:key='{{index}}'>
           <view wx:if='{{item.goods.length}}' id='b{{index}}' class='type_title'>
             {{item.goods_type}}

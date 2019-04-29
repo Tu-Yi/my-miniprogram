@@ -24,15 +24,15 @@ Page({
     img_first: '../../' + constants.img_first,
     img_drop: '../../' + constants.img_drop,
     height: 0,
-    storeImg: '',
-    address: '',
-    phone: '',
-    delivery_time: '',
-    new_user_reduction: '',
-    minaDiscount: '',
+    storeImg: '../../' + constants.img_default,
+    address: constants.address_default,
+    phone: constants.phone_default,
+    delivery_time: constants.time_default,
+    new_user_reduction: 0,
+    minaDiscount: 0,
     latitude: '',
     longitude: '',
-    notice: '',
+    notice: constants.notice_default,
     cAdddress: '',
     cAddIsShow: true,
     isShow: true,
@@ -52,10 +52,7 @@ Page({
         wx.setNavigationBarTitle({
           title: res.store_name || constants.title_default
         })
-        //设置图片高度
-        let sheight = utils.getImageScale();
         that.setData({ 
-          height: sheight,
           storeImg: res.store_img || '../../' + constants.img_default,
           address: res.address || constants.address_default,
           phone: res.phone || constants.phone_default,
@@ -68,6 +65,7 @@ Page({
           key: constants.Storage_StoreInfo,
           data: res,
         })
+        wx.hideLoading();
       },
       err=>{
         wx.hideLoading();
@@ -84,6 +82,10 @@ Page({
    */
   onLoad: function (options) {
     var that=this;
+    let sheight = utils.getImageScale();
+    this.setData({
+      height: sheight
+    })
     this.getStoreDetail();
     //this.getCustomLocation();
     utils.getUserLocationInfo(function (addr) {

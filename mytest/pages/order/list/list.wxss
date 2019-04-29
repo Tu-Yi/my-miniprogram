@@ -98,14 +98,14 @@ page {
 }
 
 .stars view {
-  width: 32rpx;
-  height: 32rpx;
+  width: 20px;
+  height: 20px;
   margin-right: 30rpx;
   background-size: 100% 100%;
 }
 
 .main {
-  width: 400rpx;
+  width: 100%;
   margin: 0 auto;
 }
 

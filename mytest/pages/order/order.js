@@ -101,6 +101,7 @@ Page({
     utils.request(api.Order_Detail, { order_id: this.data.orderId }).then(
       res => {
         this.initOrder(res);
+        wx.hideLoading();
       },
       err => {
         wx.hideLoading();

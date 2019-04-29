@@ -14,7 +14,7 @@ Page({
     value: "",
     placeholder: constants.Remark_default,
     maxlength: 100,
-    focus: true,
+    focus: false,
     autoheight: false,
     adjustposition: true,
     inValue: ""
@@ -26,7 +26,8 @@ Page({
   onLoad: function (options) {
     utils.setPageTitle(constants.PageTitle_remark);
     this.setData({
-      value: app.globalData.remarkInfo
+      value: app.globalData.remarkInfo,
+      focus: true
     })
   },
   bindWord: function(e){
@@ -35,12 +36,13 @@ Page({
     })
   },
   toTextArea:function(e){
+    
     var key = this.data.keywords[e.currentTarget.dataset.index];
     var newValue = this.data.inValue + key;
     this.setData({
       inValue: newValue,
       value: newValue,
-      focus: true
+      focus: false
     })
   },
   bindFormSubmit:function(e){

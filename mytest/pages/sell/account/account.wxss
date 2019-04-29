@@ -181,7 +181,7 @@ page{
   background: #fff;
 }
 .remark .info {
-  padding: 10rpx 0;
+  padding: 20rpx 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -191,7 +191,7 @@ page{
   font-size: 13px;
 }
 .remark .info>view {
-  font-size: 11px;
+  font-size: 13px;
   color: #888888;
 }
 .remarkInfo {

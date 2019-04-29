@@ -55,7 +55,7 @@
             <block wx:for="{{evalInfo.images}}" wx:key="*this">
               <view class="weui-uploader__file evalView" bindtap="previewImage" id="{{item}}">
                 <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                <image class='evalImage' src='{{ico_cha}}' style='width:16px;height:16px;' data-idx="{{index}}" catchtap="removeImage" />
+                <image class='evalImage' src='{{ico_cha}}' style='width:20px;height:20px;' data-idx="{{index}}" catchtap="removeImage" />
               </view>
             </block>
           </view>

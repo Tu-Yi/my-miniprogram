@@ -38,6 +38,7 @@ Page({
           goodsMonthSellcount: res.goods_month_sellcount || 0,
           goodsPrice: res.goods_price || 0
         })
+        wx.hideLoading();
       },
       err => {
         wx.hideLoading();

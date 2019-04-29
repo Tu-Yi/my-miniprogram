@@ -161,13 +161,12 @@ Page({
       openid: app.globalData.openid
     }).then(
       res => {
-        console.log(123)
         that.setData({
           list: res
         })
+        wx.hideLoading();
       },
       err => {
-        console.log(isShow)
         wx.hideLoading();
         that.setData({
           isShow: false

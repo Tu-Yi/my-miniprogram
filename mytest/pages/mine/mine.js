@@ -9,6 +9,8 @@ Page({
     img_mineweixin: '../../' + constants.img_mineweixin,
     img_mineaddress: '../../' + constants.img_mineaddress,
     user: {},
+    x:0,
+    y:0
   },
   toOrderList:function(){
     wx.switchTab({

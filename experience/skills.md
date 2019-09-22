@@ -1,5 +1,45 @@
 # 技巧
 
+### 简易菜单
+
+```xml
+<view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="index">
+        <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+        </view>
+    </block>
+</view>
+<view class="weui-tab__panel">
+    <view hidden="{{activeIndex != 0}}">帝都</view>
+    <view hidden="{{activeIndex != 1}}">魔都</view>
+    <view hidden="{{activeIndex != 2}}">妖都</view>
+    <view hidden="{{activeIndex != 3}}">渔村</view>
+</view>
+```
+
+```javascript
+    data: {
+        tabs: ["北京", "上海", "广州", "深圳"],
+        activeIndex: 0
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+
+    },
+    tabClick: function (e) {
+        console.log(e)
+        this.setData({
+            activeIndex: e.currentTarget.id
+        });
+    },
+```
+
+
+
 ### 动画库
 
 animate.wxss

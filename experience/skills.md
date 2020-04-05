@@ -1,5 +1,62 @@
 # 技巧
 
+### 简易菜单
+
+```xml
+<view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="index">
+        <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+        </view>
+    </block>
+</view>
+<view class="weui-tab__panel">
+    <view hidden="{{activeIndex != 0}}">帝都</view>
+    <view hidden="{{activeIndex != 1}}">魔都</view>
+    <view hidden="{{activeIndex != 2}}">妖都</view>
+    <view hidden="{{activeIndex != 3}}">渔村</view>
+</view>
+```
+
+```javascript
+    data: {
+        tabs: ["北京", "上海", "广州", "深圳"],
+        activeIndex: 0
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+
+    },
+    tabClick: function (e) {
+        console.log(e)
+        this.setData({
+            activeIndex: e.currentTarget.id
+        });
+    },
+```
+
+
+
+### 动画库
+
+animate.wxss
+
+### 渲染数组中某一项
+
+在前面我们就已经接触过数组，比如**pages配置项**就是小程序里所有页面的一个列表。数组Array是值的**有序**集合，每个值叫做一个元素，而每个元素在数组中有一个位置，以数字表示，称为**索引**。这个索引是从0开始的非负整数，也就是0，1，2，3，4，5…..
+
+在home.wxml里输入以下代码：
+
+```xml
+<view>互联网快讯</view>
+<view>{{newstitle[0]}}</view>
+```
+
+
+
 ### 点击事件获取参数
 
 ```html
